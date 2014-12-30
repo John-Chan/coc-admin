@@ -1,7 +1,5 @@
 package org.coc.tools.client.view;
 
-import java.util.Date;
-
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -12,8 +10,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
-
 import org.coc.tools.client.presenter.ClanEditPresenter;
 
 public class ClanEditView extends Composite implements
