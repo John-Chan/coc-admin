@@ -30,8 +30,8 @@ public class ClanWarEntryDao   extends ObjectifyDao<ClanWarEntry> {
 		ClanWarEntryPojo pojo=new ClanWarEntryPojo();
 		
 		pojo.setWarIndex( entry.getWarIndex().get());
-		pojo.setHomeClan(entry.getHomeClan().get());
-		pojo.setEnemyClan(entry.getEnemyClan().get());
+		//pojo.setHomeClan(entry.getHomeClan().get());
+		//pojo.setEnemyClan(entry.getEnemyClan().get());
 		pojo.setHomeClanWarResult(entry.getHomeClanWarResult().get());
 		pojo.setEnemyClanWarResult(entry.getEnemyClanWarResult().get());
 		
@@ -43,9 +43,9 @@ public class ClanWarEntryDao   extends ObjectifyDao<ClanWarEntry> {
 	public ClanWarEntry createFromPojo(ClanWarEntryPojo pojo){
 		ClanWarEntry entry=new ClanWarEntry();
 
-		this.setEnemyClan(entry,pojo.getEnemyClan());
+		//this.setEnemyClan(entry,pojo.getEnemyClan());
 		this.setEnemyClanWarResult(entry,pojo.getEnemyClanWarResult());
-		this.setHomeClan(entry,pojo.getEnemyClan());
+		//this.setHomeClan(entry,pojo.getEnemyClan());
 		this.setHomeClanWarResult(entry,pojo.getHomeClanWarResult());
 		this.setWarBaseOrderList(entry,pojo.getWarBaseOrders());
 		this.setWarDetailList(entry,pojo.getWarDetails());

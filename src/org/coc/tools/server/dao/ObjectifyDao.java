@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.coc.tools.server.MyOfyService;
+//import org.coc.tools.server.MyOfyService;
 import org.coc.tools.shared.model.ObjectifyEntity;
 
 import com.googlecode.objectify.Key;
@@ -49,7 +49,7 @@ public class ObjectifyDao<EntityType extends ObjectifyEntity> {
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	public ObjectifyDao(){
-		this.ofy = MyOfyService.ofy();
+		//this.ofy = MyOfyService.ofy();
 	}
 	public ObjectifyDao(Objectify ofy){
 		this.ofy = ofy;

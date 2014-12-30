@@ -14,12 +14,15 @@ public class Clan extends ObjectifyEntity implements Serializable{
 
 	public enum REG_STATUS{NON_REGED,REGED};
 	
+	@Index
 	private String	clanName="";
 	private String	clanSymbol="1";
+	@Index
 	private String	clanTag="";
 	private String	clanLocate="International";
 	private int		trophiesRequired=1000;
 	private	int		clanWarFrequencyWeekly=1;
+	@Index
 	private	REG_STATUS		registered=REG_STATUS.NON_REGED;
 
 	
@@ -51,6 +54,12 @@ public class Clan extends ObjectifyEntity implements Serializable{
 		
 		return this;
 	}
+	public Clan	copyFull(final Clan another){
+		copyWithoutId(another);
+		this.setRowId(another.getRowId());
+		return this;
+	}
+	
 	public String getClanName() {
 		return clanName;
 	}

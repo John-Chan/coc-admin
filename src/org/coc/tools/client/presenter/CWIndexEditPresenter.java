@@ -122,6 +122,11 @@ public class CWIndexEditPresenter implements Presenter {
 		cwIndex.getEnemyClan().setClanTag(display.getEnemyClanTag().getValue());
 		cwIndex.getEnemyClan().setClanName(display.getEnemyClanName().getValue());
 		cwIndex.getEnemyClan().setClanSymbol(display.getEnemyClanSymbol().getValue());
+		///
+		cwIndex.getHomeClan().setClanTag("#88888888");
+		cwIndex.getHomeClan().setClanName("nakama-ck");
+		cwIndex.getHomeClan().setClanSymbol("40");
+		///
 		cwIndex.setScope(Integer.parseInt(display.getScope().getValue()) );
 
 		rpcService.update(clanWarEntryPojo, new AsyncCallback<ClanWarEntryPojo>() {

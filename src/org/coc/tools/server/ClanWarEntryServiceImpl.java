@@ -49,8 +49,8 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 		Clan homeClan=value.getWarIndex().getHomeClan();
 		Clan enemyClan=value.getWarIndex().getEnemyClan();
 		
-		value.setHomeClan(homeClan);
-		value.setEnemyClan(enemyClan);
+		//value.setHomeClan(homeClan);
+		//value.setEnemyClan(enemyClan);
 		
 		clanDao.save(homeClan);
 		clanDao.save(enemyClan);
@@ -75,8 +75,8 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 		Long warId=cwIndex.getRowId();
 		/// non-null
 		value.setWarIndex(cwIndex);
-		value.setHomeClan(cwIndex.getHomeClan());
-		value.setEnemyClan(cwIndex.getEnemyClan());
+		//value.setHomeClan(cwIndex.getHomeClan());
+		//value.setEnemyClan(cwIndex.getEnemyClan());
 		value.setWarBaseOrders(new ArrayList<>(warBaseOrderDao.getListByWarId(warId)));
 		value.setWarDetails(new ArrayList<>(warDetailDao.getListByWarId(warId)));
 		value.setHomeClanWarResult(warResultDao.getOne(warId, cwIndex.getHomeClan().getRowId()));

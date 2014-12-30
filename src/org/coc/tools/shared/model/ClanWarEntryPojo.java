@@ -13,8 +13,8 @@ public class ClanWarEntryPojo  extends ObjectifyEntity implements Serializable {
 	private static final long serialVersionUID = 3698667659761620548L;
 
 	private CWIndex warIndex=new CWIndex();
-	private Clan homeClan=new Clan();
-	private Clan enemyClan=new Clan();
+	//private Clan homeClan=new Clan();
+	//private Clan enemyClan=new Clan();
 	private WarResult homeClanWarResult=new WarResult();
 	private WarResult enemyClanWarResult=new WarResult();
 	private ArrayList<WarBaseOrder> warBaseOrders =new ArrayList<WarBaseOrder>();
@@ -26,6 +26,7 @@ public class ClanWarEntryPojo  extends ObjectifyEntity implements Serializable {
 	public void setWarIndex(CWIndex warIndex) {
 		this.warIndex = warIndex;
 	}
+	/*
 	public Clan getHomeClan() {
 		return homeClan;
 	}
@@ -38,6 +39,7 @@ public class ClanWarEntryPojo  extends ObjectifyEntity implements Serializable {
 	public void setEnemyClan(Clan enemyClan) {
 		this.enemyClan = enemyClan;
 	}
+	*/
 	public WarResult getHomeClanWarResult() {
 		return homeClanWarResult;
 	}
