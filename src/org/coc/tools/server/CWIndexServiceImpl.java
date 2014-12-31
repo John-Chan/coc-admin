@@ -1,10 +1,13 @@
 package org.coc.tools.server;
 
 import java.util.ArrayList;
+
 import org.coc.tools.client.CWIndexService;
 import org.coc.tools.server.dao.CWIndexDao;
 import org.coc.tools.shared.model.CWIndex;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.googlecode.objectify.Objectify;
 
 public class CWIndexServiceImpl extends RemoteServiceServlet  implements CWIndexService {
 
@@ -13,7 +16,8 @@ public class CWIndexServiceImpl extends RemoteServiceServlet  implements CWIndex
 	 */
 	private static final long serialVersionUID = 9223226377633504385L;
 
-	private CWIndexDao		dao=new CWIndexDao();
+	private		Objectify ofy=MyOfyService.ofy();
+	private CWIndexDao		dao=new CWIndexDao(ofy);
 	
 	@Override
 	public CWIndex addCWIndex(CWIndex one) {

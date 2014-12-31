@@ -1,12 +1,14 @@
 package org.coc.tools.server;
 
 import java.util.ArrayList;
+
 import org.coc.tools.client.ClanService;
 import org.coc.tools.server.dao.ClanDao;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.Clan.REG_STATUS;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.googlecode.objectify.Objectify;
 
 public class ClanServiceImpl extends RemoteServiceServlet  implements ClanService  {
 
@@ -15,7 +17,8 @@ public class ClanServiceImpl extends RemoteServiceServlet  implements ClanServic
 	 */
 	private static final long serialVersionUID = 1988771299566054548L;
 
-	private ClanDao		dao=new ClanDao();
+	private		Objectify ofy=MyOfyService.ofy();
+	private ClanDao		dao=new ClanDao(ofy);
 	
 	@Override
 	public Clan addClan(Clan clan) {

@@ -95,6 +95,8 @@ public class ClanDao   extends ObjectifyDao<Clan>{
 	private void	printAll(){
 
 		List<Clan> all= super.getList(Clan.class, 200);
+		if(all == null) return;
+		
 		for(Clan v:all){
 			GWT.log(v.getClanTag() + "  "+v.getClanName());
 		}

@@ -38,6 +38,17 @@
 	</servlet-mapping>
 
 
+
+	<servlet>
+		<servlet-name>clanServiceImplImplServlet</servlet-name>
+		<servlet-class>org.coc.tools.server.ClanServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>clanServiceImplImplServlet</servlet-name>
+		<url-pattern>/cocadmin/clanService</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
 		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
