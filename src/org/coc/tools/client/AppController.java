@@ -4,15 +4,20 @@ import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.CWIndexAddEvtHandler;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.client.event.CWIndexUpdateEvtHandler;
+import org.coc.tools.client.event.ClanAddEvt;
+import org.coc.tools.client.event.ClanAddEvtHandler;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
+import org.coc.tools.client.presenter.ClanEditPresenter;
 import org.coc.tools.client.presenter.Presenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
+import org.coc.tools.client.view.ClanEditView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -20,8 +25,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 public class AppController implements Presenter, ValueChangeHandler<String> {
 	private final HandlerManager eventBus;
 	//private CWIndexServiceAsync cwIndexService = GWT.create(CWIndexService.class);
-	private ClanWarEntryServiceAsync clanWarEntryService = GWT.create(ClanWarEntryService.class);
-	
+	private RpcManager	rpcMgr=new RpcManager();
 	
 	private HasWidgets container;
 
@@ -39,14 +43,20 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			Presenter presenter = null;
 
 			if (token.equals(AppCmd.CMD_LIST_CWINDEX)) {
-				presenter = new CWIndexPresenter(clanWarEntryService, eventBus,
+				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
 			} else if (token.equals(AppCmd.CMD_ADD_CWINDEX)) {
-				presenter = new CWIndexEditPresenter(clanWarEntryService, eventBus,
+				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView());
 			} else if (token.equals(AppCmd.CMD_EDIT_CWINDEX)) {
-				presenter = new CWIndexEditPresenter(clanWarEntryService, eventBus,
+				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView());
+			} else if (token.equals(AppCmd.CMD_REG_CLAN)) {
+				
+				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
+						new ClanEditView());
+				//presenter = new CWIndexPresenter(rpcMgr, eventBus,
+				//		new CWIndexView());
 			}
 
 			if (presenter != null) {
@@ -70,6 +80,15 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 
+		/// reg evt for reg clan ClanAddEvt  extends GwtEvent<ClanAddEvtHandler>
+		eventBus.addHandler(ClanAddEvt.TYPE, new ClanAddEvtHandler() {
+			@Override
+			public void onAdd(ClanAddEvt event) {
+				doAddClan();
+
+			}
+		});
+		
 		/// reg evt for add 
 		eventBus.addHandler(CWIndexAddEvt.TYPE, new CWIndexAddEvtHandler() {
 			@Override
@@ -113,7 +132,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        });  
 
 	}
-
+	/// go to reg clan 
+	private void doAddClan() {
+		History.newItem(AppCmd.CMD_REG_CLAN);
+	}
 	/// go to add 
 	private void doAddNewCWIndex() {
 		History.newItem(AppCmd.CMD_ADD_CWINDEX);
@@ -122,7 +144,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void doEditCWIndex(String id) {
 	    History.newItem(AppCmd.CMD_EDIT_CWINDEX, false);
 	    //public CWIndexEditPresenter(CWIndexServiceAsync rpcService,HandlerManager eventBus, Display display, Long id)
-	    Presenter presenter = new CWIndexEditPresenter(clanWarEntryService, eventBus, new CWIndexEditView(), Long.parseLong(id) );
+	    Presenter presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus, new CWIndexEditView(), Long.parseLong(id) );
 	    presenter.go(container);
 	  }
 	

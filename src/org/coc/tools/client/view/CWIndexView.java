@@ -17,7 +17,6 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-//import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
@@ -25,9 +24,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-//import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -52,7 +49,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 
 	private final FlexTable headerTable;
-	private final Button createClanButton;
+	private final Button regClanButton;
 	private Label homeClanName;
 	private Label homeClanTag;
 	private HTML homeClanSymbol;
@@ -65,7 +62,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		homeClanList=new ArrayList<>();
 		////
 		headerTable=new FlexTable();
-		createClanButton=new Button("Create");
+		regClanButton=new Button("Create");
 		homeClanName=new Label("ClanName");
 		homeClanTag=new Label("ClanTag");
 		homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
@@ -126,7 +123,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		homeClanName.setHeight(MENU_BAR_ELEM_HEIGHT);
 		homeClanTag.setHeight(MENU_BAR_ELEM_HEIGHT);
 		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
-		createClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
+		regClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
 		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
 		
 		
@@ -135,7 +132,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		headerTable.setWidget(0, 2, homeClanTag);
 		//headerTable.setWidget(0, 3, bull);
 		headerTable.setWidget(0, 4, homeClanBox);
-		headerTable.setWidget(0, 5, createClanButton);
+		headerTable.setWidget(0, 5, regClanButton);
 		
 		this.setHeaderSmall(headerTable);
 		//this.setHeader(headerTable);//
@@ -296,6 +293,11 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			tabRowIndex++;
 		}
 		
+	}
+
+	@Override
+	public HasClickHandlers getRegClanButton() {
+		return regClanButton;
 	}
 
 	/*

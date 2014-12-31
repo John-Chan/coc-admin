@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.coc.tools.client.CWIndexServiceAsync;
 import org.coc.tools.client.ClanWarEntryServiceAsync;
+import org.coc.tools.client.RpcManager;
 import org.coc.tools.client.event.CWIndexAddEvt;
+import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 
@@ -57,6 +59,8 @@ public class CWIndexPresenter implements Presenter {
 		HasClickHandlers getAddButton();
 
 		HasClickHandlers getDeleteButton();
+		
+		HasClickHandlers getRegClanButton();
 
 		HasClickHandlers getList();
 
@@ -72,14 +76,14 @@ public class CWIndexPresenter implements Presenter {
 
 	private List<ClanWarEntryPojo> clanWarEntryPojoList;
 	//private final CWIndexServiceAsync rpcService;
-	private final ClanWarEntryServiceAsync rpcService;
-	
+	//private final ClanWarEntryServiceAsync rpcService;
+	private final RpcManager rpcMgr;
 	private final HandlerManager eventBus;
 	private final Display display;
 
-	public CWIndexPresenter(ClanWarEntryServiceAsync rpcService,
+	public CWIndexPresenter(RpcManager rpcMgr,
 			HandlerManager eventBus, Display view) {
-		this.rpcService = rpcService;
+		this.rpcMgr = rpcMgr;
 		this.eventBus = eventBus;
 		this.display = view;
 	}
@@ -116,6 +120,13 @@ public class CWIndexPresenter implements Presenter {
 				eventBus.fireEvent(new CWIndexAddEvt());
 			}
 		});
+		
+		display.getRegClanButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new ClanAddEvt());
+			}
+		});
+		
 		/*
 		 * display.getAddButton().addClickHandler(new ClickHandler() { public
 		 * void onClick(ClickEvent event) { eventBus.fireEvent(new
@@ -134,7 +145,7 @@ public class CWIndexPresenter implements Presenter {
 		 */
 	}
 	private void fetchCWIndexs() {
-		rpcService.getList(10, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
+		rpcMgr.getClanWarEntryService().getList(10, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
 			public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
 				clanWarEntryPojoList = result;
 				sortClanWarEntryPojoList();
