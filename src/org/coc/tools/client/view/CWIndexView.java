@@ -10,6 +10,13 @@ import java.util.List;
 
 
 
+
+
+
+
+
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 //import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -19,6 +26,7 @@ import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 //import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -26,12 +34,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
 import org.coc.tools.shared.DateTimeFmt;
+import org.coc.tools.shared.model.Clan;
 
 //public class CWIndexView extends Composite implements CWIndexPresenter.Display {
 public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
+	public final static String MENU_BAR_ELEM_HEIGHT="32px";
+	
 	private final String	appVersion="V0.1";
 	private final Button addButton;
 	private final Button deleteButton;
@@ -43,20 +55,32 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private final Button createClanButton;
 	private Label homeClanName;
 	private Label homeClanTag;
-	private ListBox homeClanList;
+	private HTML homeClanSymbol;
+	private ListBox homeClanBox;
 
+	private	List<Clan>	homeClanList;
 	
 	public CWIndexView() {
 
+		homeClanList=new ArrayList<>();
 		////
 		headerTable=new FlexTable();
 		createClanButton=new Button("Create");
 		homeClanName=new Label("ClanName");
 		homeClanTag=new Label("ClanTag");
-		homeClanList = new ListBox(false);
+		homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
+		homeClanBox = new ListBox(false);
 
 		for(int i=0;i<5;++i){
-			homeClanList.addItem("Clan - "+i, Integer.toString(i));
+			Clan one=new Clan();
+			one.setClanName("clanName-"+i);
+			one.setClanTag("#YYI8J6U"+i);
+			one.setClanSymbol(Integer.toString(i+1));
+			homeClanList.add(one);
+		}
+		
+		for(Clan one:homeClanList){
+			homeClanBox.addItem(one.getClanName()+ " - "+ one.getClanTag(), one.getClanTag());
 		}
 		////
 
@@ -67,6 +91,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		
 		initMainArea();
 		initHearderBar();
+		initHanlder();
 	}
 
 	private void initHearderBar(){
@@ -74,11 +99,12 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		headerTable.setWidth("100%");
 		headerTable.getCellFormatter().setWidth(0, 0, "10%");
 		headerTable.getCellFormatter().setWidth(0, 1, "10%");
-		//headerTable.getCellFormatter().setWidth(0, 2, "55%");
-		headerTable.getCellFormatter().setWidth(0, 3, "15%");
-		headerTable.getCellFormatter().setWidth(0, 4, "5%");
+		headerTable.getCellFormatter().setWidth(0, 2, "10%");
+		//headerTable.getCellFormatter().setWidth(0, 3, "55%");
+		headerTable.getCellFormatter().setWidth(0, 4, "15%");
+		headerTable.getCellFormatter().setWidth(0, 5, "5%");
 		
-		for(int i=0;i<4;++i){
+		for(int i=0;i<5;++i){
 
 			headerTable.getFlexCellFormatter().setVerticalAlignment(0, i,
 					DockPanel.ALIGN_TOP);
@@ -89,11 +115,27 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 					DockPanel.ALIGN_TOP);
 			*/
 		}
+		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
+		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 4, DockPanel.ALIGN_RIGHT);
+		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 5, DockPanel.ALIGN_RIGHT);
+		
+		/*homeClanName.setHeight("100%");
+		homeClanTag.setHeight("100%");
+		homeClanList.setHeight("100%");
+		createClanButton.setHeight("100%");*/
+		homeClanName.setHeight(MENU_BAR_ELEM_HEIGHT);
+		homeClanTag.setHeight(MENU_BAR_ELEM_HEIGHT);
+		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
+		createClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
+		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
+		
+		
 		headerTable.setWidget(0, 0, homeClanName);
-		headerTable.setWidget(0, 1, homeClanTag);
-		//headerTable.setWidget(0, 2, bull);
-		headerTable.setWidget(0, 3, homeClanList);
-		headerTable.setWidget(0, 4, createClanButton);
+		headerTable.setWidget(0, 1, homeClanSymbol);
+		headerTable.setWidget(0, 2, homeClanTag);
+		//headerTable.setWidget(0, 3, bull);
+		headerTable.setWidget(0, 4, homeClanBox);
+		headerTable.setWidget(0, 5, createClanButton);
 		
 		this.setHeaderSmall(headerTable);
 		//this.setHeader(headerTable);//
@@ -148,6 +190,22 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		contentTableDecorator.add(contentTable);
 
 		this.setCenter(contentTableDecorator); 
+	}
+	private void initHanlder(){
+		// Add a handler to handle drop box events
+		homeClanBox.addChangeHandler(new ChangeHandler() {
+	      public void onChange(ChangeEvent event) {
+	    	updateHomeClanInfo(homeClanBox.getSelectedIndex());
+	        //multiBox.ensureDebugId("cwListBox-multiBox");
+	      }
+	    });
+	}
+	private	void	updateHomeClanInfo(int index){
+
+		
+		homeClanName.setText(homeClanList.get(index).getClanName());
+		homeClanTag.setText("Tag : "+homeClanList.get(index).getClanTag());
+		homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(homeClanList.get(index).getClanSymbol()), "32px", "32px"));
 	}
 	@Override
 	public HasClickHandlers getAddButton() {
