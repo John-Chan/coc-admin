@@ -210,10 +210,10 @@ public class CWIndexView extends Composite implements CWIndexPresenter.Display {
 		int tabColIndex=0;
 		/// set title
 		cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, new CheckBox());
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, "Enemy clan tag"); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, "Enemy clan name"); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, "Enemy clan symobl"); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, "Prepare Day"); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_TAG); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_NAME); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_SYMBOL); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.WAR_PREPARE_DATE); 
 		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
 		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
 		tabRowIndex++;

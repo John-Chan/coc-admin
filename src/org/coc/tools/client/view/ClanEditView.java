@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import org.coc.tools.client.presenter.ClanEditPresenter;
 
 public class ClanEditView extends Composite implements
@@ -59,17 +60,17 @@ public class ClanEditView extends Composite implements
 		contentDetailsPanel.add(menuPanel);
 		contentDetailsDecorator.add(contentDetailsPanel);
 
-		setValueRule();
+		initInputComponents();
 		initHanlder();
 	}
 
 	private void initDetailsTable() {
 
-		detailsTable.setWidget(0, 0, new Label("clanTag"));
+		detailsTable.setWidget(0, 0, new Label(ViewConstants.ValueNames.CLAN_TAG));
 		detailsTable.setWidget(0, 1, clanTag);
-		detailsTable.setWidget(1, 0, new Label("clanName"));
+		detailsTable.setWidget(1, 0, new Label(ViewConstants.ValueNames.CLAN_NAME));
 		detailsTable.setWidget(1, 1, clanName);
-		detailsTable.setWidget(2, 0, new Label("clanSymbol"));
+		detailsTable.setWidget(2, 0, new Label(ViewConstants.ValueNames.CLAN_SYMBOL));
 		detailsTable.setWidget(2, 1, clanSymbol);
 		// prepareDate.setFocus(true);
 	}
@@ -78,8 +79,11 @@ public class ClanEditView extends Composite implements
 
 	}
 
-	private void setValueRule() {
+	private void initInputComponents() {
 
+		clanSymbol.setMaxLength(2);
+		clanName.setMaxLength(32);
+		clanTag.setMaxLength(12);
 	}
 
 	private void initHanlder() {
@@ -88,32 +92,26 @@ public class ClanEditView extends Composite implements
 
 	@Override
 	public HasClickHandlers getSaveButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return saveButton;
 	}
 
 	@Override
 	public HasClickHandlers getCancelButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return cancelButton;
 	}
 
 	@Override
 	public HasValue<String> getClanTag() {
-		// TODO Auto-generated method stub
-		return null;
+		return clanTag;
 	}
-
 	@Override
 	public HasValue<String> getClanName() {
-		// TODO Auto-generated method stub
-		return null;
+		return clanName;
 	}
 
 	@Override
 	public HasValue<String> getClanSymbol() {
-		// TODO Auto-generated method stub
-		return null;
+		return clanSymbol;
 	}
 
 }

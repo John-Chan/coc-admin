@@ -121,7 +121,7 @@ public class Cocadmin implements EntryPoint {
 				// First, we validate the input.
 				errorLabel.setText("");
 				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
+				if (textToServer==null || textToServer.length()<4) {
 					errorLabel.setText("Please enter at least four characters");
 					return;
 				}

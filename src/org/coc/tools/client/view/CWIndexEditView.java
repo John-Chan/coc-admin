@@ -3,7 +3,7 @@ package org.coc.tools.client.view;
 import java.util.Date;
 
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
-import org.coc.tools.shared.CocConstant;
+import org.coc.tools.shared.FieldVerifier;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -74,11 +74,11 @@ public class CWIndexEditView extends Composite implements
 		contentDetailsPanel.add(menuPanel);
 		contentDetailsDecorator.add(contentDetailsPanel);
 		
-		setValueRule();
+		initInputComponents();
 		initHanlder();
 	}
 	
-	private void	setValueRule(){
+	private void	initInputComponents(){
 		scope.setMaxLength(2);
 		
 		enemyClanSymbol.setMaxLength(2);
@@ -88,35 +88,12 @@ public class CWIndexEditView extends Composite implements
 
 	private boolean checkEnemyClanSymbol(){
 		String val=enemyClanSymbol.getValue();
-		boolean good=false;
-    	try{
-
-	        int symbol=Integer.parseInt(val);
-	        if(symbol>=CocConstant.ClanInfo.MIN_CLANSYMBOL_VALUE && symbol<=CocConstant.ClanInfo.MAX_CLANSYMBOL_VALUE){
-	        	good=true;
-	        }
-    	}catch(NumberFormatException e){
-    		good=false;
-    	}
-    	return good;
+    	return FieldVerifier.isValidClanSymbol(val).getPassed();
 	}
 	private boolean checkPlayerCount(){
 
 		String val=scope.getValue();
-		boolean good=false;
-    	try{
-
-	        int count=Integer.parseInt(val);
-	        if (count >= CocConstant.WarCounters.MIN_PLAYER_COUNT
-					&& count <= CocConstant.WarCounters.MAX_PLAYER_COUNT
-					&& (count % CocConstant.WarCounters.PLAYER_COUNT_MULTIPLES) == 0) {
-	        	good=true;
-			}
-    	}catch(NumberFormatException e){
-    		good=false;
-    	}
-    	return good;
-
+    	return FieldVerifier.isValidCwPlayerCount(val).getPassed();
 	}
 	private void initHanlder(){
 		enemyClanSymbol.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -157,16 +134,16 @@ public class CWIndexEditView extends Composite implements
 	}
 
 	private void initDetailsTable() {
-
-		detailsTable.setWidget(0, 0, new Label("player count"));
+		
+		detailsTable.setWidget(0, 0, new Label(ViewConstants.ValueNames.WAR_PLAYER_COUNT));
 		detailsTable.setWidget(0, 1, scope);
-		detailsTable.setWidget(1, 0, new Label("enemyClanTag"));
+		detailsTable.setWidget(1, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_TAG));
 		detailsTable.setWidget(1, 1, enemyClanTag);
-		detailsTable.setWidget(2, 0, new Label("enemyClanName"));
+		detailsTable.setWidget(2, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_NAME));
 		detailsTable.setWidget(2, 1, enemyClanName);
-		detailsTable.setWidget(3, 0, new Label("enemyClanSymbol"));
+		detailsTable.setWidget(3, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_SYMBOL));
 		detailsTable.setWidget(3, 1, enemyClanSymbol);
-		detailsTable.setWidget(4, 0, new Label("prepareDate"));
+		detailsTable.setWidget(4, 0, new Label(ViewConstants.ValueNames.WAR_PREPARE_DATE));
 		detailsTable.setWidget(4, 1, prepareDate);
 		// prepareDate.setFocus(true);
 	}

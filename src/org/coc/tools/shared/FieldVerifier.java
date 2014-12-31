@@ -22,6 +22,18 @@ package org.coc.tools.shared;
  */
 public class FieldVerifier {
 
+	public static boolean isDigit(String val) {
+		//int count=0;
+		boolean good=false;
+		try{
+			//count=Integer.parseInt(val);
+			Integer.parseInt(val);
+			good=true;
+		}catch(Exception e){
+			//NumberFormatException
+		}
+		return good;
+	}
 	/**
 	 * Verifies that the specified name is valid for our service.
 	 * 
@@ -33,10 +45,60 @@ public class FieldVerifier {
 	 * @param name the name to validate
 	 * @return true if valid, false if invalid
 	 */
-	public static boolean isValidName(String name) {
-		if (name == null) {
-			return false;
+	public static VerifieStatus isValidClanName(String val) {
+		String what="Clan Name";
+		if (val == null) {
+			return VerifieStatus.NullError(what);
 		}
-		return name.length() > 3;
+		if (val.length()<3) {
+			return VerifieStatus.LengthError(what);
+		}
+		return VerifieStatus.NoError();
+	}
+	
+	public static VerifieStatus isValidClanTag(String val) {
+		String what="Clan Tag";
+		if (val == null) {
+			return VerifieStatus.NullError(what);
+		}
+		if (val.length()<5) {
+			return VerifieStatus.LengthError(what);
+		}
+		if (false == val.startsWith(CocConstant.ClanInfo.CLAN_TAG_PREFIX)) {
+			return new VerifieStatus(false,what+" should start with a '"+CocConstant.ClanInfo.CLAN_TAG_PREFIX+"'");
+		}
+		return VerifieStatus.NoError();
+	}
+	public static VerifieStatus isValidClanSymbol(String val) {
+		String what="Clan Symbol";
+		if (val == null) {
+			return VerifieStatus.NullError(what);
+		}
+		if (!isDigit(val)) {
+			return VerifieStatus.IllegalCharacterError(what);
+		}
+		int count=Integer.parseInt(val);
+		if (count<CocConstant.ClanInfo.MIN_CLANSYMBOL_VALUE || count>CocConstant.ClanInfo.MAX_CLANSYMBOL_VALUE) {
+			return VerifieStatus.RangeError(what,CocConstant.ClanInfo.MIN_CLANSYMBOL_VALUE,CocConstant.ClanInfo.MAX_CLANSYMBOL_VALUE);
+		}
+		return VerifieStatus.NoError();
+	}
+	
+	public static VerifieStatus isValidCwPlayerCount(String val) {
+		String what="Clan War Player Count";
+		if (val == null) {
+			return VerifieStatus.NullError(what);
+		}
+		if (!isDigit(val)) {
+			return VerifieStatus.IllegalCharacterError(what);
+		}
+		int count=Integer.parseInt(val);
+		if(count <CocConstant.WarCounters.MIN_PLAYER_COUNT || count> CocConstant.WarCounters.MAX_PLAYER_COUNT ){
+			return VerifieStatus.RangeError(what,CocConstant.WarCounters.MIN_PLAYER_COUNT,CocConstant.WarCounters.MAX_PLAYER_COUNT);
+		}
+		if ((count%CocConstant.WarCounters.PLAYER_COUNT_MULTIPLES)!=0 ) {
+			return new VerifieStatus(false,what+" should increnment by "+CocConstant.WarCounters.PLAYER_COUNT_MULTIPLES);
+		}
+		return VerifieStatus.NoError();
 	}
 }
