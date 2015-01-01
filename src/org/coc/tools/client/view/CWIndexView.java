@@ -72,11 +72,11 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private void initHearderBar(){
 
 		headerTable.setWidth("100%");
-		headerTable.getCellFormatter().setWidth(0, 0, "10%");
-		headerTable.getCellFormatter().setWidth(0, 1, "10%");
-		headerTable.getCellFormatter().setWidth(0, 2, "10%");
+		headerTable.getCellFormatter().setWidth(0, 0, "5%");
+		headerTable.getCellFormatter().setWidth(0, 1, "15%");
+		headerTable.getCellFormatter().setWidth(0, 2, "15%");
 		//headerTable.getCellFormatter().setWidth(0, 3, "55%");
-		headerTable.getCellFormatter().setWidth(0, 4, "15%");
+		headerTable.getCellFormatter().setWidth(0, 4, "10%");
 		headerTable.getCellFormatter().setWidth(0, 5, "5%");
 		
 		for(int i=0;i<5;++i){
@@ -90,7 +90,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 					DockPanel.ALIGN_TOP);
 			*/
 		}
-		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
+		//headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
 		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 4, DockPanel.ALIGN_RIGHT);
 		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 5, DockPanel.ALIGN_RIGHT);
 		
@@ -105,8 +105,8 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
 		
 		
-		headerTable.setWidget(0, 0, homeClanName);
-		headerTable.setWidget(0, 1, homeClanSymbol);
+		headerTable.setWidget(0, 1, homeClanName);
+		headerTable.setWidget(0, 0, homeClanSymbol);
 		headerTable.setWidget(0, 2, homeClanTag);
 		//headerTable.setWidget(0, 3, bull);
 		headerTable.setWidget(0, 4, homeClanBox);
@@ -271,6 +271,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	
 	private void	updateClanBox(List<Clan> list){
 		homeClanBox.clear();
+		//homeClanBox.setVisibleItemCount(1);
 		for(Clan one:list){
 			homeClanBox.addItem(one.getClanName()+ " - "+ one.getClanTag(), one.getClanTag());
 		}

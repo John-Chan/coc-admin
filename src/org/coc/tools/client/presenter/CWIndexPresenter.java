@@ -180,12 +180,10 @@ public class CWIndexPresenter implements Presenter {
 	}
 	private void fetchRegedClans() {
 		rpcMgr.getClanServiceAsync().getRegedClanList(10, new AsyncCallback<ArrayList<Clan>>(){
-
-
 			@Override
 			public void onSuccess(ArrayList<Clan> result) {
 				regedClanList=result;
-				
+				display.setRegedClanList(regedClanList);
 			}
 
 			@Override
