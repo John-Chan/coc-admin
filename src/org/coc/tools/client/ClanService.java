@@ -16,6 +16,7 @@ public interface ClanService extends RemoteService{
 	Clan	addClan(String	clanTag,String	clanName,String	clanSymbol,Clan.REG_STATUS registered);
 
 	Clan	removeClanByTag(String	clanTag);
+	ArrayList<Clan> getRegedClanList(int maxResult);
 	ArrayList<Clan> getClanList(int maxResult);
 	ArrayList<Clan> getClanListByName(String	clanName,int maxResult);
 	

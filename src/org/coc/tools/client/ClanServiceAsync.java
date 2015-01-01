@@ -15,6 +15,7 @@ public interface ClanServiceAsync {
 	void	addClan(String	clanTag,String	clanName,String	clanSymbol,Clan.REG_STATUS registered,AsyncCallback<Clan> callback);
 
 	void	removeClanByTag(String	clanTag,AsyncCallback<Clan> callback);
+	void 	getRegedClanList(int maxResult,AsyncCallback<ArrayList<Clan>> callback);
 	void 	getClanList(int maxResult,AsyncCallback<ArrayList<Clan>> callback);
 	void 	getClanListByName(String	clanName,int maxResult,AsyncCallback<ArrayList<Clan>> callback);
 }

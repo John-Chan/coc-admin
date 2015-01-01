@@ -3,21 +3,10 @@ package org.coc.tools.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -55,11 +44,11 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private HTML homeClanSymbol;
 	private ListBox homeClanBox;
 
-	private	List<Clan>	homeClanList;
+	//private	List<Clan>	homeClanList;
 	
 	public CWIndexView() {
 
-		homeClanList=new ArrayList<>();
+		//homeClanList=new ArrayList<>();
 		////
 		headerTable=new FlexTable();
 		regClanButton=new Button("Create");
@@ -68,17 +57,6 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
 		homeClanBox = new ListBox(false);
 
-		for(int i=0;i<5;++i){
-			Clan one=new Clan();
-			one.setClanName("clanName-"+i);
-			one.setClanTag("#YYI8J6U"+i);
-			one.setClanSymbol(Integer.toString(i+1));
-			homeClanList.add(one);
-		}
-		
-		for(Clan one:homeClanList){
-			homeClanBox.addItem(one.getClanName()+ " - "+ one.getClanTag(), one.getClanTag());
-		}
 		////
 
 		addButton = new Button("Add");
@@ -88,7 +66,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		
 		initMainArea();
 		initHearderBar();
-		initHanlder();
+		//initHanlder();
 	}
 
 	private void initHearderBar(){
@@ -136,6 +114,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		
 		this.setHeaderSmall(headerTable);
 		//this.setHeader(headerTable);//
+		
 	}
 
 	private void initMainArea(){
@@ -188,22 +167,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 		this.setCenter(contentTableDecorator); 
 	}
-	private void initHanlder(){
-		// Add a handler to handle drop box events
-		homeClanBox.addChangeHandler(new ChangeHandler() {
-	      public void onChange(ChangeEvent event) {
-	    	updateHomeClanInfo(homeClanBox.getSelectedIndex());
-	        //multiBox.ensureDebugId("cwListBox-multiBox");
-	      }
-	    });
-	}
-	private	void	updateHomeClanInfo(int index){
 
-		
-		homeClanName.setText(homeClanList.get(index).getClanName());
-		homeClanTag.setText("Tag : "+homeClanList.get(index).getClanTag());
-		homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(homeClanList.get(index).getClanSymbol()), "32px", "32px"));
-	}
 	@Override
 	public HasClickHandlers getAddButton() {
 		return this.addButton;
@@ -220,7 +184,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	}
 
 	@Override
-	public int getClickedRow(ClickEvent event) {
+	public int getClickedCwEntryRow(ClickEvent event) {
 		int selectedRow = -1;
 		HTMLTable.Cell cell = cwIndexsTable.getCellForEvent(event);
 
@@ -237,7 +201,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	}
 
 	@Override
-	public List<Integer> getSelectedRows() {
+	public List<Integer> getSelectedCwIndexRows() {
 		List<Integer> selectedRows = new ArrayList<Integer>();
 
 		for (int i = 0; i < cwIndexsTable.getRowCount(); ++i) {
@@ -256,7 +220,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 
 	@Override
-	public void setData(List<CWIndexData> data) {
+	public void setCwEntryList(List<CWIndexData> data) {
 		cwIndexsTable.removeAllRows();
 
 		int tabRowIndex=0;
@@ -299,6 +263,35 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public HasClickHandlers getRegClanButton() {
 		return regClanButton;
 	}
+
+	@Override
+	public void setRegedClanList(List<Clan> data) {
+		updateClanBox(data);
+	}
+	
+	private void	updateClanBox(List<Clan> list){
+		homeClanBox.clear();
+		for(Clan one:list){
+			homeClanBox.addItem(one.getClanName()+ " - "+ one.getClanTag(), one.getClanTag());
+		}
+	}
+	@Override
+	public int getSelectedRegClan() {
+		return homeClanBox.getSelectedIndex();
+	}
+	@Override
+	public HasChangeHandlers getRegedClanBox() {
+		return homeClanBox;
+	}
+	@Override
+	public void setRegedClan(Clan clan) {
+
+		homeClanName.setText(clan.getClanName());
+		homeClanTag.setText("Tag : "+clan.getClanTag());
+		homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(clan.getClanSymbol()), "32px", "32px"));
+		
+	}
+
 
 	/*
 	@Override

@@ -4,6 +4,7 @@ import org.coc.tools.shared.model.ClanWarEntryPojo;
 
 import com.google.gwt.event.shared.GwtEvent;
 
+/// CWIndex has been saved or updated
 public class CWIndexUpdateEvt  extends GwtEvent<CWIndexUpdateEvtHandler>{
 
 	  public static Type<CWIndexUpdateEvtHandler> TYPE = new Type<CWIndexUpdateEvtHandler>();
@@ -13,7 +14,7 @@ public class CWIndexUpdateEvt  extends GwtEvent<CWIndexUpdateEvtHandler>{
 	    this.forUpdate = forUpdate;
 	  }
 	  
-	  public ClanWarEntryPojo getUpdatedClanWarEntryPojo() { return forUpdate; }
+	  public ClanWarEntryPojo getData() { return forUpdate; }
 	  
 
 	  @Override

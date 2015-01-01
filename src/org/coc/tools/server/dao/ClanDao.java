@@ -41,8 +41,8 @@ public class ClanDao   extends ObjectifyDao<Clan>{
 		}
 		return list;
 	}
-	public List<Clan>	getRegedClan(){
-		List<Clan> list=this.getOfy().load().type(Clan.class).filter("registered", Clan.REG_STATUS.REGED).list();
+	public List<Clan>	getRegedClan(int maxResult){
+		List<Clan> list=this.getOfy().load().type(Clan.class).filter("registered", Clan.REG_STATUS.REGED).limit(maxResult).list();
 		if(list == null){
 			return new ArrayList<Clan>();
 		}

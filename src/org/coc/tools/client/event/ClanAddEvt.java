@@ -2,6 +2,7 @@ package org.coc.tools.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
+/// ask for create clan 
 public class ClanAddEvt  extends GwtEvent<ClanAddEvtHandler>{
 
 	public static Type<ClanAddEvtHandler> TYPE = new Type<ClanAddEvtHandler>();

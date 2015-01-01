@@ -6,6 +6,8 @@ import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.client.event.CWIndexUpdateEvtHandler;
 import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.ClanAddEvtHandler;
+import org.coc.tools.client.event.ClanUpdateEvt;
+import org.coc.tools.client.event.ClanUpdateEvtHandler;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
@@ -41,17 +43,20 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 		if (token != null) {
 			Presenter presenter = null;
-
-			if (token.equals(AppCmd.CMD_LIST_CWINDEX)) {
+			/*if (token.equals(AppCmd.CMD_LIST_REGED_CLAN)) {
 				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
-			} else if (token.equals(AppCmd.CMD_ADD_CWINDEX)) {
+			} else */
+			if (token.equals(AppCmd.CMD_LIST_CW_ENTRY)) {
+				presenter = new CWIndexPresenter(rpcMgr, eventBus,
+						new CWIndexView());
+			} else if (token.equals(AppCmd.CMD_ADD_CW_ENTRY)) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView());
-			} else if (token.equals(AppCmd.CMD_EDIT_CWINDEX)) {
+			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY)) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView());
-			} else if (token.equals(AppCmd.CMD_REG_CLAN)) {
+			} else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
 				
 				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
 						new ClanEditView());
@@ -71,7 +76,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		this.container = container;
 
 		if ("".equals(History.getToken())) {
-			History.newItem(AppCmd.CMD_LIST_CWINDEX);
+			History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
 		} else {
 			History.fireCurrentHistoryState();
 		}
@@ -89,11 +94,21 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			}
 		});
 		
+		/// reg evt for update&save
+	    eventBus.addHandler(ClanUpdateEvt.TYPE,
+	        new ClanUpdateEvtHandler() {
+			@Override
+			public void onUpdate(ClanUpdateEvt event) {
+				doListCwEntry();
+				
+			}
+	        });  
+	    
 		/// reg evt for add 
 		eventBus.addHandler(CWIndexAddEvt.TYPE, new CWIndexAddEvtHandler() {
 			@Override
 			public void onAdd(CWIndexAddEvt event) {
-				doAddNewCWIndex();
+				doAddCwEntry();
 
 			}
 		});
@@ -126,21 +141,23 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        new CWIndexUpdateEvtHandler() {
 			@Override
 			public void onUpdate(CWIndexUpdateEvt event) {
-				doCWIndexUpdated();
+				doListCwEntry();
 				
 			}
 	        });  
 
 	}
-	/// go to reg clan 
+	/// going to reg clan 
 	private void doAddClan() {
-		History.newItem(AppCmd.CMD_REG_CLAN);
+		History.newItem(AppCmd.CMD_ADD_REGED_CLAN);
 	}
-	/// go to add 
-	private void doAddNewCWIndex() {
-		History.newItem(AppCmd.CMD_ADD_CWINDEX);
+	/// going to add 
+	private void doAddCwEntry() {
+		History.newItem(AppCmd.CMD_ADD_CW_ENTRY);
 	}
-	/// go to edit
+	
+	/*
+	/// going to edit
 	private void doEditCWIndex(String id) {
 	    History.newItem(AppCmd.CMD_EDIT_CWINDEX, false);
 	    //public CWIndexEditPresenter(CWIndexServiceAsync rpcService,HandlerManager eventBus, Display display, Long id)
@@ -148,13 +165,17 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    presenter.go(container);
 	  }
 	
-	/// cancel in edit view
+	/// saved or update has been canceled
 	private void doEditCWIndexCancelled() {
 		History.newItem(AppCmd.CMD_LIST_CWINDEX);
 	}
-
-	/// saved in edit view
-	private void doCWIndexUpdated() {
-		History.newItem(AppCmd.CMD_LIST_CWINDEX);
+	*/
+	/// saved or update has been done
+	private void doListCwEntry() {
+		History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
+	}
+	/// saved or update has been done
+	private void doListClan() {
+		History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
 	}
 }

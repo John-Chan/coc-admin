@@ -10,11 +10,15 @@ import org.coc.tools.client.RpcManager;
 import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.shared.model.CWIndex;
+import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
@@ -63,29 +67,51 @@ public class CWIndexPresenter implements Presenter {
 		HasClickHandlers getRegClanButton();
 
 		HasClickHandlers getList();
-
-		//void setData(List<List<String>> data);
-		void setData(List<CWIndexData> data);
 		
-		int getClickedRow(ClickEvent event);
+		void setCwEntryList(List<CWIndexData> data);
+		
+		int getClickedCwEntryRow(ClickEvent event);
+		
 
-		List<Integer> getSelectedRows();
+		List<Integer> getSelectedCwIndexRows();
 
+		void setRegedClanList(List<Clan> data);
+		int getSelectedRegClan();
+		HasChangeHandlers	getRegedClanBox();
+		
+		void setRegedClan(Clan clan);
+		
 		Widget asWidget();
 	}
 
 	private List<ClanWarEntryPojo> clanWarEntryPojoList;
+	private List<Clan> regedClanList;
+	private int currentClan;
 	//private final CWIndexServiceAsync rpcService;
 	//private final ClanWarEntryServiceAsync rpcService;
 	private final RpcManager rpcMgr;
 	private final HandlerManager eventBus;
 	private final Display display;
 
+
+	private List<Clan>	createClansForTest(int n){
+		ArrayList<Clan> list=new ArrayList<Clan>();
+		for(int i=0;i<n;++i){
+			Clan one=new Clan();
+			one.setClanName("clanName-"+i);
+			one.setClanTag("#YYI8J6U"+i);
+			one.setClanSymbol(Integer.toString(i+1));
+			list.add(one);
+		}
+		return list;
+	}
+	
 	public CWIndexPresenter(RpcManager rpcMgr,
 			HandlerManager eventBus, Display view) {
 		this.rpcMgr = rpcMgr;
 		this.eventBus = eventBus;
 		this.display = view;
+		this.currentClan=-1;
 	}
 
 	public List<ClanWarEntryPojo> getClanWarEntryPojoList() {
@@ -106,15 +132,23 @@ public class CWIndexPresenter implements Presenter {
 		bind();
 		container.clear();
 		container.add(display.asWidget());
-		fetchCWIndexs();
+		fetchRegedClans();
 	}
 	
 	public void sortClanWarEntryPojoList() {
-		//
+		//TODL: sort in server side
 	}
 
 	public void bind() {
 
+		display.getRegedClanBox().addChangeHandler(new ChangeHandler() {
+		      public void onChange(ChangeEvent event) {
+		    	 currentClan=display.getSelectedRegClan();
+		    	 display.setRegedClan(regedClanList.get(currentClan));
+		  		 fetchCWIndexs(regedClanList.get(currentClan));
+		      }
+		    });
+		
 		display.getAddButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new CWIndexAddEvt());
@@ -144,8 +178,26 @@ public class CWIndexPresenter implements Presenter {
 		 * EditContactEvent(id)); } } });
 		 */
 	}
-	private void fetchCWIndexs() {
-		rpcMgr.getClanWarEntryService().getList(10, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
+	private void fetchRegedClans() {
+		rpcMgr.getClanServiceAsync().getRegedClanList(10, new AsyncCallback<ArrayList<Clan>>(){
+
+
+			@Override
+			public void onSuccess(ArrayList<Clan> result) {
+				regedClanList=result;
+				
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+				Window.alert("Error fetchCWIndexs.");
+				GWT.log("Error fetchCWIndexs.", caught);
+			}
+		});
+	}
+	private void fetchCWIndexs(Clan clan) {
+		rpcMgr.getClanWarEntryService().getList(25, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
 			public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
 				clanWarEntryPojoList = result;
 				sortClanWarEntryPojoList();
@@ -165,7 +217,7 @@ public class CWIndexPresenter implements Presenter {
 					data.add(forView);
 				}
 
-				display.setData(data);
+				display.setCwEntryList(data);
 			}
 
 			public void onFailure(Throwable caught) {

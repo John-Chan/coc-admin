@@ -2,6 +2,7 @@ package org.coc.tools.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
+/// ask for create CWIndex 
 public class CWIndexAddEvt extends GwtEvent<CWIndexAddEvtHandler> {
 
 	public static Type<CWIndexAddEvtHandler> TYPE = new Type<CWIndexAddEvtHandler>();

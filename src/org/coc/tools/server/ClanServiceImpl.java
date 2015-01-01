@@ -64,4 +64,9 @@ public class ClanServiceImpl extends RemoteServiceServlet  implements ClanServic
 		return  new ArrayList<Clan>( dao.getClanByName(clanName));
 	}
 
+	@Override
+	public ArrayList<Clan> getRegedClanList(int maxResult) {
+		return  new ArrayList<Clan>( dao.getRegedClan(maxResult));
+	}
+
 }

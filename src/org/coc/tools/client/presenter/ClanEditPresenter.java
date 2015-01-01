@@ -3,6 +3,7 @@ package org.coc.tools.client.presenter;
 import org.coc.tools.client.ClanServiceAsync;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.client.event.ClanAddEvt;
+import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -80,7 +81,7 @@ public class ClanEditPresenter implements Presenter {
 		clan.setClanSymbol(display.getClanSymbol().getValue());
 		rpcService.addClan(clan.getClanTag(), clan.getClanName(), clan.getClanSymbol(), Clan.REG_STATUS.REGED, new AsyncCallback<Clan>() {
 			public void onSuccess(Clan result) {
-				eventBus.fireEvent(new ClanAddEvt());
+				eventBus.fireEvent(new ClanUpdateEvt(result));
 			}
 
 			public void onFailure(Throwable caught) {
