@@ -194,7 +194,39 @@ public class CWIndexPresenter implements Presenter {
 			}
 		});
 	}
+	//
 	private void fetchCWIndexs(Clan clan) {
+		rpcMgr.getClanWarEntryService().getListByClanTag(clan.getClanTag(), 25, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
+			public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
+				clanWarEntryPojoList = result;
+				sortClanWarEntryPojoList();
+				List<CWIndexData> data=new ArrayList<CWIndexData>();
+				
+
+				for (int i = 0; i < result.size(); ++i) {
+
+					CWIndex one=clanWarEntryPojoList.get(i).getWarIndex();
+					CWIndexData forView=new CWIndexData();
+					forView.setData(one);
+					/// TODO: TIMEZEON PROBLEN
+					if(new Date().after(one.getEndDate())){
+						forView.setCanBookBase(false);
+					}
+					
+					data.add(forView);
+				}
+
+				display.setCwEntryList(data);
+			}
+
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetchCWIndexs.");
+				GWT.log("Error fetchCWIndexs.", caught);
+			}
+		});
+	}
+	
+	private void fetchCWIndexs() {
 		rpcMgr.getClanWarEntryService().getList(25, new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
 			public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
 				clanWarEntryPojoList = result;

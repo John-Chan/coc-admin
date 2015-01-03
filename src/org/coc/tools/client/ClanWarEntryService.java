@@ -22,7 +22,7 @@ public interface ClanWarEntryService  extends RemoteService{
 	ClanWarEntryPojo	removeByCWIndex(CWIndex value);
 	ClanWarEntryPojo	getByWarId(Long warId);
 	ArrayList<ClanWarEntryPojo> getList(int maxResult);
-	ArrayList<ClanWarEntryPojo> getListByCWIndex(CWIndex value,int maxResult);
+	ArrayList<ClanWarEntryPojo> getListByClanTag(String tag,int maxResult);
 	
 	
 }

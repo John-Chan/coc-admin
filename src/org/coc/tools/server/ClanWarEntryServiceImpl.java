@@ -1,6 +1,7 @@
 package org.coc.tools.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.client.ClanWarEntryService;
 import org.coc.tools.server.dao.*;
@@ -128,15 +129,23 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 		return result;
 	}
 
-	@Override
-	public ArrayList<ClanWarEntryPojo> getListByCWIndex(CWIndex value,
-			int maxResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public ClanWarEntryPojo getByWarId(Long warId) {
 		return loadWithoutTxn(warId);
+	}
+	@Override
+	public ArrayList<ClanWarEntryPojo> getListByClanTag(String tag,
+			int maxResult) {
+
+		ArrayList<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
+		List<CWIndex> indexs=cwIndexDao.getListByHomeClanTag(tag, maxResult);
+		if(indexs != null){
+			for(CWIndex one:indexs){
+				result.add(loadWithoutTxn(one)); 
+			}
+		}
+		return result;
 	}
 
 }

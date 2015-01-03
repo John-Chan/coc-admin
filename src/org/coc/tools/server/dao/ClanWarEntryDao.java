@@ -237,6 +237,12 @@ public class ClanWarEntryDao   extends ObjectifyDao<ClanWarEntry> {
 		return entry;
 	}
 	
-	
+	/*
+	List<ClanWarEntry> getListByClanTag(String tag,int maxResult){
+		ClanWarEntry found=null;
+		found= this.getOfy().load().type(ClanWarEntry.class).filter("clanTag", tag).first().now();
+        return found;
+	}
+	*/
 	
 }

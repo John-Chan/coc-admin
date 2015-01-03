@@ -13,7 +13,7 @@ public interface ClanWarEntryServiceAsync {
 	void	remove(ClanWarEntryPojo value,AsyncCallback<ClanWarEntryPojo> callback);
 	void	removeByCWIndex(CWIndex value,AsyncCallback<ClanWarEntryPojo> callback);
 	void	getByWarId(Long warId,AsyncCallback<ClanWarEntryPojo> callback);
-	void getList(int maxResult,AsyncCallback<ArrayList<ClanWarEntryPojo>> callback);
-	void getListByCWIndex(CWIndex value,int maxResult,AsyncCallback<ArrayList<ClanWarEntryPojo>> callback);
+	void 	getList(int maxResult,AsyncCallback<ArrayList<ClanWarEntryPojo>> callback);
+	void 	getListByClanTag(String tag,int maxResult,AsyncCallback<ArrayList<ClanWarEntryPojo>> callback);
 
 }

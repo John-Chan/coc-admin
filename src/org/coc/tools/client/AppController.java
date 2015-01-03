@@ -36,6 +36,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		bind();
 	}
 
+	/// URL driven
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 

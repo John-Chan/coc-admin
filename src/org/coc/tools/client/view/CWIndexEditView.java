@@ -2,6 +2,7 @@ package org.coc.tools.client.view;
 
 import java.util.Date;
 
+import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.shared.FieldVerifier;
 
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -31,6 +33,11 @@ public class CWIndexEditView extends Composite implements
 	private final TextBox enemyClanTag;
 	private final TextBox enemyClanName;
 	private final TextBox enemyClanSymbol;
+
+	private final Label homeClanTag;
+	private final Label homeClanName;
+	private final HTML homeClanSymbolImg;
+	
 	private final TextBox scope;
 	private final FlexTable detailsTable;
 	private final Button saveButton;
@@ -56,6 +63,9 @@ public class CWIndexEditView extends Composite implements
 		prepareDate = new DatePicker();
 		prepareDate.setValue(new Date(), false);
 		
+		homeClanTag= new Label();
+		homeClanName= new Label();
+		homeClanSymbolImg=new HTML();
 
 		enemyClanTag = new TextBox();
 		enemyClanName = new TextBox();
@@ -63,7 +73,7 @@ public class CWIndexEditView extends Composite implements
 		scope = new TextBox();
 		// scope= new ListBox();
 		initScopeList();
-		initDetailsTable();
+		initLayout();
 		contentDetailsPanel.add(detailsTable);
 
 		HorizontalPanel menuPanel = new HorizontalPanel();
@@ -133,18 +143,49 @@ public class CWIndexEditView extends Composite implements
 		 */
 	}
 
-	private void initDetailsTable() {
+	private void initLayout() {
+		int rowIndex=0;
+		int colIndex=0;
 		
-		detailsTable.setWidget(0, 0, new Label(ViewConstants.ValueNames.WAR_PLAYER_COUNT));
-		detailsTable.setWidget(0, 1, scope);
-		detailsTable.setWidget(1, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_TAG));
-		detailsTable.setWidget(1, 1, enemyClanTag);
-		detailsTable.setWidget(2, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_NAME));
-		detailsTable.setWidget(2, 1, enemyClanName);
-		detailsTable.setWidget(3, 0, new Label(ViewConstants.ValueNames.ENEMY_CLAN_SYMBOL));
-		detailsTable.setWidget(3, 1, enemyClanSymbol);
-		detailsTable.setWidget(4, 0, new Label(ViewConstants.ValueNames.WAR_PREPARE_DATE));
-		detailsTable.setWidget(4, 1, prepareDate);
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.HOME_CLAN_TAG));
+		detailsTable.setWidget(rowIndex, colIndex++, homeClanTag);
+		colIndex=0;
+		rowIndex++;
+		
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.HOME_CLAN_NAME));
+		detailsTable.setWidget(rowIndex, colIndex++, homeClanName);
+		colIndex=0;
+		rowIndex++;
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.HOME_CLAN_SYMBOL));
+		detailsTable.setWidget(rowIndex, colIndex++, homeClanSymbolImg);
+		colIndex=0;
+		rowIndex++;
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.WAR_PLAYER_COUNT));
+		detailsTable.setWidget(rowIndex, colIndex++, scope);
+		colIndex=0;
+		rowIndex++;
+		
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.ENEMY_CLAN_TAG));
+		detailsTable.setWidget(rowIndex, colIndex++, enemyClanTag);
+		colIndex=0;
+		rowIndex++;
+		
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.ENEMY_CLAN_NAME));
+		detailsTable.setWidget(rowIndex, colIndex++, enemyClanName);
+		colIndex=0;
+		rowIndex++;
+		
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.ENEMY_CLAN_SYMBOL));
+		detailsTable.setWidget(rowIndex, colIndex++, enemyClanSymbol);
+		colIndex=0;
+		rowIndex++;
+		
+		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.WAR_PREPARE_DATE));
+		detailsTable.setWidget(rowIndex, colIndex++, prepareDate);
+		colIndex=0;
+		rowIndex++;
+		
 		// prepareDate.setFocus(true);
 	}
 
@@ -182,5 +223,14 @@ public class CWIndexEditView extends Composite implements
 	public HasValue<String> getEnemyClanSymbol() {
 		return enemyClanSymbol;
 	}
+
+	@Override
+	public void setHomeClan(String tag, String name, String symbol) {
+		homeClanTag.setText(tag);
+		homeClanName.setText(name);
+		homeClanSymbolImg.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(symbol), "32px", "32px"));
+		
+	}
+
 
 }

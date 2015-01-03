@@ -6,6 +6,7 @@ import org.coc.tools.client.CWIndexServiceAsync;
 import org.coc.tools.client.ClanWarEntryServiceAsync;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.shared.model.CWIndex;
+import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 
 import com.google.gwt.core.shared.GWT;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
+@SuppressWarnings("unused")
 public class CWIndexEditPresenter implements Presenter {
 
 	public interface Display {
@@ -36,6 +38,15 @@ public class CWIndexEditPresenter implements Presenter {
 		HasValue<String> getEnemyClanName();
 
 		HasValue<String> getEnemyClanSymbol();
+		
+		/*
+		HasValue<String> getHomeClanTag();
+
+		HasValue<String> getHomeClanName();
+
+		HasValue<String> getHomeClanSymbol();
+		*/
+		void		setHomeClan(String tag,String name,String symbol);
 
 		//HasValue<String> getHomeTeam();
 
@@ -44,17 +55,20 @@ public class CWIndexEditPresenter implements Presenter {
 		Widget asWidget();
 	}
 
+	private Clan homeClan;
 	private ClanWarEntryPojo clanWarEntryPojo;
 	private final ClanWarEntryServiceAsync rpcService;
 	private final HandlerManager eventBus;
 	private final Display display;
 
 	public CWIndexEditPresenter(ClanWarEntryServiceAsync rpcService,
-			HandlerManager eventBus, Display display) {
+			HandlerManager eventBus, Display display,Clan homeClan) {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
 		this.clanWarEntryPojo = new ClanWarEntryPojo();
 		this.display = display;
+		this.homeClan=homeClan;
+		this.display.setHomeClan(homeClan.getClanTag(), homeClan.getClanName(), homeClan.getClanSymbol());
 		bind();
 	}
 
@@ -69,6 +83,7 @@ public class CWIndexEditPresenter implements Presenter {
 			public void onSuccess(ClanWarEntryPojo result) {
 				clanWarEntryPojo = result;
 				CWIndex cwIndex=result.getWarIndex();
+				homeClan=cwIndex.getHomeClan();
 				//CWIndexEditPresenter.this.display.getDateFmtString().setValue(DateTimeHelper.SIMPLE_DATE_TIME_FMT_STRING);
 				CWIndexEditPresenter.this.display.getPrepareDate().setValue(cwIndex.getPrepareDate() );
 				
@@ -82,6 +97,8 @@ public class CWIndexEditPresenter implements Presenter {
 				
 				CWIndexEditPresenter.this.display.getScope().setValue(
 						Integer.toString(cwIndex.getScope()));
+				CWIndexEditPresenter.this.display.setHomeClan(homeClan.getClanTag(), homeClan.getClanName(), homeClan.getClanSymbol());
+				
 			}
 
 			public void onFailure(Throwable caught) {
@@ -122,10 +139,12 @@ public class CWIndexEditPresenter implements Presenter {
 		cwIndex.getEnemyClan().setClanTag(display.getEnemyClanTag().getValue());
 		cwIndex.getEnemyClan().setClanName(display.getEnemyClanName().getValue());
 		cwIndex.getEnemyClan().setClanSymbol(display.getEnemyClanSymbol().getValue());
+		
+		cwIndex.setHomeClan(homeClan);
 		///
-		cwIndex.getHomeClan().setClanTag("#88888888");
-		cwIndex.getHomeClan().setClanName("nakama-ck");
-		cwIndex.getHomeClan().setClanSymbol("40");
+		//cwIndex.getHomeClan().setClanTag("#88888888");
+		//cwIndex.getHomeClan().setClanName("nakama-ck");
+		//cwIndex.getHomeClan().setClanSymbol("40");
 		///
 		cwIndex.setScope(Integer.parseInt(display.getScope().getValue()) );
 
