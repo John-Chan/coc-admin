@@ -8,6 +8,8 @@ import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.ClanAddEvtHandler;
 import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.client.event.ClanUpdateEvtHandler;
+import org.coc.tools.client.event.HomeClanSwitchEvt;
+import org.coc.tools.client.event.HomeClanSwitchEvtHandler;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
@@ -15,6 +17,7 @@ import org.coc.tools.client.presenter.Presenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
 import org.coc.tools.client.view.ClanEditView;
+import org.coc.tools.shared.model.Clan;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -31,6 +34,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	
 	private HasWidgets container;
 
+	private Clan	homeClan=null;
+	
 	public AppController(HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		bind();
@@ -51,13 +56,15 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			if (token.equals(AppCmd.CMD_LIST_CW_ENTRY)) {
 				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
-			} else if (token.equals(AppCmd.CMD_ADD_CW_ENTRY)) {
+			} 
+			else if (token.equals(AppCmd.CMD_ADD_CW_ENTRY) && homeClan!=null) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
-						new CWIndexEditView());
-			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY)) {
+						new CWIndexEditView(),homeClan);
+			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY) && homeClan!=null) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
-						new CWIndexEditView());
-			} else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
+						new CWIndexEditView(),homeClan);
+			}
+			 else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
 				
 				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
 						new ClanEditView());
@@ -86,6 +93,15 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 
+		eventBus.addHandler(HomeClanSwitchEvt.TYPE, new HomeClanSwitchEvtHandler() {
+			@Override
+			public void onSwitch(HomeClanSwitchEvt event) {
+				//homeClan
+				AppController.this.homeClan=event.getClan();
+				doListCwEntry();
+			}
+		});
+		
 		/// reg evt for reg clan ClanAddEvt  extends GwtEvent<ClanAddEvtHandler>
 		eventBus.addHandler(ClanAddEvt.TYPE, new ClanAddEvtHandler() {
 			@Override

@@ -52,8 +52,8 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		////
 		headerTable=new FlexTable();
 		regClanButton=new Button("Create");
-		homeClanName=new Label("ClanName");
-		homeClanTag=new Label("ClanTag");
+		homeClanName=new Label("N/A");
+		homeClanTag=new Label("N/A");
 		homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
 		homeClanBox = new ListBox(false);
 
