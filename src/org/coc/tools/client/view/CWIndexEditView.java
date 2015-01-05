@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
+import org.coc.tools.client.widget.ClanInfoPanel;
 import org.coc.tools.shared.FieldVerifier;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -33,6 +34,7 @@ public class CWIndexEditView extends Composite implements
 	private final TextBox enemyClanTag;
 	private final TextBox enemyClanName;
 	private final TextBox enemyClanSymbol;
+	private final ClanInfoPanel	homeClanInfoPanel;
 
 	private final Label homeClanTag;
 	private final Label homeClanName;
@@ -44,8 +46,10 @@ public class CWIndexEditView extends Composite implements
 	private final Button cancelButton;
 
 	public CWIndexEditView() {
+		homeClanInfoPanel= new ClanInfoPanel();
+		
 		DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
-		contentDetailsDecorator.setWidth("18em");
+		contentDetailsDecorator.setWidth("80%");
 		initWidget(contentDetailsDecorator);
 
 		VerticalPanel contentDetailsPanel = new VerticalPanel();
@@ -147,6 +151,12 @@ public class CWIndexEditView extends Composite implements
 		int rowIndex=0;
 		int colIndex=0;
 		
+		//////
+		detailsTable.setWidget(rowIndex, colIndex++, new Label("Home Clan info"));
+		detailsTable.setWidget(rowIndex, colIndex++, homeClanInfoPanel.getWidget());
+		colIndex=0;
+		rowIndex++;
+		//////
 		detailsTable.setWidget(rowIndex, colIndex++, new Label(ViewConstants.ValueNames.HOME_CLAN_TAG));
 		detailsTable.setWidget(rowIndex, colIndex++, homeClanTag);
 		colIndex=0;
@@ -229,7 +239,7 @@ public class CWIndexEditView extends Composite implements
 		homeClanTag.setText(tag);
 		homeClanName.setText(name);
 		homeClanSymbolImg.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(symbol), "32px", "32px"));
-		
+		homeClanInfoPanel.update(tag, name, symbol);
 	}
 
 

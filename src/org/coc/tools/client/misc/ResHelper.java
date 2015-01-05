@@ -8,7 +8,15 @@ public class ResHelper {
 		//// http://127.0.0.1:8888/res/img/clan-symbols/Symbol_1.png
 		return GWT.getHostPageBaseURL()+"res/img/clan-symbols/Symbol_"+number+".png";
 	}
-	
+	public static String getClanSymbolIco32AbsUrl(String number){
+		return GWT.getHostPageBaseURL()+"res/img/clan-ico-32/Symbol_"+number+".ico";
+	}
+	public static String getClanSymbolIco48AbsUrl(String number){
+		return GWT.getHostPageBaseURL()+"res/img/clan-ico-48/Symbol_"+number+".ico";
+	}
+	public static String getClanSymbolIco64AbsUrl(String number){
+		return GWT.getHostPageBaseURL()+"res/img/clan-ico-64/Symbol_"+number+".ico";
+	}
 	//default.png
 	public static String getDefClanSymbolAbsUrl(){
 		//// http://127.0.0.1:8888/res/img/clan-symbols/Symbol_1.png

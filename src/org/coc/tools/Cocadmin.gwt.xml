@@ -22,6 +22,15 @@
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.coc.tools.client.Cocadmin'/>
 
+  <inherits name='org.gwt.advanced.Grid'/>
+  <!-- 
+  <stylesheet src="advanced/themes/default/theme.css"/>
+  <stylesheet src="advanced/themes/classic/theme.css"/>
+  <stylesheet src="advanced/themes/ascetic/theme.css"/>
+  <stylesheet src="advanced/themes/gray/theme.css"/>
+  -->
+  <stylesheet src="advanced/themes/classic/theme.css"/>
+  
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>

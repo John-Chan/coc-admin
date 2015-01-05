@@ -11,7 +11,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import org.coc.tools.client.misc.ModelFactory;
+import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.ClanEditPresenter;
+import org.gwt.advanced.client.datamodel.ComboBoxDataModel;
+import org.gwt.advanced.client.datamodel.IconItem;
+import org.gwt.advanced.client.datamodel.ListDataModel;
+import org.gwt.advanced.client.ui.widget.ComboBox;
 
 public class ClanEditView extends Composite implements
 		ClanEditPresenter.Display {
@@ -60,6 +66,19 @@ public class ClanEditView extends Composite implements
 		contentDetailsPanel.add(menuPanel);
 		contentDetailsDecorator.add(contentDetailsPanel);
 
+		////////////////////////////////////////
+		ComboBox<ComboBoxDataModel> comboBox = new ComboBox<ComboBoxDataModel>();
+		comboBox.setWidth("64pix%");
+		//ComboBoxDataModel model = DemoModelFactory.createsCountriesModel();
+		ComboBoxDataModel model = ModelFactory.createClanSymbolModel(ModelFactory.CLAN_SYMBOL_IMG_SZIE.SZ_32_PIX, null);
+		model.setSelectedIndex(0);
+		comboBox.setModel(model);
+		comboBox.setCustomTextAllowed(true);
+		comboBox.setLazyRenderingEnabled(false);
+		//comboBox.setLazyRenderingEnabled(true);
+		//comboBox.set
+		menuPanel.add(comboBox);
+		////////////////////////////////////////////////////////////////////////
 		initInputComponents();
 		initHanlder();
 	}
