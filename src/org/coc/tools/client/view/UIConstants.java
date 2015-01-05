@@ -9,4 +9,5 @@ public class UIConstants {
 		public static final String MAX_CLAN_NAME_WIDTH="64px";
 		public static final String MAX_CLAN_TAG_WIDTH="32px";
 	}
+	
 }

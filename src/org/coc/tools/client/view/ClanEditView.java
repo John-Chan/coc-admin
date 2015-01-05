@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import org.coc.tools.client.misc.ModelFactory;
 import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.ClanEditPresenter;
+import org.coc.tools.client.widget.ClanEditPanel;
 import org.gwt.advanced.client.datamodel.ComboBoxDataModel;
 import org.gwt.advanced.client.datamodel.IconItem;
 import org.gwt.advanced.client.datamodel.ListDataModel;
@@ -25,85 +26,31 @@ public class ClanEditView extends Composite implements
 	private static final String SAVE_BTN_STR = "Save";
 	private static final String CANCEL_BTN_STR = "Cancel";
 
-	private final TextBox clanTag;
-	private final TextBox clanName;
-	private final TextBox clanSymbol;
-
 	private final Button saveButton;
 	private final Button cancelButton;
 
-	private final FlexTable detailsTable;
+	private final ClanEditPanel clanEditPanel;
 
 	public ClanEditView() {
+
+		clanEditPanel=new ClanEditPanel();
+		saveButton = new Button(SAVE_BTN_STR);
+		cancelButton = new Button(CANCEL_BTN_STR);
+		
 		DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
 		contentDetailsDecorator.setWidth("80%");
 		initWidget(contentDetailsDecorator);
-
 		VerticalPanel contentDetailsPanel = new VerticalPanel();
-		contentDetailsPanel.setWidth("100%");
-
-		// Create the contacts list
-		//
-		detailsTable = new FlexTable();
-		detailsTable.setCellSpacing(0);
-		detailsTable.setWidth("100%");
-		// TODO :detailsTable.addStyleName("contacts-ListContainer");
-		// TODO :detailsTable.getColumnFormatter().addStyleName(1,
-		// "add-contact-input");
-
-		clanTag = new TextBox();
-		clanName = new TextBox();
-		clanSymbol = new TextBox();
-
-		initDetailsTable();
-		contentDetailsPanel.add(detailsTable);
+		contentDetailsPanel.add(clanEditPanel.getWidget());
 
 		HorizontalPanel menuPanel = new HorizontalPanel();
-		saveButton = new Button(SAVE_BTN_STR);
-		cancelButton = new Button(CANCEL_BTN_STR);
 		menuPanel.add(saveButton);
 		menuPanel.add(cancelButton);
 		contentDetailsPanel.add(menuPanel);
 		contentDetailsDecorator.add(contentDetailsPanel);
 
-		////////////////////////////////////////
-		ComboBox<ComboBoxDataModel> comboBox = new ComboBox<ComboBoxDataModel>();
-		comboBox.setWidth("64pix%");
-		//ComboBoxDataModel model = DemoModelFactory.createsCountriesModel();
-		ComboBoxDataModel model = ModelFactory.createClanSymbolModel(ModelFactory.CLAN_SYMBOL_IMG_SZIE.SZ_32_PIX, null);
-		model.setSelectedIndex(0);
-		comboBox.setModel(model);
-		comboBox.setCustomTextAllowed(true);
-		comboBox.setLazyRenderingEnabled(false);
-		//comboBox.setLazyRenderingEnabled(true);
-		//comboBox.set
-		menuPanel.add(comboBox);
-		////////////////////////////////////////////////////////////////////////
-		initInputComponents();
-		initHanlder();
 	}
 
-	private void initDetailsTable() {
-
-		detailsTable.setWidget(0, 0, new Label(ViewConstants.ValueNames.CLAN_TAG));
-		detailsTable.setWidget(0, 1, clanTag);
-		detailsTable.setWidget(1, 0, new Label(ViewConstants.ValueNames.CLAN_NAME));
-		detailsTable.setWidget(1, 1, clanName);
-		detailsTable.setWidget(2, 0, new Label(ViewConstants.ValueNames.CLAN_SYMBOL));
-		detailsTable.setWidget(2, 1, clanSymbol);
-		// prepareDate.setFocus(true);
-	}
-
-	private void setupLayout() {
-
-	}
-
-	private void initInputComponents() {
-
-		clanSymbol.setMaxLength(2);
-		clanName.setMaxLength(32);
-		clanTag.setMaxLength(12);
-	}
 
 	private void initHanlder() {
 
@@ -120,17 +67,31 @@ public class ClanEditView extends Composite implements
 	}
 
 	@Override
-	public HasValue<String> getClanTag() {
-		return clanTag;
+	public String getClanTag() {
+		return clanEditPanel.getClanTag();
 	}
 	@Override
-	public HasValue<String> getClanName() {
-		return clanName;
+	public String getClanName() {
+		return clanEditPanel.getClanName();
 	}
-
 	@Override
-	public HasValue<String> getClanSymbol() {
-		return clanSymbol;
+	public int getClanSymbol() {
+		return clanEditPanel.getClanSymbol();
+	}
+	@Override
+	public void setClanTag(String val) {
+		clanEditPanel.setClanTag(val);
+		
+	}
+	@Override
+	public void setClanName(String val) {
+		clanEditPanel.setClanName(val);
+		
+	}
+	@Override
+	public void setClanSymbol(int val) {
+		clanEditPanel.setClanSymbol(val);
+		
 	}
 
 }

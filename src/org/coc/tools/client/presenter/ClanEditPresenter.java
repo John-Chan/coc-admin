@@ -27,11 +27,17 @@ public class ClanEditPresenter implements Presenter {
 
 		HasClickHandlers getCancelButton();
 
-		HasValue<String> getClanTag();
+		String getClanTag();
 
-		HasValue<String> getClanName();
+		String getClanName();
 
-		HasValue<String> getClanSymbol();
+		int getClanSymbol();
+
+		void setClanTag(String val);
+
+		void setClanName(String val);
+
+		void setClanSymbol(int val);
 
 		Widget asWidget();
 	}
@@ -76,9 +82,9 @@ public class ClanEditPresenter implements Presenter {
 	}
 	private void doSave() {
 
-		clan.setClanTag(display.getClanTag().getValue());
-		clan.setClanName(display.getClanName().getValue());
-		clan.setClanSymbol(display.getClanSymbol().getValue());
+		clan.setClanTag(display.getClanTag());
+		clan.setClanName(display.getClanName());
+		clan.setClanSymbol(Integer.toString(display.getClanSymbol()));
 		rpcService.addClan(clan.getClanTag(), clan.getClanName(), clan.getClanSymbol(), Clan.REG_STATUS.REGED, new AsyncCallback<Clan>() {
 			public void onSuccess(Clan result) {
 				eventBus.fireEvent(new ClanUpdateEvt(result));
