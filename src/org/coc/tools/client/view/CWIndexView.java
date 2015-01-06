@@ -78,7 +78,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		headerTable.setWidth("100%");
 		
 		GridHelper.VerticalAlign.alignAllToTop(headerTable);
-		GridHelper.setColWidth(headerTable, new String[]{"150px","80%","64px","2px","32px"});
+		GridHelper.setColWidth(headerTable, new String[]{"250px","80%","64px","2px","32px"});
 		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
 		regClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
 		/*
