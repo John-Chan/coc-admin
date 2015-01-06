@@ -4,21 +4,11 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import org.coc.tools.client.misc.ModelFactory;
-import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.ClanEditPresenter;
 import org.coc.tools.client.widget.ClanEditPanel;
-import org.gwt.advanced.client.datamodel.ComboBoxDataModel;
-import org.gwt.advanced.client.datamodel.IconItem;
-import org.gwt.advanced.client.datamodel.ListDataModel;
-import org.gwt.advanced.client.ui.widget.ComboBox;
 
 public class ClanEditView extends Composite implements
 		ClanEditPresenter.Display {
@@ -52,10 +42,6 @@ public class ClanEditView extends Composite implements
 	}
 
 
-	private void initHanlder() {
-
-	}
-
 	@Override
 	public HasClickHandlers getSaveButton() {
 		return saveButton;
@@ -75,7 +61,7 @@ public class ClanEditView extends Composite implements
 		return clanEditPanel.getClanName();
 	}
 	@Override
-	public int getClanSymbol() {
+	public String getClanSymbol() {
 		return clanEditPanel.getClanSymbol();
 	}
 	@Override
@@ -89,7 +75,7 @@ public class ClanEditView extends Composite implements
 		
 	}
 	@Override
-	public void setClanSymbol(int val) {
+	public void setClanSymbol(String val) {
 		clanEditPanel.setClanSymbol(val);
 		
 	}

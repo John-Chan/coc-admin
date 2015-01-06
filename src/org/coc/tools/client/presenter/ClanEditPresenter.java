@@ -1,13 +1,8 @@
 package org.coc.tools.client.presenter;
 
 import org.coc.tools.client.ClanServiceAsync;
-import org.coc.tools.client.event.CWIndexUpdateEvt;
-import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.ClanUpdateEvt;
-import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
-import org.coc.tools.shared.model.ClanWarEntryPojo;
-
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,7 +10,6 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,13 +25,13 @@ public class ClanEditPresenter implements Presenter {
 
 		String getClanName();
 
-		int getClanSymbol();
+		String getClanSymbol();
 
 		void setClanTag(String val);
 
 		void setClanName(String val);
 
-		void setClanSymbol(int val);
+		void setClanSymbol(String val);
 
 		Widget asWidget();
 	}
@@ -84,7 +78,7 @@ public class ClanEditPresenter implements Presenter {
 
 		clan.setClanTag(display.getClanTag());
 		clan.setClanName(display.getClanName());
-		clan.setClanSymbol(Integer.toString(display.getClanSymbol()));
+		clan.setClanSymbol(display.getClanSymbol());
 		rpcService.addClan(clan.getClanTag(), clan.getClanName(), clan.getClanSymbol(), Clan.REG_STATUS.REGED, new AsyncCallback<Clan>() {
 			public void onSuccess(Clan result) {
 				eventBus.fireEvent(new ClanUpdateEvt(result));

@@ -1,10 +1,10 @@
 package org.coc.tools.client.widget;
 
+import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.view.UIConstants;
 import org.coc.tools.shared.model.Clan;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -57,6 +57,18 @@ public class ClanInfoPanel {
 		}
 	}
 	private void	initLayout(){
+		
+		GridHelper pusher=new GridHelper(container);
+		pusher.pushBack(imgClanSymbol).pushBack(new HTML(""))
+		.pushBack(lableClanName).pushBack(new HTML(""))
+		.pushBack(lableClanTag);
+
+		container.setWidth("100%");
+		
+		GridHelper.VerticalAlign.alignAllToTop(container);
+		GridHelper.setColWidth(container, new String[]{UIConstants.Px.IMG_WIDTH_32,"2px",UIConstants.Px.MAX_CLAN_NAME_WIDTH,"2px",UIConstants.Px.MAX_CLAN_TAG_WIDTH});
+
+		holder.add(container);
 		///////////////////////////////////////////////////
 		/// layout 1 img;2 padding;3 
 		///  img
@@ -66,6 +78,7 @@ public class ClanInfoPanel {
 		///
 		///////////////////////////////////////////////////
 
+		/*
 		int rowIndex=0;
 		container.setWidget(rowIndex, 0, imgClanSymbol);
 		container.setWidget(rowIndex, 1, lableClanName);
@@ -86,6 +99,7 @@ public class ClanInfoPanel {
 		}
 		
 		holder.add(container);
+		*/
 		
 	}
 }

@@ -14,6 +14,7 @@ import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
 import org.coc.tools.client.presenter.Presenter;
+import org.coc.tools.client.presenter.UiTestPresenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
 import org.coc.tools.client.view.ClanEditView;
@@ -63,15 +64,20 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY) && homeClan!=null) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView(),homeClan);
-			}
-			 else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
+			}else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
 				
 				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
 						new ClanEditView());
 				//presenter = new CWIndexPresenter(rpcMgr, eventBus,
 				//		new CWIndexView());
+			}else if (token.equals(AppCmd.CMD_DEBUG_UI)) {
+				
+				presenter = new UiTestPresenter();
+				//presenter = new CWIndexPresenter(rpcMgr, eventBus,
+				//		new CWIndexView());
 			}
 
+			//
 			if (presenter != null) {
 				presenter.go(container);
 			}

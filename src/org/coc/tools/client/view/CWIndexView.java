@@ -20,9 +20,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
+import org.coc.tools.client.widget.ClanInfoPanel;
 import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
 
@@ -39,25 +41,23 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 	private final FlexTable headerTable;
 	private final Button regClanButton;
-	private Label homeClanName;
-	private Label homeClanTag;
-	private HTML homeClanSymbol;
+	private final ClanInfoPanel homeClanPanel;
+	//private Label homeClanName;
+	//private Label homeClanTag;
+	//private HTML homeClanSymbol;
 	private ListBox homeClanBox;
 
 	//private	List<Clan>	homeClanList;
 	
 	public CWIndexView() {
 
-		//homeClanList=new ArrayList<>();
-		////
 		headerTable=new FlexTable();
 		regClanButton=new Button("Create");
-		homeClanName=new Label("N/A");
-		homeClanTag=new Label("N/A");
-		homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
+		homeClanPanel=new ClanInfoPanel();
+		//homeClanName=new Label("N/A");
+		//homeClanTag=new Label("N/A");
+		//homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
 		homeClanBox = new ListBox(false);
-
-		////
 
 		addButton = new Button("Add");
 		deleteButton = new Button("Delete");
@@ -71,46 +71,58 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 	private void initHearderBar(){
 
-		headerTable.setWidth("100%");
-		headerTable.getCellFormatter().setWidth(0, 0, "5%");
-		headerTable.getCellFormatter().setWidth(0, 1, "15%");
-		headerTable.getCellFormatter().setWidth(0, 2, "15%");
-		//headerTable.getCellFormatter().setWidth(0, 3, "55%");
-		headerTable.getCellFormatter().setWidth(0, 4, "10%");
-		headerTable.getCellFormatter().setWidth(0, 5, "5%");
-		
-		for(int i=0;i<5;++i){
+		GridHelper pusher=new GridHelper(headerTable);
+		pusher.pushBack(homeClanPanel.getWidget()).pushBack(new HTML("")).pushBack(homeClanBox).pushBack(new HTML("")).pushBack(regClanButton);
 
-			headerTable.getFlexCellFormatter().setVerticalAlignment(0, i,
-					DockPanel.ALIGN_TOP);
-			/*
-			headerTable.getFlexCellFormatter().setVerticalAlignment(0, 1,
-					DockPanel.ALIGN_TOP);
-			headerTable.getFlexCellFormatter().setVerticalAlignment(0, 2,
-					DockPanel.ALIGN_TOP);
-			*/
-		}
-		//headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
-		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 4, DockPanel.ALIGN_RIGHT);
-		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 5, DockPanel.ALIGN_RIGHT);
+
+		headerTable.setWidth("100%");
 		
-		/*homeClanName.setHeight("100%");
-		homeClanTag.setHeight("100%");
-		homeClanList.setHeight("100%");
-		createClanButton.setHeight("100%");*/
-		homeClanName.setHeight(MENU_BAR_ELEM_HEIGHT);
-		homeClanTag.setHeight(MENU_BAR_ELEM_HEIGHT);
+		GridHelper.VerticalAlign.alignAllToTop(headerTable);
+		GridHelper.setColWidth(headerTable, new String[]{"150px","80%","64px","2px","32px"});
 		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
 		regClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
-		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
-		
-		
+		/*
 		headerTable.setWidget(0, 1, homeClanName);
 		headerTable.setWidget(0, 0, homeClanSymbol);
 		headerTable.setWidget(0, 2, homeClanTag);
 		//headerTable.setWidget(0, 3, bull);
 		headerTable.setWidget(0, 4, homeClanBox);
 		headerTable.setWidget(0, 5, regClanButton);
+		
+		headerTable.setWidth("100%");
+		headerTable.getCellFormatter().setWidth(0, 0, "5%");
+		headerTable.getCellFormatter().setWidth(0, 1, "15%");
+		headerTable.getCellFormatter().setWidth(0, 2, "15%");
+		//headerTable.getCellFormatter().setWidth(0, 3, "55%");
+		headerTable.getCellFormatter().setWidth(0, 4, "10%");
+		headerTable.getCellFormatter().setWidth(0, 5, "5%");*/
+		
+		/*
+		for(int i=0;i<5;++i){
+
+			headerTable.getFlexCellFormatter().setVerticalAlignment(0, i,
+					DockPanel.ALIGN_TOP);
+		}
+		//headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
+		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 4, DockPanel.ALIGN_RIGHT);
+		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 5, DockPanel.ALIGN_RIGHT);
+		*/
+		/*homeClanName.setHeight("100%");
+		homeClanTag.setHeight("100%");
+		homeClanList.setHeight("100%");
+		createClanButton.setHeight("100%");*/
+		//homeClanName.setHeight(MENU_BAR_ELEM_HEIGHT);
+		//homeClanTag.setHeight(MENU_BAR_ELEM_HEIGHT);
+		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
+		
+		
+		
+		//headerTable.setWidget(0, 1, homeClanName);
+		//headerTable.setWidget(0, 0, homeClanSymbol);
+		//headerTable.setWidget(0, 2, homeClanTag);
+		///headerTable.setWidget(0, 3, bull);
+		//headerTable.setWidget(0, 4, homeClanBox);
+		//headerTable.setWidget(0, 5, regClanButton);
 		
 		this.setHeaderSmall(headerTable);
 		//this.setHeader(headerTable);//
@@ -287,9 +299,10 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	@Override
 	public void setRegedClan(Clan clan) {
 
-		homeClanName.setText(clan.getClanName());
-		homeClanTag.setText("Tag : "+clan.getClanTag());
-		homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(clan.getClanSymbol()), "32px", "32px"));
+		homeClanPanel.update(clan);
+		//homeClanName.setText(clan.getClanName());
+		//homeClanTag.setText("Tag : "+clan.getClanTag());
+		//homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(clan.getClanSymbol()), "32px", "32px"));
 		
 	}
 
