@@ -31,15 +31,18 @@ public class Clan extends ObjectifyEntity implements Serializable{
 		
 	}
 	public Clan(String	clanTag,String	clanName,String	clanSymbol){
-		this.clanTag=clanTag;
-		this.clanName=clanName;
-		this.clanSymbol=clanSymbol;
+		this.setClanTag(clanTag);
+		this.setClanName(clanName);
+		this.setClanSymbol(clanSymbol);
+		//this.clanTag=clanTag;
+		//this.clanName=clanName;
+		//this.clanSymbol=clanSymbol;
 	}
 
 	public Clan(String	clanTag,String	clanName,String	clanSymbol,REG_STATUS reged){
-		this.clanTag=clanTag;
-		this.clanName=clanName;
-		this.clanSymbol=clanSymbol;
+		this.setClanTag(clanTag);
+		this.setClanName(clanName);
+		this.setClanSymbol(clanSymbol);
 		this.registered=reged;
 	}
 	
@@ -83,13 +86,13 @@ public class Clan extends ObjectifyEntity implements Serializable{
 	}
 	
 	public void setClanName(String clanName) {
-		this.clanName = clanName;
+		this.clanName = clanName.trim();
 	}
 	public void setClanSymbol(String clanSymbol) {
-		this.clanSymbol = clanSymbol;
+		this.clanSymbol = clanSymbol.trim();
 	}
 	public void setClanTag(String clanTag) {
-		this.clanTag = clanTag;
+		this.clanTag = clanTag.trim().toUpperCase();
 	}
 	public void setClanLocate(String clanLocate) {
 		this.clanLocate = clanLocate;

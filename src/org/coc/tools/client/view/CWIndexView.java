@@ -3,8 +3,6 @@ package org.coc.tools.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -16,15 +14,14 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.coc.tools.client.misc.GridHelper;
-import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
 import org.coc.tools.client.widget.ClanInfoPanel;
+import org.coc.tools.client.widget.ClanInfoWidget;
 import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
 
@@ -32,7 +29,7 @@ import org.coc.tools.shared.model.Clan;
 public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public final static String MENU_BAR_ELEM_HEIGHT="32px";
 	
-	private final String	appVersion="V0.1";
+	//private final String	appVersion="V0.1";
 	private final Button addButton;
 	private final Button deleteButton;
 	private FlexTable cwIndexsTable;
@@ -41,7 +38,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 	private final FlexTable headerTable;
 	private final Button regClanButton;
-	private final ClanInfoPanel homeClanPanel;
+	private final ClanInfoWidget homeClanPanel;
 	//private Label homeClanName;
 	//private Label homeClanTag;
 	//private HTML homeClanSymbol;
@@ -239,10 +236,10 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		int tabColIndex=0;
 		/// set title
 		cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, new CheckBox());
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_TAG); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_NAME); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.ENEMY_CLAN_SYMBOL); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ViewConstants.ValueNames.WAR_PREPARE_DATE); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_TAG); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_NAME); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_SYMBOL); 
+		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.WAR_PREPARE_DATE); 
 		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
 		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
 		tabRowIndex++;
@@ -300,33 +297,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public void setRegedClan(Clan clan) {
 
 		homeClanPanel.update(clan);
-		//homeClanName.setText(clan.getClanName());
-		//homeClanTag.setText("Tag : "+clan.getClanTag());
-		//homeClanSymbol.setHTML(ResHelper.makeImgHtml(ResHelper.getClanSymbolAbsUrl(clan.getClanSymbol()), "32px", "32px"));
-		
 	}
 
 
-	/*
-	@Override
-	public void setData(List<List<String>> data) {
-		// List<List<String>>
-		cwIndexsTable.removeAllRows();
-		for (int i = 0; i < data.size(); ++i) {
-			List<String> aRow=data.get(i);
-			int dataCellSize=aRow.size();
-			int j=0;
-			cwIndexsTable.setWidget(i, j, new CheckBox());
-			for(;j<dataCellSize;++j){
-				cwIndexsTable.setText(i, j+1, aRow.get(j));
-			}
-			if(i>0){
-				cwIndexsTable.setWidget(i, ++j, new Button("Book a base"));
-				cwIndexsTable.setWidget(i, ++j, new Button("View Or Edit Result"));
-			}
-		}
-
-		
-	}
-	*/
 }

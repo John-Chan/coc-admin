@@ -2,10 +2,14 @@ package org.coc.tools.client;
 
 import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.CWIndexAddEvtHandler;
+import org.coc.tools.client.event.CWIndexUpdateCancelEvt;
+import org.coc.tools.client.event.CWIndexUpdateCancelEvtHandler;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.client.event.CWIndexUpdateEvtHandler;
 import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.ClanAddEvtHandler;
+import org.coc.tools.client.event.ClanUpdateCancelEvt;
+import org.coc.tools.client.event.ClanUpdateCancelEvtHandler;
 import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.client.event.ClanUpdateEvtHandler;
 import org.coc.tools.client.event.HomeClanSwitchEvt;
@@ -20,10 +24,8 @@ import org.coc.tools.client.view.CWIndexView;
 import org.coc.tools.client.view.ClanEditView;
 import org.coc.tools.shared.model.Clan;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -126,6 +128,14 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				
 			}
 	        });  
+	    /// reg evt for update&cancle
+	    eventBus.addHandler(ClanUpdateCancelEvt.TYPE,
+	        new ClanUpdateCancelEvtHandler() {
+	    	@Override  
+	    	public void onCancel(ClanUpdateCancelEvt event) {
+	        	  doListCwEntry();
+	          }
+	        }); 
 	    
 		/// reg evt for add 
 		eventBus.addHandler(CWIndexAddEvt.TYPE, new CWIndexAddEvtHandler() {
@@ -147,16 +157,17 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	        });  
 
 
-		
+		 */
 		/// reg evt for update&cancle
-	    eventBus.addHandler(EditContactCancelledEvent.TYPE,
-	        new EditContactCancelledEventHandler() {
-	          public void onEditContactCancelled(EditContactCancelledEvent event) {
-	            doEditContactCancelled();
+	    eventBus.addHandler(CWIndexUpdateCancelEvt.TYPE,
+	        new CWIndexUpdateCancelEvtHandler() {
+	    	@Override  
+	    	public void onCancel(CWIndexUpdateCancelEvt event) {
+	        	  doListCwEntry();
 	          }
 	        });  
 		
-	    */
+	   
 	    
 
 		/// reg evt for update&save
@@ -198,7 +209,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
 	}
 	/// saved or update has been done
-	private void doListClan() {
-		History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
-	}
+	//private void doListClan() {
+	//	History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
+	//}
 }

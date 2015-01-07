@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.coc.tools.client.CWIndexServiceAsync;
 import org.coc.tools.client.ClanWarEntryServiceAsync;
+import org.coc.tools.client.event.CWIndexUpdateCancelEvt;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
@@ -29,22 +30,6 @@ public class CWIndexEditPresenter implements Presenter {
 
 		HasClickHandlers getCancelButton();
 
-		/*
-		HasValue<Date> getPrepareDate();
-
-		HasValue<String> getEnemyClanTag();
-
-		HasValue<String> getEnemyClanName();
-
-		HasValue<String> getEnemyClanSymbol();
-		
-		HasValue<String> getHomeClanTag();
-
-		HasValue<String> getHomeClanName();
-
-		HasValue<String> getHomeClanSymbol();
-		HasValue<String> getScope();
-		*/
 		Date getPrepareDate();
 
 		String getEnemyClanTag();
@@ -65,11 +50,7 @@ public class CWIndexEditPresenter implements Presenter {
 		
 		void setScope(String val);
 		
-		void		setHomeClan(String tag,String name,String symbol);
-
-		//HasValue<String> getHomeTeam();
-
-		
+		void		setHomeClan(String tag,String name,String symbol);	
 
 		Widget asWidget();
 	}
@@ -136,12 +117,11 @@ public class CWIndexEditPresenter implements Presenter {
 				doSave();
 			}
 		});
-
-		/*
-		 * this.display.getCancelButton().addClickHandler(new ClickHandler() {
-		 * public void onClick(ClickEvent event) { eventBus.fireEvent(new
-		 * EditContactCancelledEvent()); } });
-		 */
+		this.display.getCancelButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doCancel();
+			}
+		});
 	}
 
 	@Override
@@ -160,11 +140,8 @@ public class CWIndexEditPresenter implements Presenter {
 		cwIndex.getEnemyClan().setClanSymbol(display.getEnemyClanSymbol() );
 		
 		cwIndex.setHomeClan(homeClan);
-		///
-		//cwIndex.getHomeClan().setClanTag("#88888888");
-		//cwIndex.getHomeClan().setClanName("nakama-ck");
-		//cwIndex.getHomeClan().setClanSymbol("40");
-		///
+
+
 		cwIndex.setScope(Integer.parseInt(display.getScope() ) );
 
 		rpcService.update(clanWarEntryPojo, new AsyncCallback<ClanWarEntryPojo>() {
@@ -177,6 +154,9 @@ public class CWIndexEditPresenter implements Presenter {
 				GWT.log("Error =>rpcService.update", caught);
 			}
 		});
+	}
+	private void doCancel(){
+		eventBus.fireEvent(new CWIndexUpdateCancelEvt());
 	}
 
 }

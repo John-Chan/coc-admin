@@ -4,6 +4,27 @@ import org.coc.tools.shared.model.WarResult;
 
 public class WarResultBuilder {
 
+	public static final int calcMaxAttacks(int playerCount){
+		return playerCount * CocConstant.WarCounters.ATTACK_COUNT_EACH_PLAYER;
+	}
+	public static final int calcMaxPossibleStars(int attacksWon){
+		return attacksWon *  CocConstant.WarCounters.MULTIPLES_STAR3;
+	}
+	public static final int calcFinalStars(int star1, int star2, int star3){
+		return star1* CocConstant.WarCounters.MULTIPLES_STAR1
+		+ star2* CocConstant.WarCounters.MULTIPLES_STAR2
+		+ star3* CocConstant.WarCounters.MULTIPLES_STAR3;
+	}
+
+	// return [1.00~3.00]
+	public static final float calcNspaPercent(int attacksUsed,int finalStars){
+		if(attacksUsed==0) return 0.00f;
+		float percent = ((float) finalStars)
+				/ ((float) attacksUsed);
+		percent = (float) (Math.round(percent * 100)) / 100;
+		return percent;
+	}
+	
 	/**
 	 * values are not inited after this call : # averageDestruction #
 	 * averageAttackDurationSecond # heroicAttackPlayer # heroicDefensePlayer
@@ -28,21 +49,11 @@ public class WarResultBuilder {
 		one.setTotalStars2Count(star2);
 		one.setTotalStars3Count(star3);
 
-		one.setMaxAccackCount(playerCount
-				* CocConstant.WarCounters.ATTACK_COUNT_EACH_PLAYER);
+		one.setMaxAccackCount( calcMaxAttacks(playerCount));
 		one.setAttacksRemaining(one.getMaxAccackCount() - one.getAttacksUsed());
 		one.setAttacksLost(one.getAttacksUsed() - one.getAttacksWon());
-		one.setFinalStars(one.getTotalStars1Count()
-				* CocConstant.WarCounters.MULTIPLES_STAR1
-				+ one.getTotalStars2Count()
-				* CocConstant.WarCounters.MULTIPLES_STAR2
-				+ one.getTotalStars3Count()
-				* CocConstant.WarCounters.MULTIPLES_STAR3);
-
-		float percent = ((float) one.getFinalStars())
-				/ ((float) one.getAttacksUsed());
-		percent = (float) (Math.round(percent * 100)) / 100;
-		one.setNewStarPeerAttack(percent);
+		one.setFinalStars(calcFinalStars(one.getTotalStars1Count(),  one.getTotalStars2Count(),  one.getTotalStars3Count()));
+		one.setNewStarPeerAttack(calcNspaPercent(one.getAttacksUsed(),one.getFinalStars()));
 
 		checkCounters(one);
 		return one;

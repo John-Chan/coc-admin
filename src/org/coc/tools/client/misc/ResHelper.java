@@ -24,9 +24,8 @@ public class ResHelper {
 	}
 	
 	/// e.g. makeImgHtml("xxx.png","32px","32px")
+	/// got "<img src='" + imgUrl + "' style='width:304px;height:228px'>";
 	public static String makeImgHtml(String imgUrl,String width,String height){
-		//return "<img src='" + imgUrl + "' style='width:304px;height:228px'>";
 		return "<img src='" + imgUrl + "' style='width:"+width+";height:"+height+"'>";
-		//picSpace.setHTML("<img src='" + result.get(i).getUrl() + "' style='width:304px;height:228px'>");
 	}
 }

@@ -1,8 +1,10 @@
 package org.coc.tools.client.presenter;
 
 import org.coc.tools.client.ClanServiceAsync;
+import org.coc.tools.client.event.ClanUpdateCancelEvt;
 import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.shared.model.Clan;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -38,7 +40,6 @@ public class ClanEditPresenter implements Presenter {
 
 	private Clan clan;
 	private final ClanServiceAsync rpcService;
-	//private final RpcManager rpcMgr;
 	private final HandlerManager eventBus;
 	private final Display display;
 	
@@ -56,10 +57,6 @@ public class ClanEditPresenter implements Presenter {
 	@Override
 	public void go(HasWidgets container) {
 
-		/*bind();
-		container.clear();
-		container.add(display.asWidget());*/
-
 		container.clear();
 		container.add(display.asWidget());
 
@@ -70,6 +67,12 @@ public class ClanEditPresenter implements Presenter {
 		this.display.getSaveButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doSave();
+			}
+		});
+		
+		this.display.getCancelButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doCancel();
 			}
 		});
 		
@@ -89,6 +92,10 @@ public class ClanEditPresenter implements Presenter {
 				GWT.log("Error =>rpcService.update", caught);
 			}
 		});
+	}
+	
+	private void doCancel(){
+		eventBus.fireEvent(new ClanUpdateCancelEvt());
 	}
 
 }

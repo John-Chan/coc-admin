@@ -22,6 +22,14 @@ package org.coc.tools.shared;
  */
 public class FieldVerifier {
 
+	public static  int tryParseInt(String val,int defVal){
+		try{
+			return Integer.parseInt(val);
+		}catch(Exception e){
+			//NumberFormatException
+			return defVal;
+		}
+	}
 	public static boolean isDigit(String val) {
 		//int count=0;
 		boolean good=false;

@@ -3,8 +3,8 @@ package org.coc.tools.client.widget;
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.misc.ModelFactory;
 import org.coc.tools.client.misc.ResHelper;
-import org.coc.tools.client.view.UIConstants;
-import org.coc.tools.client.view.ViewConstants;
+import org.coc.tools.client.view.UiSizeConstants;
+import org.coc.tools.client.view.UiStrConstants;
 import org.coc.tools.shared.CocConstant;
 import org.gwt.advanced.client.datamodel.ComboBoxDataModel;
 import org.gwt.advanced.client.ui.widget.ComboBox;
@@ -31,7 +31,7 @@ public class ClanEditPanel {
 	public ClanEditPanel(){
 		holder=new HorizontalPanel();
 		container=new FlexTable();
-		clanSymbolImg=new HTML( ResHelper.makeImgHtml( ResHelper.getDefClanSymbolAbsUrl(),UIConstants.Px.IMG_WIDTH_32,UIConstants.Px.IMG_HIGHT_32 ));
+		clanSymbolImg=new HTML( ResHelper.makeImgHtml( ResHelper.getDefClanSymbolAbsUrl(),UiSizeConstants.Px.IMG_WIDTH_32,UiSizeConstants.Px.IMG_HIGHT_32 ));
 		clanTag = new TextBox();
 		clanName = new TextBox(); 
 		clanSymbolBox = new ComboBox<ComboBoxDataModel>();
@@ -49,6 +49,12 @@ public class ClanEditPanel {
 		bindUiEvt();
 	}
 	
+	public void setReadOnly(boolean roClanTag,boolean roClanName,boolean roClanSymbol){
+		//clanSymbolBox.setChoiceButtonVisible(!roClanSymbol);
+		clanSymbolBox.setEnabled(!roClanSymbol);
+		clanTag.setReadOnly(roClanTag);
+		clanName.setReadOnly(roClanName);
+	}
 	public void	setEnableEdit(boolean eidtClanTag,boolean eidtClanName,boolean editClanSymbol){
 		clanSymbolBox.setEnabled(editClanSymbol);
 		clanTag.setEnabled(eidtClanTag);
@@ -94,7 +100,8 @@ public class ClanEditPanel {
 		setClanTag(tag);
 		setClanName(name);
 		setClanSymbolIndex(symbolIndex);
-		clanSymbolImg.setHTML(ResHelper.makeImgHtml( ResHelper.getClanSymbolIco32AbsUrl(Integer.toString(symbolIndex+1)),UIConstants.Px.IMG_WIDTH_32,UIConstants.Px.IMG_HIGHT_32 ));
+		
+		clanSymbolImg.setHTML(ClanInfoWidget.getSymbolImg32Html(Integer.toString(symbolIndex+1)));
 	}
 	public void	updateVal(String tag,String name,String symbol){
 		updateVal(tag,name,Integer.parseInt(symbol)-1);
@@ -102,17 +109,18 @@ public class ClanEditPanel {
 	
 	private void	initLayout(){
 
+		holder.clear();
 		GridHelper pusher=new GridHelper(container);
-		pusher.pushBack(new Label(ViewConstants.ValueNames.CLAN_TAG)).pushBack(new HTML("")).pushBack(clanTag);
+		pusher.pushBack(new Label(UiStrConstants.ValueNames.CLAN_TAG)).pushBack(new HTML("")).pushBack(clanTag);
 
 		pusher.nextRow();
-		pusher.pushBack(new Label(ViewConstants.ValueNames.CLAN_NAME)).pushBack(new HTML("")).pushBack(clanName);
+		pusher.pushBack(new Label(UiStrConstants.ValueNames.CLAN_NAME)).pushBack(new HTML("")).pushBack(clanName);
 
 		HorizontalPanel symbolBoxAndImg=new HorizontalPanel();
 		symbolBoxAndImg.add(clanSymbolBox);
 		symbolBoxAndImg.add(clanSymbolImg);
 		pusher.nextRow();
-		pusher.pushBack(new Label(ViewConstants.ValueNames.CLAN_SYMBOL)).pushBack(new HTML("")).pushBack(symbolBoxAndImg);
+		pusher.pushBack(new Label(UiStrConstants.ValueNames.CLAN_SYMBOL)).pushBack(new HTML("")).pushBack(symbolBoxAndImg);
 		
 		container.setWidth("100%");
 		
@@ -120,8 +128,8 @@ public class ClanEditPanel {
 		GridHelper.setColWidth(container, new String[]{"80px","20px"});
 		
 
-		clanSymbolImg.setWidth(UIConstants.Px.IMG_WIDTH_32);
-		clanSymbolBox.setHeight(UIConstants.Px.IMG_WIDTH_32);
+		clanSymbolImg.setWidth(UiSizeConstants.Px.IMG_WIDTH_32);
+		clanSymbolBox.setHeight(UiSizeConstants.Px.IMG_WIDTH_32);
 		symbolBoxAndImg.setWidth("95%");
 		clanSymbolBox.setWidth("95%");
 		clanTag.setWidth("95%");
@@ -134,7 +142,7 @@ public class ClanEditPanel {
 			@Override
 			public void onChange(ChangeEvent event) {
 				int symbolIndex=clanSymbolBox.getSelectedIndex();
-				clanSymbolImg.setHTML(ResHelper.makeImgHtml( ResHelper.getClanSymbolIco32AbsUrl(Integer.toString(symbolIndex+1)),UIConstants.Px.IMG_WIDTH_32,UIConstants.Px.IMG_HIGHT_32 ));
+				clanSymbolImg.setHTML(ClanInfoWidget.getSymbolImg32Html(Integer.toString(symbolIndex+1)));
 			}
 			//
 		});

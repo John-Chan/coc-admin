@@ -1,6 +1,6 @@
 package org.coc.tools.client.view;
 
-public class ViewConstants {
+public class UiStrConstants {
 	public static class ValueNames{
 		public	static final String CLAN_NAME="Clan Name";
 		public	static final String CLAN_TAG="Clan Tag";
@@ -19,5 +19,18 @@ public class ViewConstants {
 		public	static final String WAR_BATTLE_DATE="Prepare Day";
 		public	static final String WAR_END_DATE="End Day";
 		public	static final String WAR_PLAYER_COUNT="Player Count";
+		
+		public	static final String WAR_ATTACKS_USED="Attacks Used";
+		public	static final String WAR_ATTACKS_WON="Attacks Won";
+		public	static final String WAR_1_STAR="1 Star";
+		public	static final String WAR_2_STAR="2 Star";
+		public	static final String WAR_3_STAR="3 Star";
+		public	static final String WAR_MOST_HEROIC_ATTACK="Most Heroic Attack";
+		public	static final String WAR_MOST_HEROIC_DEFENSE="Most Heroic Defense";
+		public	static final String WAR_ATTACKS_REMAINING="Attacks Remaining";
+		public	static final String WAR_ATTACKS_LOST="Attacks Lost";
+		public	static final String WAR_FINAL_STARS="Final Stars";
+		public	static final String WAR_NEW_STAR_PEER_ATTACK="New Star Peer Attack";
+		
 	}
 }
