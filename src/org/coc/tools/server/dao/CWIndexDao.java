@@ -5,6 +5,7 @@ import java.util.List;
 import org.coc.tools.shared.model.CWIndex;
 
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.cmd.Query;
 
 
 public class CWIndexDao  extends ObjectifyDao<CWIndex>{
@@ -17,6 +18,8 @@ public class CWIndexDao  extends ObjectifyDao<CWIndex>{
 	}
 	
 	public List<CWIndex> getListByHomeClanTag(String tag,int maxResult){
-		return getOfy().load().type(CWIndex.class).filter("homeClan.clanTag", tag).limit(maxResult).list();
+		Query<CWIndex> qry=super.startQry(CWIndex.class, true);
+		return qry.filter("homeClan.clanTag", tag).order("-prepareDate").limit(maxResult).list();
+		//return getOfy().load().type(CWIndex.class).filter("homeClan.clanTag", tag).limit(maxResult).list();
 	}
 }
