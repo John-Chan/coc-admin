@@ -12,6 +12,7 @@ public abstract class ClanInfoWidget {
 	public	abstract void update(String tag,String name,String symbol);
 	public 	abstract Widget getWidget();
 	public 	abstract Clan getClan();
+	public 	abstract void setBorderWidth(int size);
 	 
 	public static String getSymbolImg32Html(String clanSymbol){
 		if(clanSymbol==null || clanSymbol.length()<=0){

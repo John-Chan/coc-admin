@@ -7,6 +7,7 @@ import org.coc.tools.client.misc.DateTimeUtility;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 //@Subclass(index=true)
 @Entity
@@ -19,6 +20,7 @@ public class CWIndex   implements Serializable,ObjectifyEntity {
 
 
 	private int scope=15;
+	@Index
 	private Date prepareDate=new Date();
 	
 	private Clan homeClan=new Clan();

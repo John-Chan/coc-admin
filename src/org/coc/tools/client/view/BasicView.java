@@ -1,6 +1,7 @@
 package org.coc.tools.client.view;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -14,6 +15,7 @@ public class BasicView extends Composite{
 	private String width=DEFAULT_WIDTH;
 	private String height=DEFAULT_HEIGHT;
 	
+	/*
 	private Widget	header=new HTML("header");
 	private Widget	headerSmall=new HTML("headerSmall");
 	private Widget	footer=new HTML("footer");
@@ -21,6 +23,15 @@ public class BasicView extends Composite{
 	private Widget	left=new HTML("left");
 	private Widget	right=new HTML("right");
 	private Widget	center=new HTML("center");
+	*/
+	private Widget	header=new HTML("");
+	private Widget	headerSmall=new HTML("");
+	private Widget	footer=new HTML("");
+	private Widget	footerSmall=new HTML("");
+	private Widget	left=new HTML("");
+	private Widget	right=new HTML("");
+	private Widget	center=new HTML("");
+	//DecoratorPanel 	centerDecorator = new DecoratorPanel();
 	
 	public BasicView(){
 		rootPanel = new DockPanel();
@@ -35,6 +46,10 @@ public class BasicView extends Composite{
 	
 	private void	resetPanel(){
 		rootPanel.clear();
+		//centerDecorator.clear();
+		//centerDecorator.setWidth("100%");
+		//centerDecorator.add(center);
+		
 		//rootPanel.setVerticalAlignment(DockPanel.ALIGN_CENTER);
 		rootPanel.add(header, DockPanel.NORTH);
 		rootPanel.add(footer, DockPanel.SOUTH);
@@ -42,6 +57,7 @@ public class BasicView extends Composite{
 		rootPanel.add(right, DockPanel.EAST);
 		rootPanel.add(left, DockPanel.WEST);
 		rootPanel.add(center, DockPanel.CENTER);
+		//rootPanel.add(centerDecorator, DockPanel.CENTER);
 		rootPanel.add(headerSmall, DockPanel.NORTH);
 		rootPanel.add(footerSmall, DockPanel.SOUTH);
 

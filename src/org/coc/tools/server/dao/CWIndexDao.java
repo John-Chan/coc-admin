@@ -18,7 +18,7 @@ public class CWIndexDao  extends ObjectifyDao<CWIndex>{
 	}
 	
 	public List<CWIndex> getListByHomeClanTag(String tag,int maxResult){
-		Query<CWIndex> qry=super.startQry(CWIndex.class, true);
+		Query<CWIndex> qry=super.startQry(CWIndex.class);
 		return qry.filter("homeClan.clanTag", tag).order("-prepareDate").limit(maxResult).list();
 		//return getOfy().load().type(CWIndex.class).filter("homeClan.clanTag", tag).limit(maxResult).list();
 	}

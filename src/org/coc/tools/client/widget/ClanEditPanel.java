@@ -146,5 +146,26 @@ public class ClanEditPanel {
 			}
 			//
 		});
+		clanTag.addChangeHandler(new ChangeHandler(){
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				String tag=clanTag.getText().trim().toUpperCase();
+				if(!tag.startsWith(CocConstant.ClanInfo.CLAN_TAG_PREFIX)){
+					tag=CocConstant.ClanInfo.CLAN_TAG_PREFIX+tag;
+				}
+				clanTag.setText(tag);
+			}
+			//
+		});
+		clanName.addChangeHandler(new ChangeHandler(){
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				String name=clanName.getText().trim();
+				clanName.setText(name);
+			}
+			//
+		});
 	}
 }

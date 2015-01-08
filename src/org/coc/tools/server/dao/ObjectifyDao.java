@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+
 //import org.coc.tools.server.MyOfyService;
 import org.coc.tools.shared.model.ObjectifyEntity;
 
+import com.google.appengine.api.datastore.Query.Filter;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Ref;
@@ -115,8 +117,9 @@ public class ObjectifyDao<EntityType /* extends ObjectifyEntity */> {
 	// / maxResult can be 0
 	// / orders can be null or empty
 	public List<EntityType> getList(Class<EntityType> clazz,
-			List<String> orders, boolean isDistinct, int maxResult) {
-		Query<EntityType> qry = startQry(clazz,isDistinct);// ofy.load().type(clazz).distinct(isDistinct);
+			List<String> orders, /*boolean isDistinct,String distinctFor, */int maxResult) {
+		//Query<EntityType> qry = startQry(clazz,isDistinct,distinctFor);// ofy.load().type(clazz).distinct(isDistinct);
+		Query<EntityType> qry = startQry(clazz);// ofy.load().type(clazz).distinct(isDistinct);
 		if(qry == null ){
 			return new ArrayList<EntityType>();
 		}
@@ -132,10 +135,15 @@ public class ObjectifyDao<EntityType /* extends ObjectifyEntity */> {
 		}
 
 	}
-
-	public Query<EntityType>	startQry(Class<EntityType> clazz,boolean isDistinct){
-		return ofy.load().type(clazz).distinct(isDistinct);
+	public Query<EntityType>	startQry(Class<EntityType> clazz){
+		return  ofy.load().type(clazz);
+		//return ofy.load().type(clazz).project(distinctFor).distinct(isDistinct);
 	}
+
+	//public Query<EntityType>	startQry(Class<EntityType> clazz,boolean isDistinct,String distinctFor){
+	//	ofy.load().type(clazz).filter(filter);
+	//	return ofy.load().type(clazz).project(distinctFor).distinct(isDistinct);
+	//}
 	public EntityType loadById(Class<EntityType> clazz, Long id) {
 		return ofy.load().type(clazz).id(id).now();
 	}

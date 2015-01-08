@@ -75,4 +75,9 @@ public class ClanInfoPanel extends ClanInfoWidget {
 		holder.add(container);
 		
 	}
+	@Override
+	public void setBorderWidth(int size) {
+		holder.setBorderWidth(size);
+		
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 //@Subclass(index=true)
 @Entity
@@ -15,16 +16,22 @@ public class WarDetail    implements Serializable,ObjectifyEntity {
 	 */
 	private static final long serialVersionUID = 9014965538681368610L;
 
+	@Index
 	private Long	warId;
+	@Index
 	private int targetNumber=1;
 	private int targetTHLevel=5;
+	@Index
 	private Long	targetClanId=0L;
+	@Index
 	private String attacker="";
 	private int attackerTHLevel=5;
+	@Index
 	private Long	attackerClanId=0L;
 	private int	thisStars=0;
 	private int historyBestStars=0;
 	private int	damagePrecent=0;
+	@Index
 	private Date attackDate=new Date();
 	@Id
 	private Long	id;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 //@Subclass(index=true)
 @Entity
@@ -14,13 +15,18 @@ public class WarBaseOrder  implements Serializable,ObjectifyEntity {
 	 */
 	private static final long serialVersionUID = -8402974585267023573L;
 
+	@Index
 	private Long	warId;
+	@Index
 	private String attacker="";
 	private int attackerTHLevel=5;
 	private int targetNumber=1;
 	private int targetTHLevel=5;
+	@Index
 	private int goal=3;
+	@Index
 	private Long	targetClanId=0L;
+	@Index
 	private Long	attackerClanId=0L;
 	@Id
 	private Long	id;

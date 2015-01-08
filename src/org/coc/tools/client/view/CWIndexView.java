@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.coc.tools.client.misc.GridHelper;
@@ -75,52 +76,11 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		headerTable.setWidth("100%");
 		
 		GridHelper.VerticalAlign.alignAllToTop(headerTable);
-		GridHelper.setColWidth(headerTable, new String[]{"250px","80%","64px","2px","32px"});
+		GridHelper.setColWidth(headerTable, new String[]{"250px","80%","150px","2px","32px"});
 		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
 		regClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
-		/*
-		headerTable.setWidget(0, 1, homeClanName);
-		headerTable.setWidget(0, 0, homeClanSymbol);
-		headerTable.setWidget(0, 2, homeClanTag);
-		//headerTable.setWidget(0, 3, bull);
-		headerTable.setWidget(0, 4, homeClanBox);
-		headerTable.setWidget(0, 5, regClanButton);
 		
-		headerTable.setWidth("100%");
-		headerTable.getCellFormatter().setWidth(0, 0, "5%");
-		headerTable.getCellFormatter().setWidth(0, 1, "15%");
-		headerTable.getCellFormatter().setWidth(0, 2, "15%");
-		//headerTable.getCellFormatter().setWidth(0, 3, "55%");
-		headerTable.getCellFormatter().setWidth(0, 4, "10%");
-		headerTable.getCellFormatter().setWidth(0, 5, "5%");*/
-		
-		/*
-		for(int i=0;i<5;++i){
-
-			headerTable.getFlexCellFormatter().setVerticalAlignment(0, i,
-					DockPanel.ALIGN_TOP);
-		}
-		//headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, DockPanel.ALIGN_RIGHT);
-		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 4, DockPanel.ALIGN_RIGHT);
-		headerTable.getFlexCellFormatter().setHorizontalAlignment(0, 5, DockPanel.ALIGN_RIGHT);
-		*/
-		/*homeClanName.setHeight("100%");
-		homeClanTag.setHeight("100%");
-		homeClanList.setHeight("100%");
-		createClanButton.setHeight("100%");*/
-		//homeClanName.setHeight(MENU_BAR_ELEM_HEIGHT);
-		//homeClanTag.setHeight(MENU_BAR_ELEM_HEIGHT);
-		//homeClanSymbol.setHeight(MENU_BAR_ELEM_HEIGHT);
-		
-		
-		
-		//headerTable.setWidget(0, 1, homeClanName);
-		//headerTable.setWidget(0, 0, homeClanSymbol);
-		//headerTable.setWidget(0, 2, homeClanTag);
-		///headerTable.setWidget(0, 3, bull);
-		//headerTable.setWidget(0, 4, homeClanBox);
-		//headerTable.setWidget(0, 5, regClanButton);
-		
+		homeClanPanel.setBorderWidth(0);
 		this.setHeaderSmall(headerTable);
 		//this.setHeader(headerTable);//
 		
@@ -129,10 +89,12 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private void initMainArea(){
 
 		//initWidget(contentTableDecorator);
-		DecoratorPanel contentTableDecorator = new DecoratorPanel();
+		//DecoratorPanel contentTableDecorator = new DecoratorPanel();
+		HorizontalPanel containerPanel = new HorizontalPanel();
 
 		HorizontalPanel menuPanel = new HorizontalPanel();
-		contentTableDecorator.setWidth("100%");
+		//contentTableDecorator.setWidth("100%");
+		containerPanel.setWidth("100%");
 
 		contentTable.setWidth("100%");
 		// TODO : contentTable.getCellFormatter().addStyleName(0, 0,
@@ -170,11 +132,16 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		cwIndexsTable.setWidth("100%");
 		cwIndexsTable.addStyleName("contacts-ListContents");
 		cwIndexsTable.getColumnFormatter().setWidth(0, "15px");
+		//cwIndexsTable.setBorderWidth(1);
 		contentTable.setWidget(1, 0, cwIndexsTable);
 
-		contentTableDecorator.add(contentTable);
+		containerPanel.add(contentTable);
+		containerPanel.setBorderWidth(1);
+		
+		//contentTableDecorator.add(contentTable);
 
-		this.setCenter(contentTableDecorator); 
+		//this.setCenter(contentTableDecorator); 
+		this.setCenter(containerPanel); 
 	}
 
 	@Override

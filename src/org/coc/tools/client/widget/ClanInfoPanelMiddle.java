@@ -57,6 +57,12 @@ public class ClanInfoPanelMiddle extends ClanInfoWidget{
 	public Clan getClan() {
 		return this.clan;
 	}
+
+	@Override
+	public void setBorderWidth(int size) {
+		holder.setBorderWidth(size);
+		
+	}
 	
 	private void	initData(){
 		if(clan != null){

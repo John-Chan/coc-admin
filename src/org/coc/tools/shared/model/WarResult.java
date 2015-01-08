@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 //@Subclass(index=true)
 @Entity
@@ -14,7 +15,9 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	 */
 	private static final long serialVersionUID = -6282962981468178879L;
 
+	@Index
 	private Long	warId;
+	@Index
 	private Long	clanId;
 	private int		playerCount=0;
 	private	int		maxAccackCount=0;
@@ -29,7 +32,9 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	private	float	newStarPeerAttack=0;
 	private	float	averageDestruction=0;
 	private	int		averageAttackDurationSecond=0;
+	@Index
 	private String	heroicAttackPlayer="";
+	@Index
 	private String	heroicDefensePlayer="";
 	
 	@Id
