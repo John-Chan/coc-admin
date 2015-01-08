@@ -11,6 +11,7 @@ import org.coc.tools.shared.WarResultBuilder;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -35,6 +36,21 @@ public class CWResultInputGroup {
 	
 	private  int	scope;
 	private boolean autoFillEnabled=true;
+
+	public void	setTxtAlignLeftForAll(){
+		List<Widget> list=getInputWidgets();
+		for(Widget w:list){
+			TextBox tx=(TextBox)w;
+			tx.setAlignment(TextAlignment.LEFT);
+		}
+	}
+	public void	setTxtAlignRightForAll(){
+		List<Widget> list=getInputWidgets();
+		for(Widget w:list){
+			TextBox tx=(TextBox)w;
+			tx.setAlignment(TextAlignment.RIGHT);
+		}
+	}
 
 	public List<Widget>		getInputWidgets(){
 		List<Widget> list= getRequiredInputWidgets();

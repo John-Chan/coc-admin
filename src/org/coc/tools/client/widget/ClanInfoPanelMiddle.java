@@ -12,13 +12,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ClanInfoPanelMiddle extends ClanInfoWidget{
 
+	public enum HorizontalStyle{LEFT_SIDE_ALIGN,RIGHT_SIDE_ALIGN};
+	
 	private	Clan clan=null;
 	private HorizontalPanel	holder=new HorizontalPanel();
 	private FlexTable txtContainer=new FlexTable();
 	private Label lableClanTag=new Label("N/A");
 	private Label lableClanName=new Label("N/A");
 	private HTML imgClanSymbol=new HTML( getSymbolImg64Html(null));
-	private boolean useLeftSideAlign=true;
+	private HorizontalStyle horizontalStyle=HorizontalStyle.LEFT_SIDE_ALIGN;
 	public ClanInfoPanelMiddle(){
 		update(clan);
 	}
@@ -81,7 +83,7 @@ public class ClanInfoPanelMiddle extends ClanInfoWidget{
 		//GridHelper.setColWidth(container, new String[]{UiSizeConstants.Px.IMG_WIDTH_32,"2px",UiSizeConstants.Px.MAX_CLAN_NAME_WIDTH,"2px",UiSizeConstants.Px.MAX_CLAN_TAG_WIDTH});
 
 		//
-		if(useLeftSideAlign){
+		if(HorizontalStyle.LEFT_SIDE_ALIGN == horizontalStyle){
 			holder.add(imgClanSymbol);
 			holder.add(txtContainer);
 			lableClanName.setHorizontalAlignment(DockPanel.ALIGN_LEFT);
@@ -95,10 +97,10 @@ public class ClanInfoPanelMiddle extends ClanInfoWidget{
 		
 	}
 	
-	//return old value
-	public boolean	resetHorizontalStyle(boolean useLeftSideAlign){
-		boolean old=this.useLeftSideAlign;
-		this.useLeftSideAlign=useLeftSideAlign;
+	//return old value HorizontalStyle.LEFT_SIDE_ALIGN == horizontalStyle
+	public HorizontalStyle	resetHorizontalStyle(HorizontalStyle horizontalStyle){
+		HorizontalStyle old=this.horizontalStyle;
+		this.horizontalStyle=horizontalStyle;
 		update(this.clan);
 		return old;
 	}

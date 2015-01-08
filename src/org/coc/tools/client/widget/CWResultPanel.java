@@ -9,6 +9,8 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,28 +43,30 @@ public class CWResultPanel {
 	private void	initLayout(){
 
 		holder.clear();
-		homeClanPanel.resetHorizontalStyle(false);
-		enemyClanPanel.resetHorizontalStyle(true);
+		homeClanPanel.resetHorizontalStyle(ClanInfoPanelMiddle.HorizontalStyle.RIGHT_SIDE_ALIGN);
+		enemyClanPanel.resetHorizontalStyle(ClanInfoPanelMiddle.HorizontalStyle.LEFT_SIDE_ALIGN);
 		introPanel.add(introMsg);
 		GridHelper pusher=new GridHelper(inputTable);
+		pusher.pushBack(GridHelper.paddingHtml());
 		pusher.pushBack(homeClanPanel.getWidget()).pushBack(introPanel).pushBack(enemyClanPanel.getWidget());
-		inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 0, DockPanel.ALIGN_RIGHT);
-		inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 1, DockPanel.ALIGN_CENTER);
-		inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 2, DockPanel.ALIGN_LEFT);
-
+		pusher.pushBack(GridHelper.paddingHtml());
+		
 		List<Widget> homeInputs=homeInputGroup.getInputWidgets();
 		List<Widget> enemyInputs=enemyInputGroup.getInputWidgets();
 		for(int i=0;i<homeInputs.size();++i){
 			pusher.nextRow();
 			Widget input1=homeInputs.get(i);
 			Widget input2=enemyInputs.get(i);
+			pusher.pushBack(GridHelper.paddingHtml());
 			pusher.pushBack(input1).pushBack(new HTML(input2.getTitle())).pushBack(input2);
-			inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 0, DockPanel.ALIGN_RIGHT);
-			inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 1, DockPanel.ALIGN_CENTER);
-			inputTable.getCellFormatter().setHorizontalAlignment(pusher.getCurrentRow(), 2, DockPanel.ALIGN_LEFT);
+			pusher.pushBack(GridHelper.paddingHtml());
 		}
-		//GridHelper.setColWidth(inputTable, new String[]{"180px","100%","180px"});
-		GridHelper.setColWidth(inputTable, new String[]{"100%","380px","100%"});
+		
+		GridHelper.HorizontalAlign.alignAllMirrorCenter(inputTable);
+		homeInputGroup.setTxtAlignRightForAll( );
+		enemyInputGroup.setTxtAlignLeftForAll( );
+		//GridHelper.setColWidth(inputTable, new String[]{"50%","120px","280px","120px","50%"});
+		GridHelper.setColWidth(inputTable, new String[]{"20%","20%","280px","20%","20%"});
 		
 		
 		inputTable.setWidth("100%");

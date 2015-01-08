@@ -1,11 +1,55 @@
 package org.coc.tools.client.misc;
 
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.Widget;
 
 public class GridHelper {
 
+	public static HTML paddingHtml(){
+		return new HTML("");
+	}
+	public static class HorizontalAlign{
+
+		public static void alignAllMirrorCenter(final HTMLTable	ref,int row){
+			int colCount=ref.getCellCount(row);
+
+			//  colcount==4 : left [0~2) right[2,4)
+			//  colcount==5 : left [0~2) right[3,5) center=2
+			//
+			int center=colCount/2;
+			int leftEnd=center;  
+			int rightStart= ((colCount%2)==0)? center:center+1 ; 
+
+			for(int colIndex =0;colIndex<colCount;++colIndex){
+				//[0,2)
+				if(colIndex >= 0 && colIndex < leftEnd){
+					ref.getCellFormatter().setHorizontalAlignment(row, colIndex, DockPanel.ALIGN_RIGHT);
+					continue;
+				}
+				//[3,5)
+				if(colIndex >= rightStart && colIndex < colCount){
+					ref.getCellFormatter().setHorizontalAlignment(row, colIndex, DockPanel.ALIGN_LEFT);
+					continue;
+				}
+				// 2
+				ref.getCellFormatter().setHorizontalAlignment(row, colIndex, DockPanel.ALIGN_CENTER);	
+			}
+
+			/*
+			for(int n=0;n<colCount;++n){
+				ref.getCellFormatter().setVerticalAlignment(row, n, DockPanel.ALIGN_BOTTOM);
+			}
+			*/
+		}
+		public static void alignAllMirrorCenter(final HTMLTable	ref){
+			int rowCount=ref.getRowCount();
+			for(int n=0;n<rowCount;++n){
+				alignAllMirrorCenter(ref,n);
+			}
+		}
+	}
 	public static class VerticalAlign{
 
 		/// align top for all Widget in a row 
@@ -34,6 +78,8 @@ public class GridHelper {
 				alignAllToBottom(ref,n);
 			}
 		}
+		
+		
 		/*
 		public static void alignAllToVCenter(final HTMLTable	ref,int row){
 			int colCount=ref.getCellCount(row);

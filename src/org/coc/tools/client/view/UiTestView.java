@@ -86,7 +86,7 @@ public class UiTestView extends BasicView {
 		panel.getHomeClanPanel().update("#YUIOP", "NAKAMA CK", "40");
 		panel.getEnemyClanPanel().update("#R5YEQ3", "NAKAMA UNION", "32");
 		panel.update();
-		panel.getWidget().setWidth("90%");
+		//panel.getWidget().setWidth("90%");
 		super.setCenter(panel.getWidget());
 	}
 }
