@@ -5,10 +5,12 @@ import java.util.Date;
 
 import org.coc.tools.client.misc.DateTimeUtility;
 
-import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-@Subclass(index = true)
-public class CWIndex extends ObjectifyEntity implements Serializable {
+//@Subclass(index=true)
+@Entity
+public class CWIndex   implements Serializable,ObjectifyEntity {
 
 	/**
 	 * 
@@ -21,7 +23,17 @@ public class CWIndex extends ObjectifyEntity implements Serializable {
 	
 	private Clan homeClan=new Clan();
 	private Clan enemyClan=new Clan();
+	@Id
+	private Long	id;
 
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
+	}
 	public Clan getHomeClan() {
 		return homeClan;
 	}

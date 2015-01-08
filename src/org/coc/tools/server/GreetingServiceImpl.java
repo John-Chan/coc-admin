@@ -1,7 +1,6 @@
 package org.coc.tools.server;
 
 import org.coc.tools.client.GreetingService;
-import org.coc.tools.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

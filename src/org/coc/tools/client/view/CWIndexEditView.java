@@ -3,30 +3,22 @@ package org.coc.tools.client.view;
 import java.util.Date;
 
 import org.coc.tools.client.misc.GridHelper;
-import org.coc.tools.client.misc.ResHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.widget.ClanEditPanel;
-import org.coc.tools.client.widget.ClanInfoPanel;
 import org.coc.tools.client.widget.DateTimePicker;
 import org.coc.tools.shared.CocConstant;
-import org.coc.tools.shared.FieldVerifier;
 import org.gwt.advanced.client.datamodel.ComboBoxDataModel;
 import org.gwt.advanced.client.ui.widget.ComboBox;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class CWIndexEditView extends Composite implements
 		CWIndexEditPresenter.Display {

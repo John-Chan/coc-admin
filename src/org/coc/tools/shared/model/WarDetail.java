@@ -3,10 +3,12 @@ package org.coc.tools.shared.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-@Subclass(index=true)
-public class WarDetail  extends ObjectifyEntity implements Serializable {
+//@Subclass(index=true)
+@Entity
+public class WarDetail    implements Serializable,ObjectifyEntity {
 
 	/**
 	 * 
@@ -24,7 +26,17 @@ public class WarDetail  extends ObjectifyEntity implements Serializable {
 	private int historyBestStars=0;
 	private int	damagePrecent=0;
 	private Date attackDate=new Date();
-	
+	@Id
+	private Long	id;
+
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
+	}
 	
 	public Long getWarId() {
 		return warId;

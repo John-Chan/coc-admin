@@ -2,16 +2,21 @@ package org.coc.tools.shared.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import com.googlecode.objectify.annotation.Subclass;
 
-@Subclass(index=true)
-public class ClanWarEntryPojo  extends ObjectifyEntity implements Serializable {
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
+//@Subclass(index=true)
+@Entity
+public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3698667659761620548L;
 
+	@Id
+	private Long	id;
 	private CWIndex warIndex=new CWIndex();
 	//private Clan homeClan=new Clan();
 	//private Clan enemyClan=new Clan();
@@ -25,6 +30,15 @@ public class ClanWarEntryPojo  extends ObjectifyEntity implements Serializable {
 	}
 	public void setWarIndex(CWIndex warIndex) {
 		this.warIndex = warIndex;
+	}
+
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
 	}
 	/*
 	public Clan getHomeClan() {

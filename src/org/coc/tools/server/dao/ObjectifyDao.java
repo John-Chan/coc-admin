@@ -12,7 +12,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Ref;
 
-public class ObjectifyDao<EntityType extends ObjectifyEntity> {
+public class ObjectifyDao<EntityType /*extends ObjectifyEntity*/> {
 	
 	private Objectify ofy=null;
 

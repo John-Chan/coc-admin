@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 import com.googlecode.objectify.annotation.*;
 
-@Subclass(index=true)
-public class Clan extends ObjectifyEntity implements Serializable{
+//@Subclass(index=true)
+@Entity
+public class Clan /*extends ObjectifyEntity*/ implements Serializable,ObjectifyEntity{
 
 	/**
 	 * 
@@ -25,7 +26,17 @@ public class Clan extends ObjectifyEntity implements Serializable{
 	@Index
 	private	REG_STATUS		registered=REG_STATUS.NON_REGED;
 
-	
+	@Id
+	private Long	id;
+
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
+	}
 
 	public Clan(){
 		

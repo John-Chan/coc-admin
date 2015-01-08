@@ -2,8 +2,6 @@ package org.coc.tools.server;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import org.coc.tools.shared.RandomNumber;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;

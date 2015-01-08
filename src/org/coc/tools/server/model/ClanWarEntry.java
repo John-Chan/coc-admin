@@ -12,11 +12,13 @@ import org.coc.tools.shared.model.WarDetail;
 import org.coc.tools.shared.model.WarResult;
 
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
-import com.googlecode.objectify.annotation.Subclass;
-@Subclass(index=true)
-public class ClanWarEntry  extends ObjectifyEntity implements Serializable{
+//@Subclass(index=true)
+@Entity
+public class ClanWarEntry  implements Serializable,ObjectifyEntity {
 
 	/**
 	 * 
@@ -52,7 +54,17 @@ public class ClanWarEntry  extends ObjectifyEntity implements Serializable{
 	@Index 
 	private List<Ref<WarDetail>> warDetailList = new ArrayList<Ref<WarDetail>>();
 	
-	
+	@Id
+	private Long	id;
+
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
+	}
 	
 	public Ref<CWIndex> getWarIndex() {
 		return warIndex;

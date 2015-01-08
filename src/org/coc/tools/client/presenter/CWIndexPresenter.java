@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.coc.tools.client.CWIndexServiceAsync;
-import org.coc.tools.client.ClanWarEntryServiceAsync;
 import org.coc.tools.client.RpcManager;
 import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.ClanAddEvt;
@@ -105,6 +103,7 @@ public class CWIndexPresenter implements Presenter {
 	private final HandlerManager eventBus;
 	private final Display display;
 
+	@SuppressWarnings("unused")
 	private List<Clan> createClansForTest(int n) {
 		ArrayList<Clan> list = new ArrayList<Clan>();
 		for (int i = 0; i < n; ++i) {

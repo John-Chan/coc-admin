@@ -2,10 +2,12 @@ package org.coc.tools.shared.model;
 
 import java.io.Serializable;
 
-import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-@Subclass(index=true)
-public class WarResult  extends ObjectifyEntity  implements Serializable {
+//@Subclass(index=true)
+@Entity
+public class WarResult   implements Serializable,ObjectifyEntity {
 
 	/**
 	 * 
@@ -30,7 +32,17 @@ public class WarResult  extends ObjectifyEntity  implements Serializable {
 	private String	heroicAttackPlayer="";
 	private String	heroicDefensePlayer="";
 	
-	
+	@Id
+	private Long	id;
+
+	@Override
+	public Long getRowId() {
+		return this.id;
+	}
+	@Override
+	public void setRowId(Long id) {
+		this.id = id;
+	}
 	
 	public Long getClanId() {
 		return clanId;
