@@ -60,7 +60,7 @@ public class ClanEditPanel {
 		clanTag.setEnabled(eidtClanTag);
 		clanName.setEnabled(eidtClanName);
 	}
-	public Widget getWidget(){
+	public Widget asWidget(){
 		return holder;
 	}
 	public String	getClanTag(){

@@ -28,4 +28,14 @@ public class ResHelper {
 	public static String makeImgHtml(String imgUrl,String width,String height){
 		return "<img src='" + imgUrl + "' style='width:"+width+";height:"+height+"'>";
 	}
+	public static String getCwWonImgAbsUrl(){
+		//\res\img\web-img\btn
+		return GWT.getHostPageBaseURL()+"res/img/web-img/btn/"+"cw-won.png";
+	}
+	public static String getCwLostImgAbsUrl(){
+		return GWT.getHostPageBaseURL()+"res/img/web-img/btn/"+"cw-lost.png";
+	}
+	public static String getCwDrawImgAbsUrl(){
+		return GWT.getHostPageBaseURL()+"res/img/web-img/btn/"+"cw-draw.png";
+	}
 }

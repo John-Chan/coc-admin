@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
@@ -22,6 +23,7 @@ import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
 import org.coc.tools.client.widget.ClanInfoPanel;
+import org.coc.tools.client.widget.ClanInfoPanelEx;
 import org.coc.tools.client.widget.ClanInfoWidget;
 import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
@@ -51,7 +53,8 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 		headerTable=new FlexTable();
 		regClanButton=new Button("Create");
-		homeClanPanel=new ClanInfoPanel();
+		//homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.SMALL);
+		homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.MIDDLE);
 		//homeClanName=new Label("N/A");
 		//homeClanTag=new Label("N/A");
 		//homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
@@ -70,7 +73,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private void initHearderBar(){
 
 		GridHelper pusher=new GridHelper(headerTable);
-		pusher.pushBack(homeClanPanel.getWidget()).pushBack(new HTML("")).pushBack(homeClanBox).pushBack(new HTML("")).pushBack(regClanButton);
+		pusher.pushBack(homeClanPanel.asWidget()).pushBack(new HTML("")).pushBack(homeClanBox).pushBack(new HTML("")).pushBack(regClanButton);
 
 
 		headerTable.setWidth("100%");
@@ -199,6 +202,51 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public void setCwEntryList(List<CWIndexData> data) {
 		cwIndexsTable.removeAllRows();
 
+		String paddingWidth="32px";
+		GridHelper pusher=new GridHelper(cwIndexsTable);
+	
+		for (int i = 0; i < data.size(); ++i) {
+			if(i==0){
+				// title
+				pusher.pushBack( new HTML(UiStrConstants.ValueNames.WAR_INDEX_ID))
+				.pushBack(GridHelper.paddingHtml(paddingWidth))
+				.pushBack(new HTML(UiStrConstants.ValueNames.ENEMY_CLAN))
+				.pushBack(GridHelper.paddingHtml(paddingWidth))
+				.pushBack(new HTML(UiStrConstants.ValueNames.WAR_PREPARE_DATE))
+				.pushBack(GridHelper.paddingHtml(paddingWidth))
+				.pushBack(GridHelper.paddingHtml(paddingWidth))
+				.pushBack(GridHelper.paddingHtml(paddingWidth));
+				pusher.nextRow();
+			}
+
+			CWIndexData aRow=data.get(i);
+			Button bookBtn=new Button("Book a base");
+			Button resultBtn=new Button("View Or Edit Result");
+			//ClanInfoWidget clanPanel=new ClanInfoPanel();
+			ClanInfoWidget clanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.SMALL);
+			clanPanel.showTag(false);
+			clanPanel.update(aRow.getData().getEnemyClan().getClanTag(), aRow.getData().getEnemyClan().getClanName(), aRow.getData().getEnemyClan().getClanSymbol());
+			if(!aRow.isCanBookBase()){
+				bookBtn.setEnabled(false);
+			}
+			// data
+			String warId=Long.toString(aRow.getData().getRowId());
+			//String warId=Long.toHexString(aRow.getData().getRowId());
+			pusher.pushBack( new HTML(warId ))
+			.pushBack(GridHelper.paddingHtml(paddingWidth))
+			.pushBack(clanPanel.asWidget())
+			.pushBack(GridHelper.paddingHtml(paddingWidth))
+			.pushBack(new HTML(DateTimeFmt.getString(aRow.getData().getPrepareDate(),DateTimeFmt.FmtLongGmt())))
+			.pushBack(GridHelper.paddingHtml(paddingWidth))
+			.pushBack(bookBtn)
+			.pushBack(resultBtn);
+			pusher.nextRow();
+			
+			
+		}
+		/*
+		//homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.MIDDLE);
+		// 
 		int tabRowIndex=0;
 		int tabColIndex=0;
 		/// set title
@@ -232,6 +280,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			
 			tabRowIndex++;
 		}
+		*/
 		
 	}
 

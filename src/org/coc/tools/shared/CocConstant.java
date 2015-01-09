@@ -14,6 +14,10 @@ public  class CocConstant {
 		public	static final int	MULTIPLES_STAR1=1;
 		public	static final int	MULTIPLES_STAR2=2;
 		public	static final int	MULTIPLES_STAR3=3;
+		
+
+		public	static final int	MIN_TH_LEVEL=3;
+		public	static final int	MAX_TH_LEVEL=10;
 	}
 	
 	public static class ClanInfo{

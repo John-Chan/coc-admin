@@ -10,6 +10,11 @@ public class GridHelper {
 	public static HTML paddingHtml(){
 		return new HTML("");
 	}
+	public static HTML paddingHtml(String width){
+		HTML padding= new HTML("");
+		padding.setWidth(width);
+		return padding;
+	}
 	public static class HorizontalAlign{
 
 		public static void alignAllMirrorCenter(final HTMLTable	ref,int row){
@@ -79,16 +84,6 @@ public class GridHelper {
 			}
 		}
 		
-		
-		/*
-		public static void alignAllToVCenter(final HTMLTable	ref,int row){
-			int colCount=ref.getCellCount(row);
-			for(int n=0;n<colCount;++n){
-				//ref.getCellFormatter().setHorizontalAlignment(row, n, DockPanel.ALIGN_TOP);
-				ref.getCellFormatter().setVerticalAlignment(row, n, DockPanel.ALIGN_CENTER);
-			}
-		}
-		*/
 	}
 	private final HTMLTable	ref;
 	private int	rowIndex=0;
@@ -114,6 +109,10 @@ public class GridHelper {
 	}
 	
 	
+	public GridHelper(HTMLTable	ref,int startRowIndex){
+		this.ref=ref;
+		resetPos(startRowIndex,0);
+	}
 	public GridHelper(HTMLTable	ref){
 		this.ref=ref;
 	}

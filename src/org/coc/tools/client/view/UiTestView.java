@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.widget.CWResultInputGroup;
+import org.coc.tools.client.widget.CWResultLessPanel;
 import org.coc.tools.client.widget.CWResultPanel;
 import org.coc.tools.client.widget.ClanEditPanel;
-import org.coc.tools.client.widget.ClanInfoPanelMiddle;
+import org.coc.tools.client.widget.ClanInfoPanelEx;
 import org.coc.tools.client.widget.DateTimePicker;
 import org.coc.tools.shared.DateTimeFmt;
+import org.coc.tools.shared.TestHelper;
+import org.coc.tools.shared.model.ClanWarEntryPojo;
 import org.gwt.advanced.client.ui.widget.Calendar;
 import org.gwt.advanced.client.ui.widget.DatePicker;
 
@@ -20,6 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class UiTestView extends BasicView {
 
+	
 	public UiTestView(){
 		//showCalendar();
 		//showDatePicker();
@@ -27,7 +31,8 @@ public class UiTestView extends BasicView {
 		//showClanEditPanel();
 		//showClanInfoPanelMiddle();
 		//showCWResultInputGroup();
-		showCWResultPanel();
+		//showCWResultPanel();
+		showCWResultLessPanel();
 	}
 	
 	public void showDateTimePicker(){
@@ -56,12 +61,13 @@ public class UiTestView extends BasicView {
 	public void showClanEditPanel(){
 		ClanEditPanel edtPanel= new ClanEditPanel();
 		edtPanel.setReadOnly(true, true, true);
-		super.setCenter(edtPanel.getWidget());
+		super.setCenter(edtPanel.asWidget());
 	}
 	public void showClanInfoPanelMiddle(){
-		ClanInfoPanelMiddle panel= new ClanInfoPanelMiddle("#UI0PUQE","nakama ck","40");
+		ClanInfoPanelEx panel= new ClanInfoPanelEx("#UI0PUQE","nakama ck","40");
+		panel.setBorderWidth(1);
 		//edtPanel.setReadOnly(true, true, true);
-		super.setCenter(panel.getWidget());
+		super.setCenter(panel.asWidget());
 	}
 	//
 	public void	showCWResultInputGroup(){
@@ -87,6 +93,15 @@ public class UiTestView extends BasicView {
 		panel.getEnemyClanPanel().update("#R5YEQ3", "NAKAMA UNION", "32");
 		panel.update();
 		//panel.getWidget().setWidth("90%");
-		super.setCenter(panel.getWidget());
+		super.setCenter(panel.asWidget());
+	}
+	
+	public void showCWResultLessPanel(){
+		CWResultLessPanel panel=new CWResultLessPanel();
+		panel.setBorderWidth(1);
+		//panel.setGridBorderWidth(1);
+		List<ClanWarEntryPojo> datas=	TestHelper.makeClanWarEntryPojoList(20,"#R5YEQ3", "NAKAMA UNION", "32");
+		panel.addData(datas);
+		super.setCenter(panel.asWidget());
 	}
 }

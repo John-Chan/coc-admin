@@ -31,7 +31,7 @@ public class ClanEditView extends Composite implements
 		contentDetailsDecorator.setWidth("80%");
 		initWidget(contentDetailsDecorator);
 		VerticalPanel contentDetailsPanel = new VerticalPanel();
-		contentDetailsPanel.add(clanEditPanel.getWidget());
+		contentDetailsPanel.add(clanEditPanel.asWidget());
 
 		HorizontalPanel menuPanel = new HorizontalPanel();
 		menuPanel.add(saveButton);

@@ -6,6 +6,9 @@ public class UiSizeConstants {
 		public static final String IMG_WIDTH_32="32px";
 		public static final String IMG_HIGHT_32="32px";
 
+		public static final String IMG_WIDTH_48="48px";
+		public static final String IMG_HIGHT_48="48px";
+
 		public static final String IMG_WIDTH_64="64px";
 		public static final String IMG_HIGHT_64="64px";
 		

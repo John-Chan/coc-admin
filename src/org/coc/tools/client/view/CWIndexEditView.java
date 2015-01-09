@@ -143,10 +143,10 @@ public class CWIndexEditView extends Composite implements
 		contentDetailsDecorator.add(contentDetailsPanel);
 		
 		GridHelper pusher=new GridHelper(detailsTable);
-		pusher.pushBack(new Label("Home Team")).pushBack(new HTML("")).pushBack(homeClanInfoPanel.getWidget());
+		pusher.pushBack(new Label("Home Team")).pushBack(new HTML("")).pushBack(homeClanInfoPanel.asWidget());
 
 		pusher.nextRow();
-		pusher.pushBack(new Label("Enemy Team")).pushBack(new HTML("")).pushBack(enemyClanInfoPanel.getWidget());
+		pusher.pushBack(new Label("Enemy Team")).pushBack(new HTML("")).pushBack(enemyClanInfoPanel.asWidget());
 		
 		pusher.nextRow();
 		pusher.pushBack(new Label("Scope")).pushBack(new HTML("")).pushBack(scopeBox);

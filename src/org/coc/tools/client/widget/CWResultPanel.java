@@ -7,13 +7,14 @@ import org.coc.tools.shared.CocConstant;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CWResultPanel {
+public class CWResultPanel implements IsWidget{
 
-	private final ClanInfoPanelMiddle	homeClanPanel;
-	private final ClanInfoPanelMiddle	enemyClanPanel;
+	private final ClanInfoPanelEx	homeClanPanel;
+	private final ClanInfoPanelEx	enemyClanPanel;
 	private final VerticalPanel	introPanel;
 	////
 	private final CWResultInputGroup homeInputGroup;
@@ -26,8 +27,8 @@ public class CWResultPanel {
 	private int scope=CocConstant.WarCounters.MIN_PLAYER_COUNT;
 	
 	public CWResultPanel(){
-		homeClanPanel=new ClanInfoPanelMiddle();
-		enemyClanPanel=new ClanInfoPanelMiddle();
+		homeClanPanel=new ClanInfoPanelEx();
+		enemyClanPanel=new ClanInfoPanelEx();
 		introPanel= new VerticalPanel();
 		homeInputGroup=new CWResultInputGroup();
 		enemyInputGroup=new CWResultInputGroup();
@@ -39,12 +40,12 @@ public class CWResultPanel {
 	private void	initLayout(){
 
 		holder.clear();
-		homeClanPanel.resetHorizontalStyle(ClanInfoPanelMiddle.HorizontalStyle.RIGHT_SIDE_ALIGN);
-		enemyClanPanel.resetHorizontalStyle(ClanInfoPanelMiddle.HorizontalStyle.LEFT_SIDE_ALIGN);
+		homeClanPanel.resetHorizontalStyle(ClanInfoPanelEx.HORIZONTAL_STYLE.RIGHT_SIDE_ALIGN);
+		enemyClanPanel.resetHorizontalStyle(ClanInfoPanelEx.HORIZONTAL_STYLE.LEFT_SIDE_ALIGN);
 		introPanel.add(introMsg);
 		GridHelper pusher=new GridHelper(inputTable);
 		pusher.pushBack(GridHelper.paddingHtml());
-		pusher.pushBack(homeClanPanel.getWidget()).pushBack(introPanel).pushBack(enemyClanPanel.getWidget());
+		pusher.pushBack(homeClanPanel.asWidget()).pushBack(introPanel).pushBack(enemyClanPanel.asWidget());
 		pusher.pushBack(GridHelper.paddingHtml());
 		
 		List<Widget> homeInputs=homeInputGroup.getInputWidgets();
@@ -70,14 +71,14 @@ public class CWResultPanel {
 		holder.add(inputTable);
 	}
 
-	public Widget getWidget(){
+	public Widget asWidget(){
 		return holder;
 	}
-	public ClanInfoPanelMiddle getHomeClanPanel() {
+	public ClanInfoPanelEx getHomeClanPanel() {
 		return homeClanPanel;
 	}
 
-	public ClanInfoPanelMiddle getEnemyClanPanel() {
+	public ClanInfoPanelEx getEnemyClanPanel() {
 		return enemyClanPanel;
 	}
 

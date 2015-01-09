@@ -18,6 +18,7 @@ public class ClanInfoPanel extends ClanInfoWidget {
 	private Label lableClanTag=new Label("N/A");
 	private Label lableClanName=new Label("N/A");
 	private HTML imgClanSymbol=new HTML( getSymbolImg32Html(null));
+	private boolean showTag=true;
 	public ClanInfoPanel(){
 		update(clan);
 	}
@@ -26,6 +27,11 @@ public class ClanInfoPanel extends ClanInfoWidget {
 	}
 	public ClanInfoPanel(String tag,String name,String symbol){
 		update( tag, name, symbol);
+	}
+	@Override
+	public void update() {
+		update(this.clan);
+		
 	}
 	@Override
 	public	void update(Clan clan){
@@ -45,7 +51,7 @@ public class ClanInfoPanel extends ClanInfoWidget {
 		initData();
 	}
 	@Override
-	public Widget getWidget(){
+	public Widget asWidget(){
 		return holder;
 	}
 	@Override
@@ -62,11 +68,15 @@ public class ClanInfoPanel extends ClanInfoWidget {
 	private void	initLayout(){
 
 		holder.clear();
+		container.clear();
 		GridHelper pusher=new GridHelper(container);
 		pusher.pushBack(imgClanSymbol).pushBack(new HTML(""))
-		.pushBack(lableClanName).pushBack(new HTML(""))
-		.pushBack(lableClanTag);
+		.pushBack(lableClanName);
 
+		if(this.showTag){
+			pusher.pushBack(new HTML("")).pushBack(lableClanTag);
+		}
+		
 		container.setWidth("100%");
 		
 		GridHelper.VerticalAlign.alignAllToTop(container);
@@ -78,6 +88,13 @@ public class ClanInfoPanel extends ClanInfoWidget {
 	@Override
 	public void setBorderWidth(int size) {
 		holder.setBorderWidth(size);
+		
+	}
+	@Override
+	public boolean showTag(boolean show) {
+		boolean old=this.showTag;
+		this.showTag=show;
+		return old;
 		
 	}
 }
