@@ -1,11 +1,9 @@
 package org.coc.tools.client;
 
-import java.util.ArrayList;
-
-
-
+import java.util.List;
 
 import org.coc.tools.shared.model.CWIndex;
+
 
 //import com.google.gwt.sample.contacts.shared.Contact;
 //import com.google.gwt.sample.contacts.shared.ContactDetails;
@@ -18,7 +16,7 @@ public interface CWIndexService extends RemoteService {
 
 	// Boolean deleteCWIndex(Long id);
 	// ArrayList<CWIndex> deleteContacts(ArrayList<Long> ids);
-	ArrayList<CWIndex> getCWIndexList(int maxResult);
+	List<CWIndex> getCWIndexList(int maxResult);
 	CWIndex getCWIndex(Long id);
 	CWIndex updateCWIndex(CWIndex one);
 }

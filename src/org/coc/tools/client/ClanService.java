@@ -1,6 +1,6 @@
 package org.coc.tools.client;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.shared.model.Clan;
 
@@ -16,9 +16,9 @@ public interface ClanService extends RemoteService{
 	Clan	addClan(String	clanTag,String	clanName,String	clanSymbol,Clan.REG_STATUS registered);
 
 	Clan	removeClanByTag(String	clanTag);
-	ArrayList<Clan> getRegedClanList(int maxResult);
-	ArrayList<Clan> getClanList(int maxResult);
-	ArrayList<Clan> getClanListByName(String	clanName,int maxResult);
+	List<Clan> getRegedClanList(int maxResult);
+	List<Clan> getClanList(int maxResult);
+	List<Clan> getClanListByName(String	clanName,int maxResult);
 	
 	
 	

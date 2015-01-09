@@ -2,11 +2,11 @@ package org.coc.tools.shared.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-//@Subclass(index=true)
 @Entity
 public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
 
@@ -22,8 +22,8 @@ public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
 	//private Clan enemyClan=new Clan();
 	private WarResult homeClanWarResult=new WarResult();
 	private WarResult enemyClanWarResult=new WarResult();
-	private ArrayList<WarBaseOrder> warBaseOrders =new ArrayList<WarBaseOrder>();
-	private ArrayList<WarDetail> warDetails =new ArrayList<WarDetail>();
+	private List<WarBaseOrder> warBaseOrders =new ArrayList<WarBaseOrder>();
+	private List<WarDetail> warDetails =new ArrayList<WarDetail>();
 	
 	public CWIndex getWarIndex() {
 		return warIndex;
@@ -66,16 +66,16 @@ public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
 	public void setEnemyClanWarResult(WarResult enemyClanWarResult) {
 		this.enemyClanWarResult = enemyClanWarResult;
 	}
-	public ArrayList<WarBaseOrder> getWarBaseOrders() {
+	public List<WarBaseOrder> getWarBaseOrders() {
 		return warBaseOrders;
 	}
-	public void setWarBaseOrders(ArrayList<WarBaseOrder> warBaseOrders) {
+	public void setWarBaseOrders(List<WarBaseOrder> warBaseOrders) {
 		this.warBaseOrders = warBaseOrders;
 	}
-	public ArrayList<WarDetail> getWarDetails() {
+	public List<WarDetail> getWarDetails() {
 		return warDetails;
 	}
-	public void setWarDetails(ArrayList<WarDetail> warDetails) {
+	public void setWarDetails(List<WarDetail> warDetails) {
 		this.warDetails = warDetails;
 	}
 

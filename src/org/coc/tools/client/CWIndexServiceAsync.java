@@ -1,6 +1,6 @@
 package org.coc.tools.client;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.shared.model.CWIndex;
 
@@ -10,7 +10,7 @@ public interface CWIndexServiceAsync {
 	void addCWIndex(CWIndex one,AsyncCallback<CWIndex> callback);
 	// Boolean deleteCWIndex(Long id);
 	// ArrayList<CWIndex> deleteContacts(ArrayList<Long> ids);
-	void getCWIndexList(int maxResult,AsyncCallback<ArrayList<CWIndex>> callback);
+	void getCWIndexList(int maxResult,AsyncCallback<List<CWIndex>> callback);
 	void getCWIndex(Long id,AsyncCallback<CWIndex> callback);
 	void updateCWIndex(CWIndex one,AsyncCallback<CWIndex> callback);
 }

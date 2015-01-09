@@ -6,7 +6,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
-//@Subclass(index=true)
 @Entity
 public class WarResult   implements Serializable,ObjectifyEntity {
 

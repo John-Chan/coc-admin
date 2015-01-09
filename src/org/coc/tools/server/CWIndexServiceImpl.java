@@ -1,6 +1,7 @@
 package org.coc.tools.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.client.CWIndexService;
 import org.coc.tools.server.dao.CWIndexDao;
@@ -26,7 +27,7 @@ public class CWIndexServiceImpl extends RemoteServiceServlet  implements CWIndex
 	}
 
 	@Override
-	public ArrayList<CWIndex> getCWIndexList(int maxResult) {
+	public List<CWIndex> getCWIndexList(int maxResult) {
 		return new ArrayList<CWIndex>(dao.getList(CWIndex.class, maxResult));
 		//long n=maxResult;
 		//return TestHelper.createCWIndexForTest(n);

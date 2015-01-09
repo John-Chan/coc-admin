@@ -202,9 +202,9 @@ public class CWIndexPresenter implements Presenter {
 
 	private void fetchRegedClans() {
 		rpcMgr.getClanServiceAsync().getRegedClanList(10,
-				new AsyncCallback<ArrayList<Clan>>() {
+				new AsyncCallback<List<Clan>>() {
 					@Override
-					public void onSuccess(ArrayList<Clan> result) {
+					public void onSuccess(List<Clan> result) {
 						regedClanList = result;
 						display.setRegedClanList(regedClanList);
 						setDefaultHomeClan();
@@ -222,8 +222,8 @@ public class CWIndexPresenter implements Presenter {
 	//
 	private void fetchCWIndexs(Clan clan) {
 		rpcMgr.getClanWarEntryService().getListByClanTag(clan.getClanTag(), 25,
-				new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
-					public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
+				new AsyncCallback<List<ClanWarEntryPojo>>() {
+					public void onSuccess(List<ClanWarEntryPojo> result) {
 						clanWarEntryPojoList = result;
 						sortClanWarEntryPojoList();
 						List<CWIndexData> data = new ArrayList<CWIndexData>();
@@ -254,8 +254,8 @@ public class CWIndexPresenter implements Presenter {
 
 	private void fetchCWIndexs() {
 		rpcMgr.getClanWarEntryService().getList(25,
-				new AsyncCallback<ArrayList<ClanWarEntryPojo>>() {
-					public void onSuccess(ArrayList<ClanWarEntryPojo> result) {
+				new AsyncCallback<List<ClanWarEntryPojo>>() {
+					public void onSuccess(List<ClanWarEntryPojo> result) {
 						clanWarEntryPojoList = result;
 						sortClanWarEntryPojoList();
 						List<CWIndexData> data = new ArrayList<CWIndexData>();

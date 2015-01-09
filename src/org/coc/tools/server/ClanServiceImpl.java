@@ -1,6 +1,7 @@
 package org.coc.tools.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.client.ClanService;
 import org.coc.tools.server.dao.ClanDao;
@@ -55,17 +56,17 @@ public class ClanServiceImpl extends RemoteServiceServlet  implements ClanServic
 	}
 
 	@Override
-	public ArrayList<Clan> getClanList(int maxResult) {
+	public List<Clan> getClanList(int maxResult) {
 		return new ArrayList<Clan>( dao.getList(Clan.class, maxResult));
 	}
 
 	@Override
-	public ArrayList<Clan> getClanListByName(String clanName, int maxResult) {
+	public List<Clan> getClanListByName(String clanName, int maxResult) {
 		return  new ArrayList<Clan>( dao.getClanByName(clanName));
 	}
 
 	@Override
-	public ArrayList<Clan> getRegedClanList(int maxResult) {
+	public List<Clan> getRegedClanList(int maxResult) {
 		return  new ArrayList<Clan>( dao.getRegedClan(maxResult));
 	}
 

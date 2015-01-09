@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.coc.tools.client.ClanWarEntryService;
 import org.coc.tools.server.dao.*;
+import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 import org.coc.tools.shared.model.WarBaseOrder;
 import org.coc.tools.shared.model.WarDetail;
+import org.coc.tools.shared.model.WarResult;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
@@ -120,7 +122,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	}
 
 	@Override
-	public ArrayList<ClanWarEntryPojo> getList(int maxResult) {
+	public List<ClanWarEntryPojo> getList(int maxResult) {
 		ArrayList<CWIndex> indexList=new ArrayList<>(cwIndexDao.getList(CWIndex.class, maxResult));
 		ArrayList<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
 		for(CWIndex one:indexList){
@@ -135,7 +137,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 		return loadWithoutTxn(warId);
 	}
 	@Override
-	public ArrayList<ClanWarEntryPojo> getListByClanTag(String tag,
+	public List<ClanWarEntryPojo> getListByClanTag(String tag,
 			int maxResult) {
 
 		ArrayList<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
@@ -146,6 +148,69 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 			}
 		}
 		return result;
+	}
+	@Override
+	public List<WarResult> getWarResultByWarId(Long warId) {
+		List<WarResult> list=new ArrayList<WarResult>();
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			list.add(full.getHomeClanWarResult());
+			list.add(full.getEnemyClanWarResult());
+		}
+		return list;
+	}
+	@Override
+	public RpcResult updateWarResultByWarId(Long warId, WarResult homeTeam,
+			WarResult enemyTeam) {
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			full.setEnemyClanWarResult(enemyTeam);
+			full.setHomeClanWarResult(homeTeam);
+			addWithoutTxn(full);
+			return new RpcResult();
+		}
+		return null;
+	}
+	@Override
+	public List<WarDetail> getWarDetailByWarId(Long warId) {
+		List<WarDetail> list=new ArrayList<WarDetail>();
+
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			list=full.getWarDetails();
+		}
+		return list;
+	}
+	@Override
+	public RpcResult updateWarDetailByWarId(Long warId, List<WarDetail> list) {
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			full.setWarDetails(list);
+			addWithoutTxn(full);
+			return new RpcResult();
+		}
+		return new RpcResult(RpcResult.ERROR_CODE.EC_FAILED,null);
+	}
+	@Override
+	public List<WarBaseOrder> getWarBaseOrderByWarId(Long warId) {
+		List<WarBaseOrder> list=new ArrayList<WarBaseOrder>();
+
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			list= full.getWarBaseOrders();
+		}
+		return list;
+	}
+	@Override
+	public RpcResult updateWarBaseOrderByWarId(Long warId,
+			List<WarBaseOrder> list) {
+		ClanWarEntryPojo full= getByWarId(warId);
+		if(full != null ){
+			full.setWarBaseOrders(list);
+			addWithoutTxn(full);
+			return new RpcResult();
+		}
+		return new RpcResult(RpcResult.ERROR_CODE.EC_FAILED,null);
 	}
 
 }

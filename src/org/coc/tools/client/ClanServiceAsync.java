@@ -1,6 +1,6 @@
 package org.coc.tools.client;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.coc.tools.shared.model.Clan;
 
@@ -15,7 +15,7 @@ public interface ClanServiceAsync {
 	void	addClan(String	clanTag,String	clanName,String	clanSymbol,Clan.REG_STATUS registered,AsyncCallback<Clan> callback);
 
 	void	removeClanByTag(String	clanTag,AsyncCallback<Clan> callback);
-	void 	getRegedClanList(int maxResult,AsyncCallback<ArrayList<Clan>> callback);
-	void 	getClanList(int maxResult,AsyncCallback<ArrayList<Clan>> callback);
-	void 	getClanListByName(String	clanName,int maxResult,AsyncCallback<ArrayList<Clan>> callback);
+	void 	getRegedClanList(int maxResult,AsyncCallback<List<Clan>> callback);
+	void 	getClanList(int maxResult,AsyncCallback<List<Clan>> callback);
+	void 	getClanListByName(String	clanName,int maxResult,AsyncCallback<List<Clan>> callback);
 }
