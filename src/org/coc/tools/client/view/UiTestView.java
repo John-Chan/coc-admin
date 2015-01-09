@@ -31,8 +31,8 @@ public class UiTestView extends BasicView {
 		//showClanEditPanel();
 		//showClanInfoPanelMiddle();
 		//showCWResultInputGroup();
-		//showCWResultPanel();
-		showCWResultLessPanel();
+		showCWResultPanel();
+		//showCWResultLessPanel();
 	}
 	
 	public void showDateTimePicker(){

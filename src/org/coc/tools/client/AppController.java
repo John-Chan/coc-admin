@@ -52,11 +52,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 		if (token != null) {
 			Presenter presenter = null;
-			/*if (token.equals(AppCmd.CMD_LIST_REGED_CLAN)) {
+			if (token.equals(AppCmd.CMD_REDIRECT_TO_HOME)) {
 				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
-			} else */
-			if (token.equals(AppCmd.CMD_LIST_CW_ENTRY)) {
+			} else if (token.equals(AppCmd.CMD_LIST_CW_ENTRY)) {
 				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
 			} 
