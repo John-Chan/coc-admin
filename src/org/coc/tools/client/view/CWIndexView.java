@@ -222,13 +222,13 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			CWIndexData aRow=data.get(i);
 			Button bookBtn=new Button("Book a base");
 			Button resultBtn=new Button("View Or Edit Result");
+			bookBtn.setEnabled(aRow.isCanBookBase());
+			
 			//ClanInfoWidget clanPanel=new ClanInfoPanel();
 			ClanInfoWidget clanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.SMALL);
 			clanPanel.showTag(false);
 			clanPanel.update(aRow.getData().getEnemyClan().getClanTag(), aRow.getData().getEnemyClan().getClanName(), aRow.getData().getEnemyClan().getClanSymbol());
-			if(!aRow.isCanBookBase()){
-				bookBtn.setEnabled(false);
-			}
+
 			// data
 			String warId=Long.toString(aRow.getData().getRowId());
 			//String warId=Long.toHexString(aRow.getData().getRowId());

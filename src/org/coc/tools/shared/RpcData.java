@@ -4,10 +4,15 @@ public class RpcData<DataType> extends  RpcResult {
 
 	private DataType	data=null;
 	
+	public RpcData(){
+		super();
+	}
+	public RpcData(ERROR_CODE ec,String msg){
+		super(ec,msg);
+	}
 
 	public RpcData(ERROR_CODE ec,String msg,DataType data){
-		this.setErrorCode(ec);
-		this.setMsg(msg);
+		super(ec,msg);
 		this.setData(data);
 	}
 	public boolean haveData(){

@@ -1,6 +1,15 @@
 package org.coc.tools.shared;
 
-public class RpcResult {
+import java.io.Serializable;
+
+public class RpcResult  implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3464174576947875481L;
+	
 	public enum ERROR_CODE{EC_NO_ERR,EC_FAILED};
 	public static String defaultErrmsg(ERROR_CODE ec){
 		switch(ec){
