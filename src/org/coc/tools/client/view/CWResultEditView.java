@@ -52,9 +52,9 @@ public class CWResultEditView  extends BasicView implements CWResultEditPresente
 		menuPanel.add(saveButton);
 		menuPanel.add(saveAndLockButton);
 		menuPanel.add(cancelButton);
-		saveButton.setWidth("96px");
-		saveAndLockButton.setWidth("96px");
-		cancelButton.setWidth("96px");
+		saveButton.setWidth("130px");
+		saveAndLockButton.setWidth("130px");
+		cancelButton.setWidth("130px");
 		//contentTable.add();
 		containerPanel.add(contentTable);
 		this.setCenter(containerPanel); 
@@ -101,12 +101,12 @@ public class CWResultEditView  extends BasicView implements CWResultEditPresente
 	@Override
 	public void enableUpdate(boolean val) {
 		saveButton.setEnabled(val);
+		saveAndLockButton.setEnabled(val);
 		
 	}
 	@Override
 	public HasClickHandlers getSaveAndLockButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.saveAndLockButton;
 	}
 
 }

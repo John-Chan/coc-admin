@@ -35,11 +35,12 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	private String	heroicAttackPlayer="";
 	@Index
 	private String	heroicDefensePlayer="";
-	@Index
-	private boolean locked=false;
 	@Id
 	private Long	id;
 
+	@Index
+	private boolean locked=false;
+	
 	@Override
 	public Long getRowId() {
 		return this.id;

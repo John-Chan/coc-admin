@@ -132,6 +132,7 @@ public class CWResultEditPresenter implements Presenter {
 	*/
 	private void	doSave(boolean locked){
 		if(!canUpdate(currentCwData)) return;
+		
 		currentCwData=display.getCwData();
 		currentCwData.getHomeClanWarResult().setLocked(locked);
 		currentCwData.getEnemyClanWarResult().setLocked(locked);
