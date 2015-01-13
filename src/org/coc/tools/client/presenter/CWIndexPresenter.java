@@ -7,7 +7,9 @@ import java.util.List;
 import org.coc.tools.client.RpcManager;
 import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.ClanAddEvt;
+import org.coc.tools.client.event.CwResultEditEvt;
 import org.coc.tools.client.event.HomeClanSwitchEvt;
+import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -27,11 +29,15 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CWIndexPresenter implements Presenter {
 
-	public class CWIndexData {
+	public static  class CWIndexData {
+		/*public interface DataWorker{
+			void	doEditCwResult();
+		}*/
 		private CWIndex data = null;
 		private boolean canBookBase = true;
 		private boolean canUpdateWarResult = true;
 		private boolean canUpdateWarDetail = true;
+		private ClickHandler	clickHandlerForEdtCwRet=null;
 
 		public CWIndex getData() {
 			return data;
@@ -65,6 +71,24 @@ public class CWIndexPresenter implements Presenter {
 			this.canUpdateWarDetail = canUpdateWarDetail;
 		}
 
+		public ClickHandler getClickHandlerForEdtCwRet() {
+			return clickHandlerForEdtCwRet;
+		}
+
+		public void setClickHandlerForEdtCwRet(ClickHandler clickHandlerForEdtCwRet) {
+			this.clickHandlerForEdtCwRet = clickHandlerForEdtCwRet;
+		}
+		
+
+		/*public DataWorker getEvtHandler() {
+			return dataWorker;
+		}
+
+		public void setEvtHandler(DataWorker dataWorker) {
+			this.dataWorker = dataWorker;
+		}*/
+		
+
 	}
 
 	public interface Display {
@@ -93,12 +117,9 @@ public class CWIndexPresenter implements Presenter {
 		Widget asWidget();
 	}
 
-	private static final int HOME_CLAN_NOT_SELECTED = -1;
 	private List<ClanWarEntryPojo> clanWarEntryPojoList;
 	private List<Clan> regedClanList;
-	private int currentClan = HOME_CLAN_NOT_SELECTED;
-	// private final CWIndexServiceAsync rpcService;
-	// private final ClanWarEntryServiceAsync rpcService;
+
 	private final RpcManager rpcMgr;
 	private final HandlerManager eventBus;
 	private final Display display;
@@ -123,6 +144,7 @@ public class CWIndexPresenter implements Presenter {
 		this.display = view;
 	}
 
+	
 	public List<ClanWarEntryPojo> getClanWarEntryPojoList() {
 		return clanWarEntryPojoList;
 	}
@@ -151,14 +173,11 @@ public class CWIndexPresenter implements Presenter {
 
 		display.getRegedClanBox().addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
-				currentClan = display.getSelectedRegClan();
-
-				switchHomeClan(currentClan,true,true);
+				int index = display.getSelectedRegClan();
+				if(index >=0 && index < regedClanList.size()){
+					switchHomeClan(regedClanList.get(index),true,true);
+				}
 				
-				/*Clan clan = regedClanList.get(currentClan);
-				display.setRegedClan(clan);
-				fetchCWIndexs(clan);
-				eventBus.fireEvent(new HomeClanSwitchEvt(clan));*/
 			}
 		});
 
@@ -192,12 +211,31 @@ public class CWIndexPresenter implements Presenter {
 		 */
 	}
 
+	
 	private void setDefaultHomeClan() {
-		if (HOME_CLAN_NOT_SELECTED == currentClan && regedClanList.size() > 0) {
+		String cookie=CookieHelper.getHomeClanTag();
+		Clan forSwitch=null;
+		if(regedClanList.size() > 0){
+			if(cookie==null ){
+				forSwitch=regedClanList.get(0);
+			}else{
+				int found=CookieHelper.tagExists(cookie, regedClanList);
+				if(found==-1){
+					forSwitch=regedClanList.get(0);
+					//
+				}else{
+					forSwitch=regedClanList.get(found);
+				}
+			}
+		}
 
+		if(forSwitch!=null){
+			switchHomeClan(forSwitch,true,true);
+		}
+		/*if (HOME_CLAN_NOT_SELECTED == currentClan && regedClanList.size() > 0) {
 			currentClan = 0;
 			switchHomeClan(currentClan,true,true);
-		}
+		}*/
 	}
 
 	private void fetchRegedClans() {
@@ -230,9 +268,12 @@ public class CWIndexPresenter implements Presenter {
 
 						for (int i = 0; i < result.size(); ++i) {
 
-							CWIndex one = clanWarEntryPojoList.get(i)
-									.getWarIndex();
+							ClanWarEntryPojo fullInfo=clanWarEntryPojoList.get(i);
+							CWIndex one = fullInfo.getWarIndex();
 							CWIndexData forView = new CWIndexData();
+							forView.setClickHandlerForEdtCwRet(createClickHandlerForCwRetEdt(one));
+							boolean canUpdate=fullInfo.getEnemyClanWarResult().isLocked()&&fullInfo.getHomeClanWarResult().isLocked();
+							forView.setCanUpdateWarResult(!canUpdate);
 							forView.setData(one);
 							// / TODO: TIMEZEON PROBLEN
 							if (new Date().after(one.getEndDate())) {
@@ -252,7 +293,7 @@ public class CWIndexPresenter implements Presenter {
 				});
 	}
 
-	private void fetchCWIndexs() {
+	/*private void fetchCWIndexs() {
 		rpcMgr.getClanWarEntryService().getList(25,
 				new AsyncCallback<List<ClanWarEntryPojo>>() {
 					public void onSuccess(List<ClanWarEntryPojo> result) {
@@ -262,9 +303,10 @@ public class CWIndexPresenter implements Presenter {
 
 						for (int i = 0; i < result.size(); ++i) {
 
-							CWIndex one = clanWarEntryPojoList.get(i)
+							final CWIndex one = clanWarEntryPojoList.get(i)
 									.getWarIndex();
 							CWIndexData forView = new CWIndexData();
+							forView.setClickHandlerForEdtCwRet(createClickHandlerForCwRetEdt(one));
 							forView.setData(one);
 							// / TODO: TIMEZEON PROBLEN
 							if (new Date().after(one.getEndDate())) {
@@ -282,12 +324,12 @@ public class CWIndexPresenter implements Presenter {
 						GWT.log("Error fetchCWIndexs.", caught);
 					}
 				});
-	}
+	}*/
 
-	private void switchHomeClan(int index, boolean fireEvt, boolean updateCwList) {
+	private void switchHomeClan(Clan clan , boolean fireEvt, boolean updateCwList) {
 
 		//currentClan = index;
-		Clan clan = regedClanList.get(currentClan);
+		//Clan clan = regedClanList.get(currentClan);
 		display.setRegedClan(clan);
 		if (updateCwList)
 			fetchCWIndexs(clan);
@@ -295,34 +337,15 @@ public class CWIndexPresenter implements Presenter {
 			eventBus.fireEvent(new HomeClanSwitchEvt(clan));
 	}
 
-	/*
-	 * private void fetchCWIndexs() { rpcService.getCWIndexList(10, new
-	 * AsyncCallback<ArrayList<CWIndex>>() { public void
-	 * onSuccess(ArrayList<CWIndex> result) { cwIndexList = result;
-	 * sortCwIndexList(); List<List<String>> data=new ArrayList<List<String>>();
-	 * List<String> title = new ArrayList<String>(); /// put title
-	 * title.add("Enemy clan tag"); title.add("Enemy clan name");
-	 * title.add("Enemy clan symobl"); title.add("Prepare Date");
-	 * data.add(title); /// put row
-	 * 
-	 * 
-	 * for (int i = 0; i < result.size(); ++i) {
-	 * 
-	 * List<String> row = new ArrayList<String>();
-	 * 
-	 * row.add(cwIndexList.get(i).getEnemyClan().getClanTag());
-	 * row.add(cwIndexList.get(i).getEnemyClan().getClanName());
-	 * row.add(cwIndexList.get(i).getEnemyClan().getClanSymbol());
-	 * row.add(cwIndexList.get(i).getPrepareDate().toString());
-	 * 
-	 * data.add(row); }
-	 * 
-	 * display.setData(data); }
-	 * 
-	 * public void onFailure(Throwable caught) {
-	 * Window.alert("Error fetchCWIndexs."); GWT.log("Error fetchCWIndexs.",
-	 * caught); } }); }
-	 */
+	private ClickHandler	createClickHandlerForCwRetEdt(final CWIndex cwIndex){
+		return new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new CwResultEditEvt(cwIndex.getRowId()));
+			}
+		};
+	}
 	private void deleteSelectedCWIndex() {
 		/*
 		 * List<Integer> selectedRows = display.getSelectedRows();

@@ -97,11 +97,13 @@ public class CWResultPanel implements IsWidget{
 	}
 	public void setScope(int scope) {
 		this.scope = scope;
+		homeInputGroup.resetScope(scope,false);
+		enemyInputGroup.resetScope(scope,false);
 	}
 	public void	update(){
 		introMsg.setHTML(scope +" vs "+scope);
-		homeInputGroup.reset(scope);
-		enemyInputGroup.reset(scope);
+		homeInputGroup.resetScope(scope,false);
+		enemyInputGroup.resetScope(scope,false);
 	}
 	 
 	

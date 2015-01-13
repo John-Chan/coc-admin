@@ -23,15 +23,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class CWIndexEditView extends Composite implements
 		CWIndexEditPresenter.Display {
 
-	private static final String SAVE_BTN_STR="Save";
-	private static final String CANCEL_BTN_STR="Cancel";
-	
-	// private final ListBox scope;
-	//private final TextBox homeClanId;
-	//DateTimePicker
-	//private final TextBox enemyClanTag;
-	//private final TextBox enemyClanName;
-	//private final TextBox enemyClanSymbol;
+	private static final String SAVE_BTN_STR = UiStrConstants.TitleTxt.SAVE_BTN_STR;
+	private static final String CANCEL_BTN_STR = UiStrConstants.TitleTxt.CANCEL_BTN_STR;
+
 	private final ClanEditPanel	homeClanInfoPanel;
 	private final ClanEditPanel	enemyClanInfoPanel;
 	//private final TextBox scope;
@@ -39,9 +33,6 @@ public class CWIndexEditView extends Composite implements
 	private final ComboBox<ComboBoxDataModel> scopeBox;
 	private final ComboBoxDataModel scopeDataModel;
 
-	//private final Label homeClanTag;
-	//private final Label homeClanName;
-	//private final HTML homeClanSymbolImg;
 	
 	private final FlexTable detailsTable;
 	private final Button saveButton;
@@ -112,18 +103,6 @@ public class CWIndexEditView extends Composite implements
 		*/
 	}
 
-
-	/*
-	private boolean checkEnemyClanSymbol(){
-		String val=enemyClanSymbol.getValue();
-    	return FieldVerifier.isValidClanSymbol(val).getPassed();
-	}
-	private boolean checkPlayerCount(){
-
-		String val=scope.getValue();
-    	return FieldVerifier.isValidCwPlayerCount(val).getPassed();
-	}
-	*/
 
 	private void initLayout() {
 

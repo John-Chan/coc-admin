@@ -13,8 +13,8 @@ import org.coc.tools.client.widget.ClanEditPanel;
 public class ClanEditView extends Composite implements
 		ClanEditPresenter.Display {
 
-	private static final String SAVE_BTN_STR = "Save";
-	private static final String CANCEL_BTN_STR = "Cancel";
+	private static final String SAVE_BTN_STR = UiStrConstants.TitleTxt.SAVE_BTN_STR;
+	private static final String CANCEL_BTN_STR = UiStrConstants.TitleTxt.CANCEL_BTN_STR;
 
 	private final Button saveButton;
 	private final Button cancelButton;

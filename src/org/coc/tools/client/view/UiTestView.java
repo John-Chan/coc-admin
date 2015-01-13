@@ -73,7 +73,7 @@ public class UiTestView extends BasicView {
 	public void	showCWResultInputGroup(){
 		int scope=45;
 		CWResultInputGroup group=new CWResultInputGroup();
-		group.reset(scope);
+		group.resetScope(scope,true);
 		List<Widget> inputs=group.getInputWidgets();
 		FlexTable container=new FlexTable();
 		GridHelper pusher=new GridHelper(container);

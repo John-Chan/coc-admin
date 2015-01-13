@@ -12,16 +12,25 @@ import org.coc.tools.client.event.ClanUpdateCancelEvt;
 import org.coc.tools.client.event.ClanUpdateCancelEvtHandler;
 import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.client.event.ClanUpdateEvtHandler;
+import org.coc.tools.client.event.CwResultEditEvt;
+import org.coc.tools.client.event.CwResultEditEvtHandler;
+import org.coc.tools.client.event.CwResultUpdateCancelEvt;
+import org.coc.tools.client.event.CwResultUpdateCancelEvtHandler;
+import org.coc.tools.client.event.CwResultUpdateEvt;
+import org.coc.tools.client.event.CwResultUpdateEvtHandler;
 import org.coc.tools.client.event.HomeClanSwitchEvt;
 import org.coc.tools.client.event.HomeClanSwitchEvtHandler;
+import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
+import org.coc.tools.client.presenter.CWResultEditPresenter;
 import org.coc.tools.client.presenter.Presenter;
 import org.coc.tools.client.presenter.UiTestPresenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
 import org.coc.tools.client.view.ClanEditView;
+import org.coc.tools.client.view.CWResultEditView;
 import org.coc.tools.shared.model.Clan;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -37,13 +46,25 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	
 	private HasWidgets container;
 
-	private Clan	homeClan=null;
+	private final Clan	homeClan;
 	
 	public AppController(HandlerManager eventBus) {
 		this.eventBus = eventBus;
+		homeClan=new Clan();
 		bind();
 	}
 
+	private boolean homeClanSetted(){
+		if(
+				homeClan.getClanTag() == null || 
+				homeClan.getClanTag().isEmpty() ||
+				homeClan.getClanName() == null || 
+				homeClan.getClanName().isEmpty()
+				){
+			return false;
+		}
+		return true;
+	}
 	/// URL driven
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
@@ -59,25 +80,25 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				presenter = new CWIndexPresenter(rpcMgr, eventBus,
 						new CWIndexView());
 			} 
-			else if (token.equals(AppCmd.CMD_ADD_CW_ENTRY) && homeClan!=null) {
+			else if (token.equals(AppCmd.CMD_ADD_CW_ENTRY) && homeClanSetted()) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView(),homeClan);
-			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY) && homeClan!=null) {
+			} else if (token.equals(AppCmd.CMD_EDIT_CW_ENTRY) && homeClanSetted()) {
 				presenter = new CWIndexEditPresenter(rpcMgr.getClanWarEntryService(), eventBus,
 						new CWIndexEditView(),homeClan);
 			}else if (token.equals(AppCmd.CMD_ADD_REGED_CLAN)) {
 				
 				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
 						new ClanEditView());
-				//presenter = new CWIndexPresenter(rpcMgr, eventBus,
-				//		new CWIndexView());
 			}else if (token.equals(AppCmd.CMD_DEBUG_UI)) {
 				
 				presenter = new UiTestPresenter();
-				//presenter = new CWIndexPresenter(rpcMgr, eventBus,
-				//		new CWIndexView());
 			}
-
+			/*
+			else if (token.equals(AppCmd.CMD_EDIT_CW_RESULT)) {
+				presenter = new CWResultEditPresenter(rpcMgr, eventBus,new CWResultEditView());
+			}
+			*/
 			//
 			if (presenter != null) {
 				presenter.go(container);
@@ -104,7 +125,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			@Override
 			public void onSwitch(HomeClanSwitchEvt event) {
 				//homeClan
-				AppController.this.homeClan=event.getClan();
+				AppController.this.homeClan.copyFull(event.getClan()) ;
+				CookieHelper.ensureHomeClanTagSaved(AppController.this.homeClan.getClanTag());
 				doListCwEntry();
 			}
 		});
@@ -177,12 +199,49 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				doListCwEntry();
 				
 			}
-	        });  
+	        }); 
+
+		/// reg evt for do edit
+	    eventBus.addHandler(CwResultEditEvt.TYPE,
+	        new CwResultEditEvtHandler() {
+
+			@Override
+			public void onEdit(CwResultEditEvt event) {
+				doEditCwResult(event.getWarId());
+				
+			}
+	        }); 
+	    
+		/// reg evt for update&save
+	    eventBus.addHandler(CwResultUpdateEvt.TYPE,
+	        new CwResultUpdateEvtHandler() {
+			@Override
+			public void onUpdate(CwResultUpdateEvt event) {
+				doListCwEntry();
+				
+			}
+	        }); 
+		/// reg evt for update&cancel
+	    eventBus.addHandler(CwResultUpdateCancelEvt.TYPE,
+	        new CwResultUpdateCancelEvtHandler() {
+			@Override
+			public void onCancel(CwResultUpdateCancelEvt event) {
+				doListCwEntry();
+				
+			}
+	        }); 
 
 	}
 	/// going to reg clan 
 	private void doAddClan() {
 		History.newItem(AppCmd.CMD_ADD_REGED_CLAN);
+	}
+
+	/// going to edit cw result 
+	private void doEditCwResult(Long warId) {
+		History.newItem(AppCmd.CMD_EDIT_CW_RESULT,false);
+		Presenter presenter= new CWResultEditPresenter(rpcMgr, eventBus, new CWResultEditView(), warId);
+		presenter.go(container);
 	}
 	/// going to add 
 	private void doAddCwEntry() {

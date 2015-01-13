@@ -7,6 +7,7 @@ import org.coc.tools.client.view.UiStrConstants;
 import org.coc.tools.shared.CocConstant;
 import org.coc.tools.shared.FieldVerifier;
 import org.coc.tools.shared.WarResultBuilder;
+import org.coc.tools.shared.model.WarResult;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -150,8 +151,9 @@ public class CWResultInputGroup {
 		finalStars.setText("");
 		newStarPeerAttack.setText("");
 	}
-	public void 	reset(int	scope){
-		clearInputs();
+	public void 	resetScope(int	scope,boolean clearInput){
+		if(clearInput)
+			clearInputs();
 		this.scope=scope;
 	}
 		
@@ -313,5 +315,75 @@ public class CWResultInputGroup {
 		return newStarPeerAttack;
 	}
 	
+	public	WarResult	fillWarResultVal(WarResult data){
+		/*
+		private	final TextBox		attacksUsed;
+		private	final TextBox		attacksWon;
+		private	final TextBox		totalStars1Count;
+		private	final TextBox		totalStars2Count;
+		private	final TextBox		totalStars3Count;
+		private final TextBox		heroicAttackPlayer;
+		private final TextBox		heroicDefensePlayer;
+		/// auto field
+		private	final TextBox		attacksRemaining;
+		private	final TextBox		attacksLost;
+		private final TextBox 	finalStars;
+		private	final TextBox	newStarPeerAttack;
+		*/
+		//Integer.parseInt(s) ;
+		//Float.parseFloat(s) ;
+		// xxxx.getValue()
+		data.setAttacksLost(Integer.parseInt(attacksLost.getValue()) );
+		data.setAttacksRemaining(Integer.parseInt(attacksRemaining.getValue()) );
+		data.setAttacksUsed(Integer.parseInt(attacksUsed.getValue()) );
+		data.setAttacksWon(Integer.parseInt(attacksWon.getValue()) );
+		//data.setAverageAttackDurationSecond(averageAttackDurationSecond);
+		//data.setAverageDestruction(averageDestruction);
+		//data.setClanId(clanId);
+		data.setFinalStars(Integer.parseInt(finalStars.getValue()) );
+		data.setHeroicAttackPlayer(heroicAttackPlayer.getValue());
+		data.setHeroicDefensePlayer(heroicDefensePlayer.getValue());
+		//data.setMaxAccackCount(maxAccackCount);
+		data.setNewStarPeerAttack(Float.parseFloat(newStarPeerAttack.getValue()));
+		//data.setPlayerCount(playerCount);
+		data.setTotalStars1Count(Integer.parseInt(totalStars1Count.getValue()) );
+		data.setTotalStars2Count(Integer.parseInt(totalStars2Count.getValue()) );
+		data.setTotalStars3Count(Integer.parseInt(totalStars3Count.getValue()) );
+		return data;
+	}
+	public	void	updateDisplayVal(WarResult data){
+/*
+		private	final TextBox		;
+		private	final TextBox		;
+		private	final TextBox		;
+		private	final TextBox		;
+		private	final TextBox		;
+		private final TextBox		;
+		private final TextBox		;
+		/// auto field
+		private	final TextBox		;
+		private	final TextBox		;
+		private final TextBox 	;
+		private	final TextBox	;
+		*/
+		// Float.toString(arg0) 
+		// Integer.toString()
+		attacksLost.setValue(Integer.toString(data.getAttacksLost()));
+		attacksRemaining.setValue(Integer.toString(data.getAttacksRemaining()));
+		attacksUsed.setValue(Integer.toString(data.getAttacksUsed()));
+		attacksWon.setValue(Integer.toString(data.getAttacksWon()));
+		//XXXXX.setValue(value);data.getAverageAttackDurationSecond();
+		//XXXXX.setValue(value);data.getAverageDestruction();
+		//XXXXX.setValue(value);data.getClanId();
+		finalStars.setValue(Integer.toString(data.getFinalStars()));
+		heroicAttackPlayer.setValue(data.getHeroicAttackPlayer());
+		heroicDefensePlayer.setValue(data.getHeroicDefensePlayer());
+		//XXXXX.setValue(value);data.getMaxAccackCount();
+		newStarPeerAttack.setValue(Float.toString(data.getNewStarPeerAttack()));
+		//XXXXX.setValue(value);data.getPlayerCount();
+		totalStars1Count.setValue(Integer.toString(data.getTotalStars1Count()));
+		totalStars2Count.setValue(Integer.toString(data.getTotalStars2Count()));
+		totalStars3Count.setValue(Integer.toString(data.getTotalStars3Count()));
+	}
 	
 }

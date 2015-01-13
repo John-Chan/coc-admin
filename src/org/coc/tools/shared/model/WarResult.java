@@ -35,7 +35,8 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	private String	heroicAttackPlayer="";
 	@Index
 	private String	heroicDefensePlayer="";
-	
+	@Index
+	private boolean locked=false;
 	@Id
 	private Long	id;
 
@@ -152,6 +153,12 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	}
 	public void setWarId(Long warId) {
 		this.warId = warId;
+	}
+	public boolean isLocked() {
+		return locked;
+	}
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 	
 }

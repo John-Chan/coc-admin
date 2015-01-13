@@ -35,7 +35,9 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	private ClanWarEntryPojo	setupLinks(CWIndex cwIndex,ClanWarEntryPojo val){
 		Long warId = cwIndex.getRowId();
 		val.getEnemyClanWarResult().setWarId(warId);
+		val.getEnemyClanWarResult().setClanId(cwIndex.getEnemyClan().getRowId());
 		val.getHomeClanWarResult().setWarId(warId);
+		val.getHomeClanWarResult().setClanId(cwIndex.getHomeClan().getRowId());
 		
 		for (WarBaseOrder one:val.getWarBaseOrders()) {
 			one.setWarId(warId);
@@ -169,7 +171,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 			addWithoutTxn(full);
 			return new RpcResult();
 		}
-		return null;
+		return new RpcResult(RpcResult.ERROR_CODE.EC_FAILED,null);
 	}
 	@Override
 	public List<WarDetail> getWarDetailByWarId(Long warId) {

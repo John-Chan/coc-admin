@@ -36,4 +36,10 @@ public class UiStrConstants {
 		public	static final String WAR_NEW_STAR_PEER_ATTACK="New Star Peer Attack";
 		
 	}
+	public static class TitleTxt{
+
+		public static final String SAVE_BTN_STR="Save";
+		public static final String SAVE_LOCK_BTN_STR="Save And Lock";
+		public static final String CANCEL_BTN_STR="Cancel";
+	}
 }

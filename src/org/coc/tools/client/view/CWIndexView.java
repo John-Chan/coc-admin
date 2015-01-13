@@ -8,31 +8,27 @@ import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
-import org.coc.tools.client.widget.ClanInfoPanel;
 import org.coc.tools.client.widget.ClanInfoPanelEx;
 import org.coc.tools.client.widget.ClanInfoWidget;
 import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
 
-//public class CWIndexView extends Composite implements CWIndexPresenter.Display {
+
 public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public final static String MENU_BAR_ELEM_HEIGHT="32px";
 	
-	//private final String	appVersion="V0.1";
+
 	private final Button addButton;
 	private final Button deleteButton;
 	private FlexTable cwIndexsTable;
@@ -42,9 +38,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	private final FlexTable headerTable;
 	private final Button regClanButton;
 	private final ClanInfoWidget homeClanPanel;
-	//private Label homeClanName;
-	//private Label homeClanTag;
-	//private HTML homeClanSymbol;
+
 	private ListBox homeClanBox;
 
 	//private	List<Clan>	homeClanList;
@@ -125,7 +119,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		//deleteButton.setWidth("40 pix");
 		
 		
-		contentTable.getCellFormatter().addStyleName(0, 0, "contacts-ListMenu");
+		//contentTable.getCellFormatter().addStyleName(0, 0, "contacts-ListMenu");
 		contentTable.setWidget(0, 0, menuPanel);
 
 		// Create the contacts list
@@ -173,6 +167,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			//
 			if (cell.getCellIndex() > 0) {
 				selectedRow = cell.getRowIndex();
+				
 			}
 		}
 
@@ -222,6 +217,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			CWIndexData aRow=data.get(i);
 			Button bookBtn=new Button("Book a base");
 			Button resultBtn=new Button("View Or Edit Result");
+			resultBtn.addClickHandler(aRow.getClickHandlerForEdtCwRet());
 			bookBtn.setEnabled(aRow.isCanBookBase());
 			
 			//ClanInfoWidget clanPanel=new ClanInfoPanel();
@@ -244,43 +240,6 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 			
 			
 		}
-		/*
-		//homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.MIDDLE);
-		// 
-		int tabRowIndex=0;
-		int tabColIndex=0;
-		/// set title
-		cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, new CheckBox());
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_TAG); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_NAME); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.ENEMY_CLAN_SYMBOL); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, UiStrConstants.ValueNames.WAR_PREPARE_DATE); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
-		cwIndexsTable.setText(tabRowIndex, tabColIndex++, ""); 
-		tabRowIndex++;
-
-		
-		for (int i = 0; i < data.size(); ++i) {
-			tabColIndex=0;
-			CWIndexData aRow=data.get(i);
-			Button bookBtn=new Button("Book a base");
-			Button resultBtn=new Button("View Or Edit Result");
-			
-			if(!aRow.isCanBookBase()){
-				bookBtn.setEnabled(false);
-			}
-
-			cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, new CheckBox());
-			cwIndexsTable.setText(tabRowIndex, tabColIndex++, aRow.getData().getEnemyClan().getClanTag()); 
-			cwIndexsTable.setText(tabRowIndex, tabColIndex++, aRow.getData().getEnemyClan().getClanName()); 
-			cwIndexsTable.setText(tabRowIndex, tabColIndex++, aRow.getData().getEnemyClan().getClanSymbol()); 
-			cwIndexsTable.setText(tabRowIndex, tabColIndex++, DateTimeFmt.getString(aRow.getData().getPrepareDate(),DateTimeFmt.FmtLongGmt())  ); 
-			cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, bookBtn); 
-			cwIndexsTable.setWidget(tabRowIndex, tabColIndex++, resultBtn); 
-			
-			tabRowIndex++;
-		}
-		*/
 		
 	}
 
