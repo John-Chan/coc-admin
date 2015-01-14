@@ -1,12 +1,19 @@
 package org.coc.tools.server;
 
-import org.coc.tools.server.model.ClanWarEntry;
+import org.coc.tools.server.model.*;
+
+import org.coc.tools.shared.model.*;
+
+/*import org.coc.tools.server.model.ClanWarEntry;
+
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
+import org.coc.tools.shared.model.PermissionList;
+import org.coc.tools.shared.model.SysUser;
 import org.coc.tools.shared.model.WarBaseOrder;
 import org.coc.tools.shared.model.WarDetail;
-import org.coc.tools.shared.model.WarResult;
+import org.coc.tools.shared.model.WarResult;*/
 
 import com.google.gwt.core.shared.GWT;
 import com.googlecode.objectify.Objectify;
@@ -23,6 +30,10 @@ public class MyOfyService {
         factory().register(WarDetail.class);
         factory().register(WarResult.class);
         factory().register(ClanWarEntryPojo.class);
+        factory().register(SysUser.class);
+        factory().register(PermissionList.class);
+        //
+        
         
         
         

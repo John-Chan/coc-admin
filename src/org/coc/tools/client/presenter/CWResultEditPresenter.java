@@ -134,11 +134,13 @@ public class CWResultEditPresenter implements Presenter {
 		if(!canUpdate(currentCwData)) return;
 		
 		currentCwData=display.getCwData();
+		//currentCwData.getWarIndex().setWarResultLocked(locked);
 		currentCwData.getHomeClanWarResult().setLocked(locked);
 		currentCwData.getEnemyClanWarResult().setLocked(locked);
 		saveWarResult(currentCwData.getWarIndex().getRowId(),currentCwData.getHomeClanWarResult(),currentCwData.getEnemyClanWarResult());
 	}
 	private boolean canUpdate(final ClanWarEntryPojo data){
+		//return !currentCwData.getWarIndex().isWarResultLocked();
 		return (!currentCwData.getEnemyClanWarResult().isLocked())&&(!currentCwData.getHomeClanWarResult().isLocked());
 	}
 	private void	doCancel(){

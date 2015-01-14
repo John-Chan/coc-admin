@@ -24,7 +24,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	private static final long serialVersionUID = 8745465169429849051L;
 
 	private		Objectify ofy=MyOfyService.ofy();
-	//private ClanWarEntryDao dao=new ClanWarEntryDao();
+
 	private ClanDao	clanDao=new ClanDao(ofy);
 	private ClanWarEntryDao clanWarEntryDao=new ClanWarEntryDao(ofy);
 	private CWIndexDao cwIndexDao=new CWIndexDao(ofy);

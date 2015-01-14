@@ -22,16 +22,10 @@ public class ClanDao   extends ObjectifyDao<Clan>{
 	
 	// return null on not found
 	public Clan	getClanByTag(String tag){
-		Clan found=null;
-		found= this.getOfy().load().type(Clan.class).filter("clanTag", tag).first().now();
-		/*
-		Query<Clan> q = this.getOfy().load().type(Clan.class).filter("clanTag", tag);
-		// #YY980J
-        List<Clan> results = q.list();
-        if(results.size()>0)
-        	found=results.get(0);
-        */
-        return found;
+		//Clan found=null;
+		//found= this.getOfy().load().type(Clan.class).filter("clanTag", tag).first().now();
+        //return found;
+        return loadOne(Clan.class,"clanTag", tag);
 	}
 
 	public List<Clan>	getClanByName(String name){

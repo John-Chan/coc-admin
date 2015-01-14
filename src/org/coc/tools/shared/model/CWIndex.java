@@ -22,6 +22,14 @@ public class CWIndex   implements Serializable,ObjectifyEntity {
 	@Index
 	private Date prepareDate=new Date();
 	
+	/*
+	@Index
+	private boolean warResultLocked=false;
+	@Index
+	private boolean warDetailLocked=false;
+	@Index
+	private boolean warBaseOrderLocked=false;
+	*/
 	private Clan homeClan=new Clan();
 	private Clan enemyClan=new Clan();
 	@Id
@@ -76,5 +84,27 @@ public class CWIndex   implements Serializable,ObjectifyEntity {
 	public void setPrepareDate(Date prepareDate) {
 		this.prepareDate = prepareDate;
 	}
+	
+	/*
+	public boolean isWarResultLocked() {
+		return warResultLocked;
+	}
+	public boolean isWarDetailLocked() {
+		return warDetailLocked;
+	}
+	public boolean isWarBaseOrderLocked() {
+		return warBaseOrderLocked;
+	}
+	public void setWarResultLocked(boolean warResultLocked) {
+		this.warResultLocked = warResultLocked;
+	}
+	public void setWarDetailLocked(boolean warDetailLocked) {
+		this.warDetailLocked = warDetailLocked;
+	}
+	public void setWarBaseOrderLocked(boolean warBaseOrderLocked) {
+		this.warBaseOrderLocked = warBaseOrderLocked;
+	}
+	*/
 
+	
 }

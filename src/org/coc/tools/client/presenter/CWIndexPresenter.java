@@ -328,8 +328,6 @@ public class CWIndexPresenter implements Presenter {
 
 	private void switchHomeClan(Clan clan , boolean fireEvt, boolean updateCwList) {
 
-		//currentClan = index;
-		//Clan clan = regedClanList.get(currentClan);
 		display.setRegedClan(clan);
 		if (updateCwList)
 			fetchCWIndexs(clan);

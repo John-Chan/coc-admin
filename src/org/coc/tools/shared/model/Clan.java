@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.googlecode.objectify.annotation.*;
 
 @Entity
-public class Clan /*extends ObjectifyEntity*/ implements Serializable,ObjectifyEntity{
+public class Clan implements Serializable,ObjectifyEntity{
 
 	/**
 	 * 

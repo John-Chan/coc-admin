@@ -155,11 +155,13 @@ public class WarResult   implements Serializable,ObjectifyEntity {
 	public void setWarId(Long warId) {
 		this.warId = warId;
 	}
+	
 	public boolean isLocked() {
 		return locked;
 	}
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
+	
 	
 }

@@ -1,8 +1,8 @@
-<!-- Indices written at Tue, 13 Jan 2015 18:33:45 CST -->
+<!-- Indices written at Wed, 14 Jan 2015 15:21:09 CST -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="CWIndex" ancestor="false" source="auto">
         <property name="homeClan.clanTag" direction="asc"/>
         <property name="prepareDate" direction="desc"/>

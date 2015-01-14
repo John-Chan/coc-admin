@@ -139,5 +139,11 @@ public class ObjectifyDao<EntityType /* extends ObjectifyEntity */> {
 	public EntityType loadById(Class<EntityType> clazz, Long id) {
 		return ofy.load().type(clazz).id(id).now();
 	}
+	
+	/// get object 
+	/// return null on not found
+	public EntityType	loadOne(Class<EntityType> clazz,String filter,String value){
+		return this.getOfy().load().type(clazz).filter(filter, value).first().now();
+	}
 
 }

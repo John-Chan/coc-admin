@@ -49,6 +49,13 @@
 		<url-pattern>/cocadmin/clanService</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+        <servlet-name>ApplicationInitServlet</servlet-name>
+        <display-name>ApplicationInitServlet</display-name>
+        <servlet-class>org.coc.tools.server.AppInit</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+        
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
 		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
