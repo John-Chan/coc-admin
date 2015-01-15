@@ -31,6 +31,7 @@ import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
 import org.coc.tools.client.view.ClanEditView;
 import org.coc.tools.client.view.CWResultEditView;
+import org.coc.tools.client.view.UiTestView;
 import org.coc.tools.shared.model.Clan;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -92,7 +93,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 						new ClanEditView());
 			}else if (token.equals(AppCmd.CMD_DEBUG_UI)) {
 				
-				presenter = new UiTestPresenter();
+				presenter = new UiTestPresenter(rpcMgr,eventBus,new UiTestView());
 			}
 			/*
 			else if (token.equals(AppCmd.CMD_EDIT_CW_RESULT)) {

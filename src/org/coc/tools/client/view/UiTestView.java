@@ -16,25 +16,31 @@ import org.coc.tools.shared.model.ClanWarEntryPojo;
 import org.gwt.advanced.client.ui.widget.Calendar;
 import org.gwt.advanced.client.ui.widget.DatePicker;
 
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UiTestView extends BasicView {
+import org.coc.tools.client.presenter.UiTestPresenter;
 
-	
+public class UiTestView extends BasicView implements 	UiTestPresenter.Display{
+
+	private final Button testRpcButton;
 	public UiTestView(){
+		testRpcButton=new Button("testRpc");
+		super.setHeader(testRpcButton);
 		//showCalendar();
 		//showDatePicker();
 		//showDateTimePicker();
 		//showClanEditPanel();
 		//showClanInfoPanelMiddle();
 		//showCWResultInputGroup();
-		showCWResultPanel();
+		//showCWResultPanel();
+		
 		//showCWResultLessPanel();
 	}
-	
 	public void showDateTimePicker(){
 
 		DateTimePicker picker = new DateTimePicker(new Date());
@@ -103,5 +109,10 @@ public class UiTestView extends BasicView {
 		List<ClanWarEntryPojo> datas=	TestHelper.makeClanWarEntryPojoList(20,"#R5YEQ3", "NAKAMA UNION", "32");
 		panel.addData(datas);
 		super.setCenter(panel.asWidget());
+	}
+
+	@Override
+	public HasClickHandlers getTestRpcButton() {
+		return testRpcButton;
 	}
 }

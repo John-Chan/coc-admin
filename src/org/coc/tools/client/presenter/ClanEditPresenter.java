@@ -51,12 +51,12 @@ public class ClanEditPresenter implements Presenter {
 		this.eventBus = eventBus;
 		this.clan = new Clan();
 		this.display = display;
-		bind();
+		
 	}
 			
 	@Override
 	public void go(HasWidgets container) {
-
+		bind();
 		container.clear();
 		container.add(display.asWidget());
 
