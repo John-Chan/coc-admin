@@ -129,6 +129,7 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 		ServletContext context = getServletContext();
 		InputStream is = context.getResourceAsStream(IMP_DATA_DIR
 				+ DATA_FILE_CLAN_INFO);
+
 		Document doc = builder.parse(is);
 		return doc;
 		/*
