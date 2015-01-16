@@ -3,6 +3,7 @@ package org.coc.tools.client.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.coc.tools.client.misc.StringHelper;
 import org.coc.tools.client.view.UiStrConstants;
 import org.coc.tools.shared.CocConstant;
 import org.coc.tools.shared.FieldVerifier;
@@ -197,7 +198,7 @@ public class CWResultInputGroup {
 		int total= FieldVerifier.tryParseInt(finalStars.getValue(), BAD_NUMBER);
 		if(used != BAD_NUMBER && total != BAD_NUMBER ){
 			float nspa=WarResultBuilder.calcNspaPercent(used, total);
-			newStarPeerAttack.setValue(Float.toString(nspa),true);
+			newStarPeerAttack.setValue(StringHelper.CocNsapString(nspa),true);
 		}
 	}
 	private void	setAutoFillHander(){
@@ -316,23 +317,7 @@ public class CWResultInputGroup {
 	}
 	
 	public	WarResult	fillWarResultVal(WarResult data){
-		/*
-		private	final TextBox		attacksUsed;
-		private	final TextBox		attacksWon;
-		private	final TextBox		totalStars1Count;
-		private	final TextBox		totalStars2Count;
-		private	final TextBox		totalStars3Count;
-		private final TextBox		heroicAttackPlayer;
-		private final TextBox		heroicDefensePlayer;
-		/// auto field
-		private	final TextBox		attacksRemaining;
-		private	final TextBox		attacksLost;
-		private final TextBox 	finalStars;
-		private	final TextBox	newStarPeerAttack;
-		*/
-		//Integer.parseInt(s) ;
-		//Float.parseFloat(s) ;
-		// xxxx.getValue()
+
 		data.setAttacksLost(Integer.parseInt(attacksLost.getValue()) );
 		data.setAttacksRemaining(Integer.parseInt(attacksRemaining.getValue()) );
 		data.setAttacksUsed(Integer.parseInt(attacksUsed.getValue()) );
@@ -352,22 +337,7 @@ public class CWResultInputGroup {
 		return data;
 	}
 	public	void	updateDisplayVal(WarResult data){
-/*
-		private	final TextBox		;
-		private	final TextBox		;
-		private	final TextBox		;
-		private	final TextBox		;
-		private	final TextBox		;
-		private final TextBox		;
-		private final TextBox		;
-		/// auto field
-		private	final TextBox		;
-		private	final TextBox		;
-		private final TextBox 	;
-		private	final TextBox	;
-		*/
-		// Float.toString(arg0) 
-		// Integer.toString()
+
 		attacksLost.setValue(Integer.toString(data.getAttacksLost()));
 		attacksRemaining.setValue(Integer.toString(data.getAttacksRemaining()));
 		attacksUsed.setValue(Integer.toString(data.getAttacksUsed()));
@@ -379,7 +349,7 @@ public class CWResultInputGroup {
 		heroicAttackPlayer.setValue(data.getHeroicAttackPlayer());
 		heroicDefensePlayer.setValue(data.getHeroicDefensePlayer());
 		//XXXXX.setValue(value);data.getMaxAccackCount();
-		newStarPeerAttack.setValue(Float.toString(data.getNewStarPeerAttack()));
+		newStarPeerAttack.setValue(StringHelper.CocNsapString(data.getNewStarPeerAttack()));
 		//XXXXX.setValue(value);data.getPlayerCount();
 		totalStars1Count.setValue(Integer.toString(data.getTotalStars1Count()));
 		totalStars2Count.setValue(Integer.toString(data.getTotalStars2Count()));
