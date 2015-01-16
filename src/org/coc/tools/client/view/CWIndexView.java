@@ -16,12 +16,12 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.coc.tools.client.misc.DateTimeFmt;
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.presenter.CWIndexPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter.CWIndexData;
 import org.coc.tools.client.widget.ClanInfoPanelEx;
 import org.coc.tools.client.widget.ClanInfoWidget;
-import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
 
 
@@ -29,7 +29,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	public final static String MENU_BAR_ELEM_HEIGHT="32px";
 	
 
-	private final Button addButton;
+	private final Button postWarEntryButton;
 	private final Button deleteButton;
 	private FlexTable cwIndexsTable;
 	private final FlexTable contentTable;
@@ -54,7 +54,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		//homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
 		homeClanBox = new ListBox(false);
 
-		addButton = new Button("Add");
+		postWarEntryButton = new Button("Add");
 		deleteButton = new Button("Delete");
 		contentTable = new FlexTable();
 		cwIndexsTable = new FlexTable();
@@ -73,9 +73,10 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		headerTable.setWidth("100%");
 		
 		GridHelper.VerticalAlign.alignAllToTop(headerTable);
-		GridHelper.setColWidth(headerTable, new String[]{"250px","80%","150px","2px","32px"});
+		GridHelper.setColWidth(headerTable, new String[]{"250px","60%","150px","2px","32px"});
 		homeClanBox.setHeight(MENU_BAR_ELEM_HEIGHT);
 		regClanButton.setHeight(MENU_BAR_ELEM_HEIGHT);
+		regClanButton.setTitle("All informations are listed and managed by [Home Clan],if you need a new one,this button works for you!");
 		
 		homeClanPanel.setBorderWidth(0);
 		this.setHeaderSmall(headerTable);
@@ -113,7 +114,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		menuPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
 		
 	
-		menuPanel.add(addButton);
+		menuPanel.add(postWarEntryButton);
 		menuPanel.add(deleteButton);
 		//addButton.setWidth("40 pix");
 		//deleteButton.setWidth("40 pix");
@@ -143,7 +144,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 	@Override
 	public HasClickHandlers getAddButton() {
-		return this.addButton;
+		return this.postWarEntryButton;
 	}
 
 	@Override

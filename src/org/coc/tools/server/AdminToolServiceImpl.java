@@ -1,34 +1,20 @@
 package org.coc.tools.server;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import org.coc.tools.client.AdminToolService;
-import org.coc.tools.server.dao.ClanDao;
+import org.coc.tools.server.dataimp.XmlDataImpoter;
+import org.coc.tools.server.misc.DateTimeHelper;
 import org.coc.tools.shared.RpcData;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.Clan;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
+import org.coc.tools.shared.model.ClanWarEntryPojo;
+import org.coc.tools.shared.model.WarResult;
+import org.coc.tools.server.config.InMemoryUser;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
 
@@ -39,14 +25,27 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 	 * 
 	 */
 	private static final long serialVersionUID = -8891635212735822317L;
+	private static final Logger log = Logger.getLogger(AdminToolServiceImpl.class.getName());
 
-	private static final String IMP_DATA_DIR = "/WEB-INF/data-imp/";
-	private static final String DATA_FILE_CLAN_INFO = "clan-list.xml";
+	//private		Objectify ofy=MyOfyService.ofy();
 
-	private		Objectify ofy=MyOfyService.ofy();
-
-	private 	ClanDao	clanDao=new ClanDao(ofy);
+	//private 	ClanDao	clanDao=new ClanDao(ofy);
 	
+	private		Objectify ofy=MyOfyService.ofy();
+	private 	WarDataManager	dataMager=new WarDataManager(ofy);
+
+	
+	private 	boolean checkRootUser(final String userName,final String pwd,RpcResult ret){
+		if( InMemoryUser.RootAdmin.getLoginId().equals(userName) && InMemoryUser.RootAdmin.checkPassword(pwd)){
+			ret.setErrorCode(RpcResult.ERROR_CODE.EC_NO_ERR);
+			ret.setMsg(null);
+			return true;
+		}else{
+			ret.setErrorCode(RpcResult.ERROR_CODE.EC_FAILED);
+			ret.setMsg("wrong user name or password");
+			return false;
+		}
+	}
 	@Override
 	public RpcResult authRootUser(String loginId, String passwrod) {
 		return new RpcResult();
@@ -57,20 +56,20 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 			String passwrod) {
 		RpcData<Map<String, String>> rsp = new RpcData<Map<String, String>>();
 		Map<String, String> moreInfo = new HashMap<String, String>();
+		if(!checkRootUser(loginId,passwrod,rsp)){
+			return rsp;
+		}
 
 		try {
-			Document doc = readClanInfo();
-			// get the first element
-			//doc.getNodeName()
-			Element element = doc.getDocumentElement();
-			String nodName=element.getNodeName();
-			// get all child nodes
-			NodeList nodes = element.getChildNodes();
+			XmlDataImpoter imp=new XmlDataImpoter(getServletContext());
+			imp.load();
 			
-			moreInfo.put(DATA_FILE_CLAN_INFO, "ready"+",elem count:"+nodes.getLength()+" in "+ nodName);
+			moreInfo.put("Clan info for imp", " count:"+imp.getClanTab().size());
+			moreInfo.put("War result info for imp", " count:"+imp.getWarResultTab().size());
+			moreInfo.put("War index info for imp", " count:"+imp.getWarLogTab().size());
 		} catch (Exception e) {
 			rsp.setErrorCode(RpcResult.ERROR_CODE.EC_FAILED);
-			moreInfo.put(DATA_FILE_CLAN_INFO, e.getMessage());
+			moreInfo.put("error :", e.getMessage());
 			// rsp.setMsg("miss file:"+IMP_DATA_DIR+DATA_FILE_CLAN_INFO);
 			e.printStackTrace();
 		}
@@ -80,64 +79,57 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public RpcResult doImpData(String loginId, String passwrod) {
-		RpcResult rsp=new RpcResult();
-		try {
-			Document doc = readClanInfo();
-			// get the first element
-			//doc.getNodeName()
-			Element rootElement = doc.getDocumentElement();// DATA
-			String nodName=rootElement.getNodeName();
-			// get all child nodes
-			NodeList rowList = rootElement.getChildNodes(); // [ROW,ROW...]
-			int i = 0;
-			for (; i < rowList.getLength(); i++) {
-				Node rowOne=rowList.item(i);
-				NodeList cols= rowOne.getChildNodes();
-
-				//
-				String clanName=cols.item(1).getTextContent();
-				String clanTag=cols.item(5).getTextContent();
-				String clanSymbol=cols.item(2).getTextContent();
 		
-				Clan.REG_STATUS stat=Clan.REG_STATUS.REGED;
-				Clan clan=new Clan();
-				clan.setClanName(clanName);
-				clan.setClanTag(clanTag);
-				clan.setClanSymbol(clanSymbol);
-				clan.setRegistered(stat);
-				clanDao.saveOrUpdate(clan);
-	            //System.out.println("" + nodes.item(i).getTextContent());
-	         }
-			rsp.setMsg(DATA_FILE_CLAN_INFO+"- import count="+i);
+		/// TODO:no odd data
+		RpcResult rsp=new RpcResult();
+		if(!checkRootUser(loginId,passwrod,rsp)){
+			return rsp;
+		}
+		XmlDataImpoter imp=new XmlDataImpoter(getServletContext());
+		int countImpedClan=0;
+		int countImpedWarResult=0;
+		
+		//int countImpedClan=0;
+		try {
+			imp.load();
+			Map<String, Map<String,String>>	warLogTab = imp.getWarLogTab();
+			Map<String, Clan>	clanTab=imp.getClanTab();
+			Map<String, WarResult>	warResultTab=imp.getWarResultTab();
+			for (Entry<String, Map<String,String>> entry: warLogTab.entrySet()) {
+
+				String index=entry.getKey();
+				log.info("import =>"+index);
+				Map<String,String> linkInfo=entry.getValue();
+				ClanWarEntryPojo fullData=new ClanWarEntryPojo();
+		
+				Date	endDate=DateTimeHelper.parseDate(linkInfo.get("END_DATE"), DateTimeHelper.FmtLong());
+				
+				fullData.getWarIndex().setPrepareDate(DateTimeHelper.addDay(endDate, -2));
+				fullData.getWarIndex().setHomeClan(clanTab.get(linkInfo.get("HOME_CLAN_ID")));
+				fullData.getWarIndex().setEnemyClan(clanTab.get(linkInfo.get("ENEMY_CLAN_ID")));
+				fullData.getWarIndex().setScope(Integer.parseInt(linkInfo.get("PLAYER_COUNT")));
+				WarResult homeClanWarResult=warResultTab.get(linkInfo.get("HOME_CLAN_WAR_DETAIL_ID") );
+				WarResult enemyClanWarResult=warResultTab.get(linkInfo.get("ENEMY_CLAN_WAR_DETAIL_ID") );
+				homeClanWarResult.setLocked(true);
+				enemyClanWarResult.setLocked(true);
+				fullData.setHomeClanWarResult(homeClanWarResult);
+				fullData.setEnemyClanWarResult(enemyClanWarResult);
+				dataMager.addWithoutTxn(fullData);
+				countImpedClan+=2;
+				countImpedWarResult+=2;
+			}
+			String msg= "imported clan:"+countImpedClan+",imported war result:"+countImpedWarResult;
+			rsp.setMsg(msg);
+			log.info("import done =>"+msg);
 		} catch (Exception e) {
 			rsp.setErrorCode(RpcResult.ERROR_CODE.EC_FAILED);
 			//moreInfo.put(DATA_FILE_CLAN_INFO, e.getMessage());
-			rsp.setMsg(DATA_FILE_CLAN_INFO+"-"+e.getMessage());
+			rsp.setMsg(e.getMessage());
 			e.printStackTrace();
 		}
 		return rsp;
 	}
 
-	private Document readClanInfo() throws IOException,
-			ParserConfigurationException, SAXException {
-		// http://www.tutorialspoint.com/java/xml/javax_xml_parsers_documentbuilder_inputstream.htm
-
-		// SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-		// create a new DocumentBuilderFactory
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		ServletContext context = getServletContext();
-		InputStream is = context.getResourceAsStream(IMP_DATA_DIR
-				+ DATA_FILE_CLAN_INFO);
-
-		Document doc = builder.parse(is);
-		return doc;
-		/*
-		 * XMLReader reader = XMLReaderFactory.createXMLReader();
-		 * FileInputStream stream; InputSource is; stream = new
-		 * FileInputStream(IMP_DATA_DIR+DATA_FILE_CLAN_INFO); is = new
-		 * InputSource(new InputStreamReader(stream, "UTF-8"));
-		 * is.setEncoding("UTF-8"); reader.parse(is);
-		 */
-	}
+	
+	
 }

@@ -24,6 +24,8 @@ public class UiTestPresenter implements Presenter {
 	public interface Display {
 
 		HasClickHandlers getTestRpcButton();
+		String 				getText1();
+		String 				getText2();
 		Widget asWidget();
 	}
 
@@ -56,7 +58,7 @@ public class UiTestPresenter implements Presenter {
 		
 	}
 	private void	doImpData(){
-		rpcMgr.getAdminToolServiceAsync().doImpData("xxx", "xxx", new AsyncCallback<RpcResult>(){
+		rpcMgr.getAdminToolServiceAsync().doImpData(this.display.getText1(), this.display.getText2(), new AsyncCallback<RpcResult>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -75,7 +77,7 @@ public class UiTestPresenter implements Presenter {
 		});
 	}
 	private void	doGetImpDataInfo(){
-		rpcMgr.getAdminToolServiceAsync().getImpDataInfo("xxx", "xxx", new AsyncCallback<RpcData<Map<String,String>>>(){
+		rpcMgr.getAdminToolServiceAsync().getImpDataInfo(this.display.getText1(), this.display.getText2(), new AsyncCallback<RpcData<Map<String,String>>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

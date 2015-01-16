@@ -40,7 +40,7 @@ public class WarResultBuilder {
 	 */
 	public static final WarResult makeSimpleWarResult(int playerCount,
 			int attacksUsed, int attacksWon, int star1, int star2, int star3)
-			throws Exception {
+			throws IllegalArgumentException {
 		WarResult one = new WarResult();
 		one.setPlayerCount(playerCount);
 		one.setAttacksUsed(attacksUsed);
@@ -61,19 +61,19 @@ public class WarResultBuilder {
 
 	// / check input for playerCount, attacksUsed, attacksWon, star1, star2,
 	// star3
-	public static void checkCounters(final WarResult one) throws Exception {
+	public static void checkCounters(final WarResult one) throws IllegalArgumentException {
 
 		if (one.getPlayerCount() < CocConstant.WarCounters.MIN_PLAYER_COUNT
 				|| one.getPlayerCount() > CocConstant.WarCounters.MAX_PLAYER_COUNT
 				|| (one.getPlayerCount() % CocConstant.WarCounters.PLAYER_COUNT_MULTIPLES) != 0) {
-			throw new Exception("bad player count");
+			throw new IllegalArgumentException("bad player count");
 		}
 
 		if (one.getAttacksUsed() < 0
 				|| one.getAttacksRemaining() < 0
 				|| one.getAttacksUsed() + one.getAttacksRemaining() != one
 						.getMaxAccackCount()) {
-			throw new Exception(
+			throw new IllegalArgumentException(
 					"bad attack used count,or bad attack remaining count");
 		}
 
@@ -81,13 +81,13 @@ public class WarResultBuilder {
 				|| one.getAttacksLost() < 0
 				|| one.getAttacksWon() + one.getAttacksLost() != one
 						.getAttacksUsed()) {
-			throw new Exception("bad attack won count,or bad attack lost count");
+			throw new IllegalArgumentException("bad attack won count,or bad attack lost count");
 		}
 
 		if (one.getTotalStars1Count() > one.getAttacksWon()
 				|| one.getTotalStars2Count() > one.getAttacksWon()
 				|| one.getTotalStars3Count() > one.getAttacksWon()) {
-			throw new Exception("bad Stars1 or Stars2 or Stars3 Count");
+			throw new IllegalArgumentException("bad Stars1 or Stars2 or Stars3 Count");
 		}
 		int allStar = one.getTotalStars1Count()
 				* CocConstant.WarCounters.MULTIPLES_STAR1
@@ -96,7 +96,7 @@ public class WarResultBuilder {
 				+ one.getTotalStars3Count()
 				* CocConstant.WarCounters.MULTIPLES_STAR3;
 		if (allStar != one.getFinalStars()) {
-			throw new Exception(
+			throw new IllegalArgumentException(
 					"bad Stars1 or Stars2 or Stars3 Count,not equal to total stars");
 		}
 	}

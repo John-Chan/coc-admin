@@ -2,9 +2,9 @@ package org.coc.tools.client.widget;
 
 import java.util.Date;
 
+import org.coc.tools.client.misc.DateTimeFmt;
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.client.misc.ResHelper;
-import org.coc.tools.shared.DateTimeFmt;
 import org.coc.tools.shared.model.Clan;
 
 import com.google.gwt.user.client.ui.FlexTable;
