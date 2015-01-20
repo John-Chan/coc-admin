@@ -45,7 +45,7 @@ public class CWResultLessPanel implements IsWidget{
 		CWResultUnitLess rowOne=new CWResultUnitLess();
 		rowOne.updateVal(data.getWarIndex().getScope(), data.getWarIndex().getEndDate(), data.getWarIndex().getHomeClan(), data.getHomeClanWarResult().getFinalStars(), data.getWarIndex().getEnemyClan(), data.getEnemyClanWarResult().getFinalStars());
 		
-		pusher.pushBack(GridHelper.paddingHtml(paddingWidth))
+		pusher.pushBack(GridHelper.paddingHtml(paddingWidth,"# "+Integer.toString(nextRow+1)))
 		.pushBack(rowOne.getStatusImg())
 		.pushBack(GridHelper.paddingHtml(paddingWidth))
 		.pushBack(rowOne.getHomeClanPanel().asWidget())
@@ -69,7 +69,7 @@ public class CWResultLessPanel implements IsWidget{
 		CWResultUnitLess rowOne=new CWResultUnitLess();
 		rowOne.updateVal(data.getWarIndex().getScope(), data.getWarIndex().getEndDate(), data.getWarIndex().getHomeClan(), data.getHomeClanWarResult().getFinalStars(), data.getWarIndex().getEnemyClan(), data.getEnemyClanWarResult().getFinalStars());
 		
-		pusher.pushBack(GridHelper.paddingHtml(paddingWidth))
+		pusher.pushBack(GridHelper.paddingHtml(paddingWidth,"# "+Integer.toString(nextRow+1)))
 		.pushBack(rowOne.getStatusImg())
 		.pushBack(GridHelper.paddingHtml(paddingWidth))
 		.pushBack(rowOne.getHomeClanPanel().asWidget())

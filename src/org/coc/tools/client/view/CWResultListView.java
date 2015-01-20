@@ -6,7 +6,9 @@ import org.coc.tools.client.widget.CWResultLessPanel;
 
 
 
+
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -63,9 +65,9 @@ public class CWResultListView extends BasicView implements CWResultListPresenter
 		//btnReload.setWidth("33%");
 		//btnLoadMore.setWidth("33%");
 		
-		containerPanel.add(menuPanel);
 		containerPanel.add(dataPanel);
 		containerPanel.add(btnContainer);
+		containerPanel.add(menuPanel);
 		super.setCenter(containerPanel);
 	}
 	
@@ -93,6 +95,7 @@ public class CWResultListView extends BasicView implements CWResultListPresenter
 		Button btn=new Button("Detail");
 		btn.addClickHandler(data.getClickHandlerForEdtCwRet());
 		dataPanel.addData(data.getCwData(),btn);
+		Window.scrollTo(0, Window.getScrollTop() + Window.getClientHeight());
 		
 	}
 

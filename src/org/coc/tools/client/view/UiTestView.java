@@ -54,7 +54,7 @@ public class UiTestView extends BasicView implements 	UiTestPresenter.Display{
 		//showCWResultInputGroup();
 		//showCWResultPanel();
 		
-		showCWResultLessPanel();
+		//showCWResultLessPanel();
 	}
 	public void showDateTimePicker(){
 

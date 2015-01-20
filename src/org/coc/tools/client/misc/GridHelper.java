@@ -15,6 +15,12 @@ public class GridHelper {
 		padding.setWidth(width);
 		return padding;
 	}
+	public static HTML paddingHtml(String width,String txt){
+		HTML padding= new HTML(txt);
+		padding.setWidth(width);
+		return padding;
+	}
+	//
 	public static class HorizontalAlign{
 
 		public static void alignAllMirrorCenter(final HTMLTable	ref,int row){
