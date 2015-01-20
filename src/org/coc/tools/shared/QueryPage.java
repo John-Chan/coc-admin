@@ -1,8 +1,15 @@
 package org.coc.tools.shared;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class QueryPage<DataElem> {
+public class QueryPage<DataElem> implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5734604464373446766L;
 
 	/// the index of this page
 	private	int	pageNumber=0;
@@ -10,11 +17,11 @@ public class QueryPage<DataElem> {
 	/// total row count for query
 	private int totalRowCount=0;
 	
-	/// how many rows in this page
+	/// how many rows in a page,may not equal to resultSet.size
 	private	int pageSize=1;
 	
 	/// datas
-	List<DataElem>	resultSet=null;
+	List<DataElem>	resultSet=new ArrayList<DataElem>();
 
 	public QueryPage()
 	{
@@ -48,7 +55,7 @@ public class QueryPage<DataElem> {
 		this.pageNumber = pageNumber;
 	}
 	/*
-	 * how many rows in this page
+	 *  how many rows in a page,may not equal to resultSet.size
 	 */
 	public int getPageSize() {
 		return pageSize;

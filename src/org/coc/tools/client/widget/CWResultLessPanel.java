@@ -6,6 +6,7 @@ import java.util.List;
 import org.coc.tools.client.misc.GridHelper;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -55,6 +56,33 @@ public class CWResultLessPanel implements IsWidget{
 		.pushBack(GridHelper.paddingHtml(paddingWidth))
 		.pushBack(rowOne.getEndDateTxt())
 		.pushBack(GridHelper.paddingHtml(paddingWidth));
+		
+	}
+	public void	addData(ClanWarEntryPojo data,final Button btn){
+
+		String paddingWidth="32px";
+		int nextRow=0;
+		if(resultTable.getRowCount()>0){
+			nextRow=resultTable.getRowCount();
+		}
+		GridHelper pusher=new GridHelper(resultTable,nextRow);
+		CWResultUnitLess rowOne=new CWResultUnitLess();
+		rowOne.updateVal(data.getWarIndex().getScope(), data.getWarIndex().getEndDate(), data.getWarIndex().getHomeClan(), data.getHomeClanWarResult().getFinalStars(), data.getWarIndex().getEnemyClan(), data.getEnemyClanWarResult().getFinalStars());
+		
+		pusher.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(rowOne.getStatusImg())
+		.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(rowOne.getHomeClanPanel().asWidget())
+		.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(rowOne.getScorePanel())
+		.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(rowOne.getEnemyClanPanel().asWidget())
+		.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(rowOne.getEndDateTxt())
+		.pushBack(GridHelper.paddingHtml(paddingWidth))
+		.pushBack(btn)
+		.pushBack(GridHelper.paddingHtml(paddingWidth));
+		
 	}
 	public void addData(List<ClanWarEntryPojo> dataList){
 		for(ClanWarEntryPojo data:dataList){

@@ -2,6 +2,7 @@ package org.coc.tools.client;
 
 import java.util.List;
 
+import org.coc.tools.shared.QueryPage;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -27,6 +28,9 @@ public interface ClanWarEntryService  extends RemoteService{
 	ClanWarEntryPojo	getByWarId(Long warId);
 	List<ClanWarEntryPojo> getList(int maxResult);
 	List<ClanWarEntryPojo> getListByClanTag(String tag,int maxResult);
+	
+	/// pageNumber start from 0
+	QueryPage<ClanWarEntryPojo> getPageByClanTag(String tag,int pageNumber);
 
 	
 	/**

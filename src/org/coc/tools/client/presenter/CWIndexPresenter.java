@@ -8,6 +8,7 @@ import org.coc.tools.client.RpcManager;
 import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.CwResultEditEvt;
+import org.coc.tools.client.event.CwResultListEvt;
 import org.coc.tools.client.event.HomeClanSwitchEvt;
 import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.shared.model.CWIndex;
@@ -95,6 +96,8 @@ public class CWIndexPresenter implements Presenter {
 		HasClickHandlers getAddButton();
 
 		HasClickHandlers getDeleteButton();
+		
+		HasClickHandlers getListAllButton();
 
 		HasClickHandlers getRegClanButton();
 
@@ -171,6 +174,13 @@ public class CWIndexPresenter implements Presenter {
 
 	public void bind() {
 
+		display.getListAllButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new CwResultListEvt());
+			}
+		});
+
+		
 		display.getRegedClanBox().addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				int index = display.getSelectedRegClan();
@@ -251,15 +261,15 @@ public class CWIndexPresenter implements Presenter {
 					@Override
 					public void onFailure(Throwable caught) {
 
-						Window.alert("Error fetchCWIndexs.");
-						GWT.log("Error fetchCWIndexs.", caught);
+						Window.alert("Rpc Error.");
+						GWT.log("Rpc Error.", caught);
 					}
 				});
 	}
 
 	//
 	private void fetchCWIndexs(Clan clan) {
-		rpcMgr.getClanWarEntryService().getListByClanTag(clan.getClanTag(), 25,
+		rpcMgr.getClanWarEntryService().getListByClanTag(clan.getClanTag(), 10,
 				new AsyncCallback<List<ClanWarEntryPojo>>() {
 					public void onSuccess(List<ClanWarEntryPojo> result) {
 						clanWarEntryPojoList = result;

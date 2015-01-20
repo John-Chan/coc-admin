@@ -2,6 +2,7 @@ package org.coc.tools.client;
 
 import java.util.List;
 
+import org.coc.tools.shared.QueryPage;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -19,6 +20,7 @@ public interface ClanWarEntryServiceAsync {
 	void	getByWarId(Long warId,AsyncCallback<ClanWarEntryPojo> callback);
 	void 	getList(int maxResult,AsyncCallback<List<ClanWarEntryPojo>> callback);
 	void 	getListByClanTag(String tag,int maxResult,AsyncCallback<List<ClanWarEntryPojo>> callback);
+	void 	getPageByClanTag(String tag,int pageNumber,AsyncCallback<QueryPage<ClanWarEntryPojo>> callback );
 
 	/**
 	 * 

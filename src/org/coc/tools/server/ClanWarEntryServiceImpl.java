@@ -3,6 +3,7 @@ package org.coc.tools.server;
 import java.util.List;
 
 import org.coc.tools.client.ClanWarEntryService;
+import org.coc.tools.shared.QueryPage;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -12,9 +13,13 @@ import org.coc.tools.shared.model.WarResult;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.cmd.Query;
 
 public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements ClanWarEntryService {
 
+	private static final int MAX_CW_ENTRY_QRY_COUNT_ONCE=50;
+
+	
 	/**
 	 * 
 	 */
@@ -45,6 +50,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 
 	@Override
 	public List<ClanWarEntryPojo> getList(int maxResult) {
+		if(maxResult > MAX_CW_ENTRY_QRY_COUNT_ONCE  ) maxResult=MAX_CW_ENTRY_QRY_COUNT_ONCE;
 		return dataMager.getList(maxResult);
 	}
 
@@ -56,6 +62,7 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	@Override
 	public List<ClanWarEntryPojo> getListByClanTag(String tag,
 			int maxResult) {
+		if(maxResult > MAX_CW_ENTRY_QRY_COUNT_ONCE  ) maxResult=MAX_CW_ENTRY_QRY_COUNT_ONCE;
 		return dataMager.getListByClanTag(tag, maxResult);
 	}
 	@Override
@@ -84,6 +91,12 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	public RpcResult updateWarBaseOrderByWarId(Long warId,
 			List<WarBaseOrder> list) {
 		return dataMager.updateWarBaseOrderByWarId(warId, list);
+	}
+
+	@Override
+	public QueryPage<ClanWarEntryPojo> getPageByClanTag(String tag,
+			int pageNumber) {
+		return dataMager.getPageByClanTag(tag, pageNumber);
 	}
 
 }

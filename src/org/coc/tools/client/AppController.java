@@ -14,6 +14,8 @@ import org.coc.tools.client.event.ClanUpdateEvt;
 import org.coc.tools.client.event.ClanUpdateEvtHandler;
 import org.coc.tools.client.event.CwResultEditEvt;
 import org.coc.tools.client.event.CwResultEditEvtHandler;
+import org.coc.tools.client.event.CwResultListEvt;
+import org.coc.tools.client.event.CwResultListEvtHandler;
 import org.coc.tools.client.event.CwResultUpdateCancelEvt;
 import org.coc.tools.client.event.CwResultUpdateCancelEvtHandler;
 import org.coc.tools.client.event.CwResultUpdateEvt;
@@ -23,12 +25,14 @@ import org.coc.tools.client.event.HomeClanSwitchEvtHandler;
 import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
+import org.coc.tools.client.presenter.CWResultListPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
 import org.coc.tools.client.presenter.CWResultEditPresenter;
 import org.coc.tools.client.presenter.Presenter;
 import org.coc.tools.client.presenter.UiTestPresenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
+import org.coc.tools.client.view.CWResultListView;
 import org.coc.tools.client.view.ClanEditView;
 import org.coc.tools.client.view.CWResultEditView;
 import org.coc.tools.client.view.UiTestView;
@@ -94,6 +98,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			}else if (token.equals(AppCmd.CMD_DEBUG_UI)) {
 				
 				presenter = new UiTestPresenter(rpcMgr,eventBus,new UiTestView());
+			}else{
+				///
+				presenter = new CWIndexPresenter(rpcMgr, eventBus,
+						new CWIndexView());
 			}
 			/*
 			else if (token.equals(AppCmd.CMD_EDIT_CW_RESULT)) {
@@ -122,6 +130,18 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 
+		eventBus.addHandler(CwResultListEvt.TYPE, new CwResultListEvtHandler() {
+
+			@Override
+			public void onListCwResult(CwResultListEvt event) {
+				if(event.getClanTag()==null){
+					event.setClanTag(AppController.this.homeClan.getClanTag());
+					doListCwResultLess(event.getClanTag());
+				}
+				
+			}
+		});
+		
 		eventBus.addHandler(HomeClanSwitchEvt.TYPE, new HomeClanSwitchEvtHandler() {
 			@Override
 			public void onSwitch(HomeClanSwitchEvt event) {
@@ -266,6 +286,11 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	/// saved or update has been done
 	private void doListCwEntry() {
 		History.newItem(AppCmd.CMD_LIST_CW_ENTRY);
+	}
+	private void doListCwResultLess(String clanTag) {
+		History.newItem(AppCmd.CMD_LIST_ALL_WAR_RESULT,false);
+		Presenter presenter= new CWResultListPresenter(rpcMgr, eventBus, new CWResultListView(), clanTag);
+		presenter.go(container);
 	}
 	/// saved or update has been done
 	//private void doListClan() {

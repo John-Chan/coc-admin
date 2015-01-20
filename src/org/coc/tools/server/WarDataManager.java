@@ -8,6 +8,7 @@ import org.coc.tools.server.dao.ClanDao;
 import org.coc.tools.server.dao.WarBaseOrderDao;
 import org.coc.tools.server.dao.WarDetailDao;
 import org.coc.tools.server.dao.WarResultDao;
+import org.coc.tools.shared.QueryPage;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
@@ -17,12 +18,10 @@ import org.coc.tools.shared.model.WarDetail;
 import org.coc.tools.shared.model.WarResult;
 
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.cmd.Query;
 
 /// high level warper for war informations
 public class WarDataManager {
-	private static final int MAX_CW_ENTRY_QRY_COUNT_ONCE=50;
-
-	
 
 	private ClanDao	clanDao=null;
 	//private ClanWarEntryDao clanWarEntryDao=null;
@@ -30,7 +29,7 @@ public class WarDataManager {
 	private WarBaseOrderDao warBaseOrderDao=null;
 	private WarDetailDao warDetailDao=null;
 	private WarResultDao warResultDao=null;
-	private int maxQryLimit=MAX_CW_ENTRY_QRY_COUNT_ONCE;
+	//private int maxQryLimit=MAX_CW_ENTRY_QRY_COUNT_ONCE;
 	
 	public WarDataManager(Objectify ofy){
 		clanDao=new ClanDao(ofy);
@@ -40,6 +39,23 @@ public class WarDataManager {
 		warDetailDao=new WarDetailDao(ofy);
 		warResultDao=new WarResultDao(ofy);
 	}
+
+	public ClanDao getClanDao() {
+		return clanDao;
+	}
+	public CWIndexDao getCwIndexDao() {
+		return cwIndexDao;
+	}
+	public WarBaseOrderDao getWarBaseOrderDao() {
+		return warBaseOrderDao;
+	}
+	public WarDetailDao getWarDetailDao() {
+		return warDetailDao;
+	}
+	public WarResultDao getWarResultDao() {
+		return warResultDao;
+	}
+	
 	public ClanWarEntryPojo	setupLinks(CWIndex cwIndex,ClanWarEntryPojo val){
 		Long warId = cwIndex.getRowId();
 		val.getEnemyClanWarResult().setWarId(warId);
@@ -112,7 +128,6 @@ public class WarDataManager {
 	}
 
 	public List<ClanWarEntryPojo> getList(int maxResult) {
-		if(maxResult > maxQryLimit && maxQryLimit!=0) maxResult=MAX_CW_ENTRY_QRY_COUNT_ONCE;
 		ArrayList<CWIndex> indexList=new ArrayList<>(cwIndexDao.getList(CWIndex.class, maxResult));
 		ArrayList<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
 		for(CWIndex one:indexList){
@@ -130,7 +145,6 @@ public class WarDataManager {
 	public List<ClanWarEntryPojo> getListByClanTag(String tag,
 			int maxResult) {
 
-		if(maxResult > MAX_CW_ENTRY_QRY_COUNT_ONCE && maxQryLimit!=0) maxResult=MAX_CW_ENTRY_QRY_COUNT_ONCE;
 		ArrayList<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
 		List<CWIndex> indexs=cwIndexDao.getListByHomeClanTag(tag, maxResult);
 		if(indexs != null){
@@ -203,11 +217,30 @@ public class WarDataManager {
 		}
 		return new RpcResult(RpcResult.ERROR_CODE.EC_FAILED,null);
 	}
-	public int getMaxQryLimit() {
-		return maxQryLimit;
-	}
-	public void setMaxQryLimit(int maxQryLimit) {
-		this.maxQryLimit = maxQryLimit;
+	public QueryPage<ClanWarEntryPojo> getPageByClanTag(String tag,
+			int pageNumber){
+
+		int rowPeerPage=10;
+		QueryPage<ClanWarEntryPojo> page=new QueryPage<ClanWarEntryPojo>();
+		Query<CWIndex> qry=cwIndexDao.startQry(CWIndex.class).filter("homeClan.clanTag", tag).order("-prepareDate");
+		int totalRow=qry.count();
+		int from=rowPeerPage*pageNumber;
+		if(from<totalRow ){
+			//qry.limit(rowPeerPage).offset(from);
+			//List<CWIndex> indexs=qry.list();
+			
+
+			List<CWIndex> indexs=qry.limit(rowPeerPage).offset(from).list();
+			if(indexs != null){
+				for(CWIndex one:indexs){
+					page.getResultSet().add(loadWithoutTxn(one));
+				}
+			}
+		}
+		page.setTotalRowCount(totalRow);
+		page.setPageSize(rowPeerPage);
+		page.setPageNumber(pageNumber);
+		return page;
 	}
 	
 

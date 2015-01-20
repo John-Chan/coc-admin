@@ -27,9 +27,6 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 	private static final long serialVersionUID = -8891635212735822317L;
 	private static final Logger log = Logger.getLogger(AdminToolServiceImpl.class.getName());
 
-	//private		Objectify ofy=MyOfyService.ofy();
-
-	//private 	ClanDao	clanDao=new ClanDao(ofy);
 	
 	private		Objectify ofy=MyOfyService.ofy();
 	private 	WarDataManager	dataMager=new WarDataManager(ofy);
