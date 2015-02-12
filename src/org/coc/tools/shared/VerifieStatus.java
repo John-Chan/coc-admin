@@ -26,6 +26,13 @@ public class VerifieStatus {
 		}
 		return new VerifieStatus(false,"Illegal Character");
 	}
+	public static	VerifieStatus	IllegalArgumentError(String what){
+		if(what!=null && what.length()>0){
+			return new VerifieStatus(false,"Illegal Argument : "+what);
+		}
+		return new VerifieStatus(false,"Illegal Argument");
+	}
+	
 	public static	VerifieStatus	RangeError(String what,int minVal,int maxVal){
 		if(what!=null && what.length()>0){
 			return new VerifieStatus(false,"Bad "+what+",Value must in ["+minVal+","+maxVal+"]");

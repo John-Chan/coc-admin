@@ -13,7 +13,6 @@ import org.coc.tools.shared.model.WarResult;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.cmd.Query;
 
 public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements ClanWarEntryService {
 

@@ -6,6 +6,8 @@ import org.coc.tools.client.CWIndexServiceAsync;
 import org.coc.tools.client.ClanWarEntryServiceAsync;
 import org.coc.tools.client.event.CWIndexUpdateCancelEvt;
 import org.coc.tools.client.event.CWIndexUpdateEvt;
+import org.coc.tools.shared.FieldVerifier;
+import org.coc.tools.shared.VerifieStatus;
 import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
@@ -130,9 +132,38 @@ public class CWIndexEditPresenter implements Presenter {
 		container.add(display.asWidget());
 
 	}
+	
+	private boolean checkInput(VerifieStatus stat){
+		stat.setPassed(true);
+		String clanName=display.getEnemyClanName();
+		String clantag=display.getEnemyClanTag();
+		String clanSymbol=display.getEnemyClanSymbol();
+	
+		stat=FieldVerifier.isValidClanTag(clantag);
+		
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanName(clanName);
+		}
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanSymbol(clanSymbol);
+		}
+	
+		if(stat.getPassed()){
+			if(homeClan.getClanTag().toUpperCase().equals(clantag.toUpperCase())){
+				stat= VerifieStatus.IllegalArgumentError("clan tag for enemy clan can not be same with home clan");
+			}
+		}
+		return stat.getPassed();
+
+	}
 
 	private void doSave() {
 
+		VerifieStatus stat=new VerifieStatus();
+		if(!checkInput(stat)){
+			Window.alert(stat.getMsg());
+			return;
+		}
 		CWIndex cwIndex=clanWarEntryPojo.getWarIndex();
 		cwIndex.setPrepareDate(display.getPrepareDate() );
 		cwIndex.getEnemyClan().setClanTag(display.getEnemyClanTag() );

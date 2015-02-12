@@ -50,9 +50,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		regClanButton=new Button("Create");
 		//homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.SMALL);
 		homeClanPanel=new ClanInfoPanelEx(ClanInfoPanelEx.SIZE_STYLE.MIDDLE);
-		//homeClanName=new Label("N/A");
-		//homeClanTag=new Label("N/A");
-		//homeClanSymbol=new HTML(ResHelper.makeImgHtml(ResHelper.getDefClanSymbolAbsUrl(), MENU_BAR_ELEM_HEIGHT, MENU_BAR_ELEM_HEIGHT));
+
 		homeClanBox = new ListBox(false);
 
 		postWarEntryButton = new Button("Add");
@@ -88,8 +86,6 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 
 	private void initMainArea(){
 
-		//initWidget(contentTableDecorator);
-		//DecoratorPanel contentTableDecorator = new DecoratorPanel();
 		HorizontalPanel containerPanel = new HorizontalPanel();
 
 		HorizontalPanel menuPanel = new HorizontalPanel();
@@ -97,18 +93,11 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		containerPanel.setWidth("100%");
 
 		contentTable.setWidth("100%");
-		// TODO : contentTable.getCellFormatter().addStyleName(0, 0,
-		// "contacts-ListContainer");
 		//
 		contentTable.getCellFormatter().setWidth(0, 0, "100%");
 		contentTable.getFlexCellFormatter().setVerticalAlignment(0, 0,
 				DockPanel.ALIGN_TOP);
 
-		// Create the menu
-		/*
-		FlowPanel menuPanel=new FlowPanel();
-		menuPanel.setWidth("20%");
-		*/
 		
 		menuPanel.setBorderWidth(0);
 		menuPanel.setSpacing(0);
@@ -120,11 +109,6 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		menuPanel.add(deleteButton);
 		menuPanel.add(listAllButton);
 		
-		//addButton.setWidth("40 pix");
-		//deleteButton.setWidth("40 pix");
-		
-		
-		//contentTable.getCellFormatter().addStyleName(0, 0, "contacts-ListMenu");
 		contentTable.setWidget(0, 0, menuPanel);
 
 		// Create the contacts list

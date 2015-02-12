@@ -2,6 +2,7 @@ package org.coc.tools.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.coc.tools.server.dao.CWIndexDao;
 import org.coc.tools.server.dao.ClanDao;
@@ -22,7 +23,8 @@ import com.googlecode.objectify.cmd.Query;
 
 /// high level warper for war informations
 public class WarDataManager {
-
+	private static final Logger log = Logger.getLogger(WarDataManager.class.getName());
+	
 	private ClanDao	clanDao=null;
 	//private ClanWarEntryDao clanWarEntryDao=null;
 	private CWIndexDao cwIndexDao=null;
@@ -77,7 +79,10 @@ public class WarDataManager {
 	public ClanWarEntryPojo addWithoutTxn(ClanWarEntryPojo value) {
 		Clan homeClan=value.getWarIndex().getHomeClan();
 		Clan enemyClan=value.getWarIndex().getEnemyClan();
-		
+		if(homeClan.getClanTag().toUpperCase().equals(enemyClan.getClanTag().toUpperCase())){
+			log.severe("Clan tag of home clan and enemy clan cant not be same for a clan war index");
+			throw new IllegalArgumentException("Clan tag of home clan and enemy clan cant not be same for a clan war index");
+		}
 		//value.setHomeClan(homeClan);
 		//value.setEnemyClan(enemyClan);
 		

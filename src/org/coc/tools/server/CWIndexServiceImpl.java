@@ -22,6 +22,9 @@ public class CWIndexServiceImpl extends RemoteServiceServlet  implements CWIndex
 	
 	@Override
 	public CWIndex addCWIndex(CWIndex one) {
+		/*if(!one.getEnemyClan().getClanTag().equals(one.getHomeClan().getClanTag())){
+			dao.save(one);
+		}*/
 		dao.save(one);
 		return one;
 	}

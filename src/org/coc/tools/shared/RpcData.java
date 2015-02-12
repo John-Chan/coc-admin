@@ -2,6 +2,10 @@ package org.coc.tools.shared;
 
 public class RpcData<DataType> extends  RpcResult {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8580098290428477514L;
 	private DataType	data=null;
 	
 	public RpcData(){
