@@ -10,6 +10,7 @@ public class AppCmd {
 	public static final String CMD_LIST_REGED_CLAN="list-reged-clan";
 	public static final String CMD_EDIT_CW_RESULT="edit-cw-result";
 	public static final String CMD_LIST_ALL_WAR_RESULT="list-all-cw-result";
+	public static final String CMD_SEARCH_WAR_RESULT="search-cw-result";
 
 	/// redirect
 	public static final String CMD_REDIRECT_TO_HOME="redirect-to-home";

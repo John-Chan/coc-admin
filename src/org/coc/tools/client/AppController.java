@@ -16,6 +16,8 @@ import org.coc.tools.client.event.CwResultEditEvt;
 import org.coc.tools.client.event.CwResultEditEvtHandler;
 import org.coc.tools.client.event.CwResultListEvt;
 import org.coc.tools.client.event.CwResultListEvtHandler;
+import org.coc.tools.client.event.CwResultSearchEvt;
+import org.coc.tools.client.event.CwResultSearchEvtHandler;
 import org.coc.tools.client.event.CwResultUpdateCancelEvt;
 import org.coc.tools.client.event.CwResultUpdateCancelEvtHandler;
 import org.coc.tools.client.event.CwResultUpdateEvt;
@@ -25,6 +27,7 @@ import org.coc.tools.client.event.HomeClanSwitchEvtHandler;
 import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.client.presenter.CWIndexEditPresenter;
 import org.coc.tools.client.presenter.CWIndexPresenter;
+import org.coc.tools.client.presenter.CWResulSearchPresenter;
 import org.coc.tools.client.presenter.CWResultListPresenter;
 import org.coc.tools.client.presenter.ClanEditPresenter;
 import org.coc.tools.client.presenter.CWResultEditPresenter;
@@ -32,6 +35,7 @@ import org.coc.tools.client.presenter.Presenter;
 import org.coc.tools.client.presenter.UiTestPresenter;
 import org.coc.tools.client.view.CWIndexEditView;
 import org.coc.tools.client.view.CWIndexView;
+import org.coc.tools.client.view.CWResulSearchView;
 import org.coc.tools.client.view.CWResultListView;
 import org.coc.tools.client.view.ClanEditView;
 import org.coc.tools.client.view.CWResultEditView;
@@ -95,6 +99,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 				
 				presenter = new ClanEditPresenter(rpcMgr.getClanServiceAsync(), eventBus,
 						new ClanEditView());
+			}else if (token.equals(AppCmd.CMD_SEARCH_WAR_RESULT)) {
+				
+				presenter = new CWResulSearchPresenter(rpcMgr, eventBus,
+						new CWResulSearchView());
 			}else if (token.equals(AppCmd.CMD_DEBUG_UI)) {
 				
 				presenter = new UiTestPresenter(rpcMgr,eventBus,new UiTestView());
@@ -188,6 +196,16 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			}
 		});
 		
+		/// reg evt for cw log search 
+		eventBus.addHandler(CwResultSearchEvt.TYPE, new CwResultSearchEvtHandler() {
+
+			@Override
+			public void onSearch(CwResultSearchEvt event) {
+				goSearch();
+				
+			}
+		});
+		
 		/*
 		/// reg evt for update
 	    eventBus.addHandler(CWIndexUpdateEvt.TYPE,
@@ -268,7 +286,11 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void doAddCwEntry() {
 		History.newItem(AppCmd.CMD_ADD_CW_ENTRY);
 	}
-	
+
+	private void goSearch() {
+		History.newItem(AppCmd.CMD_SEARCH_WAR_RESULT);
+	}
+
 	/*
 	/// going to edit
 	private void doEditCWIndex(String id) {

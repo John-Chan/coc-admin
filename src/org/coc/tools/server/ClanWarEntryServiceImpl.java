@@ -1,8 +1,10 @@
 package org.coc.tools.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.coc.tools.client.ClanWarEntryService;
+import org.coc.tools.server.misc.InMemorySearch;
 import org.coc.tools.shared.QueryPage;
 import org.coc.tools.shared.RpcResult;
 import org.coc.tools.shared.model.CWIndex;
@@ -96,6 +98,28 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 	public QueryPage<ClanWarEntryPojo> getPageByClanTag(String tag,
 			int pageNumber) {
 		return dataMager.getPageByClanTag(tag, pageNumber);
+	}
+
+	@Override
+	public List<ClanWarEntryPojo> searchWarEntry(String searchTxt) {
+		int maxLoad=5120;
+		boolean enableAnySearch=true;
+		List<ClanWarEntryPojo> result=new ArrayList<ClanWarEntryPojo>();
+		if(searchTxt.length()<=0 ){
+			if(!enableAnySearch){
+				return result;
+			}else{
+				return dataMager.getList(maxLoad);
+			}
+		}
+		List<ClanWarEntryPojo> all=dataMager.getList(maxLoad);
+		if(all.size()>0){
+			result=InMemorySearch.search(all, searchTxt, InMemorySearch.WARLOG_SEARCH_TYPE.CLAN_NAME_OR_TAG);
+			InMemorySearch.removeRepeatWarLog(result);
+			InMemorySearch.sortByPrepareDate(result,true);
+			return result;
+		}
+		return result;
 	}
 
 }

@@ -32,6 +32,7 @@ public interface ClanWarEntryService  extends RemoteService{
 	/// pageNumber start from 0
 	QueryPage<ClanWarEntryPojo> getPageByClanTag(String tag,int pageNumber);
 
+	List<ClanWarEntryPojo>		searchWarEntry(String searchTxt);
 	
 	/**
 	 * 

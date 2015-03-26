@@ -30,7 +30,7 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	
 
 	private final Button postWarEntryButton;
-	private final Button deleteButton;
+	private final Button searchButton;
 	private final Button listAllButton;
 	private FlexTable cwIndexsTable;
 	private final FlexTable contentTable;
@@ -54,10 +54,12 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		homeClanBox = new ListBox(false);
 
 		postWarEntryButton = new Button("Add");
-		deleteButton = new Button("Delete");
-		listAllButton= new Button("See All");
+		searchButton = new Button("Search");
+		listAllButton= new Button("List more");
 		contentTable = new FlexTable();
 		cwIndexsTable = new FlexTable();
+		
+		//searchButton.setEnabled(false);
 		
 		initMainArea();
 		initHearderBar();
@@ -106,8 +108,8 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 		
 	
 		menuPanel.add(postWarEntryButton);
-		menuPanel.add(deleteButton);
 		menuPanel.add(listAllButton);
+		menuPanel.add(searchButton);
 		
 		contentTable.setWidget(0, 0, menuPanel);
 
@@ -136,8 +138,8 @@ public class CWIndexView extends BasicView implements CWIndexPresenter.Display {
 	}
 
 	@Override
-	public HasClickHandlers getDeleteButton() {
-		return this.deleteButton;
+	public HasClickHandlers getSearchButton() {
+		return this.searchButton;
 	}
 
 	@Override

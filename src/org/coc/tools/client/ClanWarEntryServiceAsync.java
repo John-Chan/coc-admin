@@ -22,6 +22,7 @@ public interface ClanWarEntryServiceAsync {
 	void 	getListByClanTag(String tag,int maxResult,AsyncCallback<List<ClanWarEntryPojo>> callback);
 	void 	getPageByClanTag(String tag,int pageNumber,AsyncCallback<QueryPage<ClanWarEntryPojo>> callback );
 
+	void		searchWarEntry(String searchTxt,AsyncCallback<List<ClanWarEntryPojo>> callback);
 	/**
 	 * 
 	 * @param warId

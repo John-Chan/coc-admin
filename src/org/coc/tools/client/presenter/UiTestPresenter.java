@@ -1,5 +1,6 @@
 package org.coc.tools.client.presenter;
 
+import java.util.List;
 import java.util.Map;
 
 import org.coc.tools.client.RpcManager;
@@ -7,6 +8,7 @@ import org.coc.tools.client.presenter.ClanEditPresenter.Display;
 import org.coc.tools.client.view.UiTestView;
 import org.coc.tools.shared.RpcData;
 import org.coc.tools.shared.RpcResult;
+import org.coc.tools.shared.model.ClanWarEntryPojo;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,7 +53,8 @@ public class UiTestPresenter implements Presenter {
 
 		this.display.getTestRpcButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				doImpData();
+				//doImpData();
+				doSearch();
 			}
 		});
 		
@@ -72,6 +75,47 @@ public class UiTestPresenter implements Presenter {
 				String msg=result.getMsg();
 				Window.alert(msg);
 				
+			}
+			
+		});
+	}
+	private void	doSearch(){
+		String searchTxt=this.display.getText1();
+		/*AsyncCallback<List<ClanWarEntryPojo>> callback=new AsyncCallback<List<ClanWarEntryPojo>>(){
+			static String txt=this.display.getText1();
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error "+caught.getMessage());
+				GWT.log("Error fetchCWIndexs.", caught);
+				
+			}
+
+			@Override
+			public void onSuccess(List<ClanWarEntryPojo> result) {
+				String msg= "search "+txt +",total: "+result.size();
+				for(ClanWarEntryPojo one:result){
+					msg+="\r\n"+one.getWarIndex().getHomeClan().getClanName() +" VS "+one.getWarIndex().getEnemyClan().getClanName()+",Date="+one.getWarIndex().getPrepareDate();
+				}
+				
+			}
+			
+		};*/
+		rpcMgr.getClanWarEntryService().searchWarEntry(searchTxt, new AsyncCallback<List<ClanWarEntryPojo>>(){
+			//static String txt=this.display.getText1();
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error "+caught.getMessage());
+				GWT.log("Error fetchCWIndexs.", caught);
+				
+			}
+
+			@Override
+			public void onSuccess(List<ClanWarEntryPojo> result) {
+				String msg= "total: "+result.size()+"\r\n";
+				for(ClanWarEntryPojo one:result){
+					msg+="\t"+one.getWarIndex().getHomeClan().getClanName() +" VS "+one.getWarIndex().getEnemyClan().getClanName()+",Date="+one.getWarIndex().getPrepareDate()+"\r\n";
+				}
+				Window.alert(msg);
 			}
 			
 		});

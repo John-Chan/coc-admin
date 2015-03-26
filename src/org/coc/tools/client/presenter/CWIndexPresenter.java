@@ -9,6 +9,7 @@ import org.coc.tools.client.event.CWIndexAddEvt;
 import org.coc.tools.client.event.ClanAddEvt;
 import org.coc.tools.client.event.CwResultEditEvt;
 import org.coc.tools.client.event.CwResultListEvt;
+import org.coc.tools.client.event.CwResultSearchEvt;
 import org.coc.tools.client.event.HomeClanSwitchEvt;
 import org.coc.tools.client.misc.CookieHelper;
 import org.coc.tools.shared.model.CWIndex;
@@ -95,7 +96,7 @@ public class CWIndexPresenter implements Presenter {
 	public interface Display {
 		HasClickHandlers getAddButton();
 
-		HasClickHandlers getDeleteButton();
+		HasClickHandlers getSearchButton();
 		
 		HasClickHandlers getListAllButton();
 
@@ -200,6 +201,12 @@ public class CWIndexPresenter implements Presenter {
 		display.getRegClanButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new ClanAddEvt());
+			}
+		});
+
+		display.getSearchButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new CwResultSearchEvt());
 			}
 		});
 
