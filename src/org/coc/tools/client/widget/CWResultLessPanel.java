@@ -90,7 +90,8 @@ public class CWResultLessPanel implements IsWidget{
 		}
 	}
 	public void	clearData(){
-		resultTable.clear();
+		//resultTable.clear();
+		resultTable.removeAllRows();
 	}
 	private void	initLayout(){
 

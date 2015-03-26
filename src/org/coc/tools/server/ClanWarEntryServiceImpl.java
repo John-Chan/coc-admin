@@ -109,7 +109,10 @@ public class ClanWarEntryServiceImpl  extends RemoteServiceServlet  implements C
 			if(!enableAnySearch){
 				return result;
 			}else{
-				return dataMager.getList(maxLoad);
+				result=dataMager.getList(maxLoad);
+				InMemorySearch.removeRepeatWarLog(result);
+				InMemorySearch.sortByPrepareDate(result,true);
+				return result;
 			}
 		}
 		List<ClanWarEntryPojo> all=dataMager.getList(maxLoad);
