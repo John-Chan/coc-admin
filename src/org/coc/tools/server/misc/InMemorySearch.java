@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 
+
 public class InMemorySearch {
 	public enum WARLOG_SEARCH_TYPE{
 		CLAN_NAME_ONLY,
@@ -82,8 +83,19 @@ public class InMemorySearch {
 	        	 
 	        }
 	    };
+	    
+	    /// GAE dont have java.util.Comparator.reversed
+	    Comparator<ClanWarEntryPojo> cmper_desc=new Comparator<ClanWarEntryPojo>() {
+	        @Override
+	        public int compare(ClanWarEntryPojo  one, ClanWarEntryPojo  two)
+	        {
+	        	int ret=one.getWarIndex().getPrepareDate().compareTo(two.getWarIndex().getPrepareDate());
+	        	return (ret!=0)?(-ret):ret;
+	        	 
+	        }
+	    };
 	    if(desc){
-	    	Collections.sort(source, cmper.reversed());
+	    	Collections.sort(source, cmper_desc);
 	    }else{
 	    	Collections.sort(source, cmper);
 	    }
