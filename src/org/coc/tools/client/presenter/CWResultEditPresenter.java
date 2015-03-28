@@ -27,6 +27,8 @@ public class CWResultEditPresenter implements Presenter {
 		
 		HasClickHandlers getCancelButton();
 
+		void	enableSave(boolean enable);
+
 		ClanWarEntryPojo	getCwData();
 		void				setCwData(ClanWarEntryPojo val);
 		void				enableUpdate(boolean val);
@@ -104,6 +106,7 @@ public class CWResultEditPresenter implements Presenter {
 	}
 
 	private void	saveWarResult(Long warId,WarResult homeTeam,WarResult enemyTeam){
+		CWResultEditPresenter.this.display.enableSave(false);
 		rpcMgr.getClanWarEntryService().updateWarResultByWarId(warId, homeTeam, enemyTeam, new AsyncCallback<RpcResult>(){
 
 			//Long Id=warId;
@@ -111,11 +114,13 @@ public class CWResultEditPresenter implements Presenter {
 			public void onFailure(Throwable caught) {
 				Window.alert("Error =>saveWarResult");
 				GWT.log("Error =>saveWarResult", caught);
+				CWResultEditPresenter.this.display.enableSave(true);
 				
 			}
 
 			@Override
 			public void onSuccess(RpcResult result) {
+				CWResultEditPresenter.this.display.enableSave(true);
 				eventBus.fireEvent( new CwResultUpdateEvt());
 				
 			}

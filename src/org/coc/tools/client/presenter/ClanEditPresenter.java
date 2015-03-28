@@ -22,6 +22,8 @@ public class ClanEditPresenter implements Presenter {
 		HasClickHandlers getSaveButton();
 
 		HasClickHandlers getCancelButton();
+		
+		void	enableSave(boolean enable);
 
 		String getClanTag();
 
@@ -79,17 +81,20 @@ public class ClanEditPresenter implements Presenter {
 	}
 	private void doSave() {
 
+		ClanEditPresenter.this.display.enableSave(false);
 		clan.setClanTag(display.getClanTag());
 		clan.setClanName(display.getClanName());
 		clan.setClanSymbol(display.getClanSymbol());
 		rpcService.addClan(clan.getClanTag(), clan.getClanName(), clan.getClanSymbol(), Clan.REG_STATUS.REGED, new AsyncCallback<Clan>() {
 			public void onSuccess(Clan result) {
+				ClanEditPresenter.this.display.enableSave(true);
 				eventBus.fireEvent(new ClanUpdateEvt(result));
 			}
 
 			public void onFailure(Throwable caught) {
 				Window.alert("Error =>rpcService.update");
 				GWT.log("Error =>rpcService.update", caught);
+				ClanEditPresenter.this.display.enableSave(true);
 			}
 		});
 	}

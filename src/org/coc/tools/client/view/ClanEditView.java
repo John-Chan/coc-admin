@@ -80,4 +80,11 @@ public class ClanEditView extends Composite implements
 		
 	}
 
+
+	@Override
+	public void enableSave(boolean enable) {
+		saveButton.setEnabled(enable);
+		
+	}
+
 }

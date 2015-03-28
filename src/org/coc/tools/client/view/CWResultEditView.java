@@ -108,5 +108,11 @@ public class CWResultEditView  extends BasicView implements CWResultEditPresente
 	public HasClickHandlers getSaveAndLockButton() {
 		return this.saveAndLockButton;
 	}
+	@Override
+	public void enableSave(boolean enable) {
+		saveButton.setEnabled(enable);
+		saveAndLockButton.setEnabled(enable);
+		
+	}
 
 }

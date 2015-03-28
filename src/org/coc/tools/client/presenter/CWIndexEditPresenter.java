@@ -31,6 +31,8 @@ public class CWIndexEditPresenter implements Presenter {
 		HasClickHandlers getSaveButton();
 
 		HasClickHandlers getCancelButton();
+		
+		void	enableSave(boolean enable);
 
 		Date getPrepareDate();
 
@@ -159,6 +161,7 @@ public class CWIndexEditPresenter implements Presenter {
 
 	private void doSave() {
 
+		CWIndexEditPresenter.this.display.enableSave(false);
 		VerifieStatus stat=new VerifieStatus();
 		if(!checkInput(stat)){
 			Window.alert(stat.getMsg());
@@ -175,14 +178,18 @@ public class CWIndexEditPresenter implements Presenter {
 
 		cwIndex.setScope(Integer.parseInt(display.getScope() ) );
 
+		
 		rpcService.update(clanWarEntryPojo, new AsyncCallback<ClanWarEntryPojo>() {
 			public void onSuccess(ClanWarEntryPojo result) {
 				eventBus.fireEvent(new CWIndexUpdateEvt(result));
+
+				CWIndexEditPresenter.this.display.enableSave(true);
 			}
 
 			public void onFailure(Throwable caught) {
 				Window.alert("Error =>rpcService.update");
 				GWT.log("Error =>rpcService.update", caught);
+				CWIndexEditPresenter.this.display.enableSave(true);
 			}
 		});
 	}
