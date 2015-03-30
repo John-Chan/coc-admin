@@ -65,9 +65,9 @@ public class CWResultInputGroup {
 		/// human friendly ordering 
 		list.add(attacksUsed);
 		list.add(attacksWon);
-		list.add(totalStars1Count);
-		list.add(totalStars2Count);
 		list.add(totalStars3Count);
+		list.add(totalStars2Count);
+		list.add(totalStars1Count);
 		list.add(heroicAttackPlayer);
 		list.add(heroicDefensePlayer);
 		return list;

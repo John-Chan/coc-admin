@@ -21,6 +21,8 @@ public class CWIndex   implements Serializable,ObjectifyEntity {
 	private int scope=15;
 	@Index
 	private Date prepareDate=new Date();
+	@Index
+	private Date dataEditDate=new Date();
 	
 	/*
 	@Index

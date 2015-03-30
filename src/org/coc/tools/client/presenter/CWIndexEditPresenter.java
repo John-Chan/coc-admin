@@ -135,7 +135,7 @@ public class CWIndexEditPresenter implements Presenter {
 
 	}
 	
-	private boolean checkInput(VerifieStatus stat){
+	/*private boolean checkInput(VerifieStatus stat){
 		stat.setPassed(true);
 		String clanName=display.getEnemyClanName();
 		String clantag=display.getEnemyClanTag();
@@ -157,16 +157,40 @@ public class CWIndexEditPresenter implements Presenter {
 		}
 		return stat.getPassed();
 
-	}
+	}*/
+	private VerifieStatus checkInput( ){
+		VerifieStatus stat=new VerifieStatus();
+		stat.setPassed(true);
+		String clanName=display.getEnemyClanName();
+		String clantag=display.getEnemyClanTag();
+		String clanSymbol=display.getEnemyClanSymbol();
+	
+		stat=FieldVerifier.isValidClanTag(clantag);
+		
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanName(clanName);
+		}
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanSymbol(clanSymbol);
+		}
+	
+		if(stat.getPassed()){
+			if(homeClan.getClanTag().toUpperCase().equals(clantag.toUpperCase())){
+				stat= VerifieStatus.IllegalArgumentError("clan tag for enemy clan can not be same with home clan");
+			}
+		}
+		return stat;
 
+	}
 	private void doSave() {
 
-		CWIndexEditPresenter.this.display.enableSave(false);
-		VerifieStatus stat=new VerifieStatus();
-		if(!checkInput(stat)){
+		VerifieStatus stat=checkInput();
+		if(!stat.getPassed()){
 			Window.alert(stat.getMsg());
+			//CWIndexEditPresenter.this.display.enableSave(true);
 			return;
 		}
+		CWIndexEditPresenter.this.display.enableSave(false);
 		CWIndex cwIndex=clanWarEntryPojo.getWarIndex();
 		cwIndex.setPrepareDate(display.getPrepareDate() );
 		cwIndex.getEnemyClan().setClanTag(display.getEnemyClanTag() );

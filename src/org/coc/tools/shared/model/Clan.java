@@ -1,6 +1,7 @@
 package org.coc.tools.shared.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.googlecode.objectify.annotation.*;
 
@@ -24,6 +25,8 @@ public class Clan implements Serializable,ObjectifyEntity{
 	private	int		clanWarFrequencyWeekly=1;
 	@Index
 	private	REG_STATUS		registered=REG_STATUS.NON_REGED;
+	@Index
+	private Date dataEditDate=new Date();
 
 	@Id
 	private Long	id;

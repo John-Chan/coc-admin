@@ -34,6 +34,8 @@ public class WarDetail    implements Serializable,ObjectifyEntity {
 	private Date attackDate=new Date();
 	@Id
 	private Long	id;
+	@Index
+	private Date dataEditDate=new Date();
 
 	@Override
 	public Long getRowId() {

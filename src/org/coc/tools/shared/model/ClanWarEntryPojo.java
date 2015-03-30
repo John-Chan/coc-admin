@@ -2,10 +2,12 @@ package org.coc.tools.shared.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
@@ -17,6 +19,8 @@ public class ClanWarEntryPojo   implements Serializable,ObjectifyEntity {
 
 	@Id
 	private Long	id;
+	@Index
+	private Date dataEditDate=new Date();
 	private CWIndex warIndex=new CWIndex();
 	//private Clan homeClan=new Clan();
 	//private Clan enemyClan=new Clan();

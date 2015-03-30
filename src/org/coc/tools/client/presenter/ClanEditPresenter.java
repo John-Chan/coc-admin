@@ -84,8 +84,8 @@ public class ClanEditPresenter implements Presenter {
 	private void doSave() {
 
 
-		VerifieStatus stat=new VerifieStatus();
-		if(!checkInput(stat)){
+		VerifieStatus stat=checkInput();
+		if(!stat.getPassed()){
 			Window.alert(stat.getMsg());
 			return;
 		}
@@ -108,7 +108,8 @@ public class ClanEditPresenter implements Presenter {
 			}
 		});
 	}
-	private boolean checkInput(VerifieStatus stat){
+	private VerifieStatus checkInput(){
+		VerifieStatus stat=new VerifieStatus();
 		stat.setPassed(true);
 		String clanName=display.getClanName();
 		String clantag=display.getClanTag();
@@ -124,7 +125,7 @@ public class ClanEditPresenter implements Presenter {
 		}
 	
 		
-		return stat.getPassed();
+		return stat;
 
 	}
 	

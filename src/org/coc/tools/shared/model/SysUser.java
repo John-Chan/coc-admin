@@ -1,6 +1,7 @@
 package org.coc.tools.shared.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -23,6 +24,8 @@ public class SysUser implements Serializable,ObjectifyEntity{
 
 	@Id
 	private Long	id;
+	@Index
+	private Date dataEditDate=new Date();
 
 	@Override
 	public Long getRowId() {
