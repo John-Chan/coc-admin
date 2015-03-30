@@ -22,6 +22,8 @@ package org.coc.tools.shared;
  */
 public class FieldVerifier {
 
+	public static final String	BAD_CLAN_TAG_CHARS="o`~!@#$%^&*()-_=+;:'\",<.>/?\\";
+	public static final String	GOOD_CLAN_TAG_CHARS_UPER="ABCDEFGHIJKLMNPQRSTUVWXYZ1234567890";
 	public static  int tryParseInt(String val,int defVal){
 		try{
 			return Integer.parseInt(val);
@@ -74,6 +76,15 @@ public class FieldVerifier {
 		}
 		if (false == val.startsWith(CocConstant.ClanInfo.CLAN_TAG_PREFIX)) {
 			return new VerifieStatus(false,what+" should start with a '"+CocConstant.ClanInfo.CLAN_TAG_PREFIX+"'");
+		}
+		int pos=1;
+		String txtUper=val.substring(pos).toUpperCase();
+		
+		for(char c:txtUper.toCharArray()){
+			if(GOOD_CLAN_TAG_CHARS_UPER.indexOf(c)<0){
+				return new VerifieStatus(false,what+" found bad character:"+c+" at pos:"+pos);
+			}
+			pos++;
 		}
 		return VerifieStatus.NoError();
 	}

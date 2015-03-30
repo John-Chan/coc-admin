@@ -3,6 +3,8 @@ package org.coc.tools.client.presenter;
 import org.coc.tools.client.ClanServiceAsync;
 import org.coc.tools.client.event.ClanUpdateCancelEvt;
 import org.coc.tools.client.event.ClanUpdateEvt;
+import org.coc.tools.shared.FieldVerifier;
+import org.coc.tools.shared.VerifieStatus;
 import org.coc.tools.shared.model.Clan;
 
 import com.google.gwt.core.shared.GWT;
@@ -81,7 +83,15 @@ public class ClanEditPresenter implements Presenter {
 	}
 	private void doSave() {
 
+
+		VerifieStatus stat=new VerifieStatus();
+		if(!checkInput(stat)){
+			Window.alert(stat.getMsg());
+			return;
+		}
+		
 		ClanEditPresenter.this.display.enableSave(false);
+		
 		clan.setClanTag(display.getClanTag());
 		clan.setClanName(display.getClanName());
 		clan.setClanSymbol(display.getClanSymbol());
@@ -97,6 +107,25 @@ public class ClanEditPresenter implements Presenter {
 				ClanEditPresenter.this.display.enableSave(true);
 			}
 		});
+	}
+	private boolean checkInput(VerifieStatus stat){
+		stat.setPassed(true);
+		String clanName=display.getClanName();
+		String clantag=display.getClanTag();
+		String clanSymbol=display.getClanSymbol();
+	
+		stat=FieldVerifier.isValidClanTag(clantag);
+		
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanName(clanName);
+		}
+		if(stat.getPassed()){
+			stat=FieldVerifier.isValidClanSymbol(clanSymbol);
+		}
+	
+		
+		return stat.getPassed();
+
 	}
 	
 	private void doCancel(){
