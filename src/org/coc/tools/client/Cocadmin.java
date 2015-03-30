@@ -25,7 +25,7 @@ public class Cocadmin implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		runMVP();
-		
+		//GWT.getVersion();
 		//runHelloWorld();
 	}
 	

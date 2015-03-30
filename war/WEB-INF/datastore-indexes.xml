@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes
+  autoGenerate="true">
+    <datastore-index kind="Clan" ancestor="false">
+        <property name="id" direction="desc" />
+        <property name="dataEditDate" direction="desc" />
+        <property name="clanName" direction="asc" />
+    </datastore-index>
+    <datastore-index kind="CWIndex" ancestor="false">
+        <property name="id" direction="desc" />
+        <property name="dataEditDate" direction="desc" />
+        <property name="homeClan.clanTag" direction="asc"/>
+        <property name="prepareDate" direction="desc"/>
+    </datastore-index>
+    <datastore-index kind="WarResult" ancestor="false">
+        <property name="id" direction="desc" />
+        <property name="dataEditDate" direction="desc" />
+    </datastore-index>
+</datastore-indexes>

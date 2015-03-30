@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 @Entity
+@Index
 public class WarResult   implements Serializable,ObjectifyEntity {
 
 	/**

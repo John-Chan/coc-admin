@@ -155,7 +155,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			public void onSwitch(HomeClanSwitchEvt event) {
 				//homeClan
 				AppController.this.homeClan.copyFull(event.getClan()) ;
-				CookieHelper.ensureHomeClanTagSaved(AppController.this.homeClan.getClanTag());
+				CookieHelper.saveHomeClanTagForever(AppController.this.homeClan.getClanTag());
 				doListCwEntry();
 			}
 		});

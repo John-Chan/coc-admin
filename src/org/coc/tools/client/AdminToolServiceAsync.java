@@ -13,5 +13,7 @@ public interface AdminToolServiceAsync {
 	void	authRootUser(String loginId,String passwrod,AsyncCallback<RpcResult> callback);
 	void	getImpDataInfo(String loginId,String passwrod,AsyncCallback<RpcData<Map<String,String>>> callback);
 	void	doImpData(String loginId,String passwrod,AsyncCallback<RpcResult> callback);
+	void	doRePutData(String loginId,String passwrod,AsyncCallback<RpcResult> callback);
+	
 	
 }

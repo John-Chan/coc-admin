@@ -14,4 +14,5 @@ public interface AdminToolService extends RemoteService {
 	RpcResult	authRootUser(String loginId,String passwrod);
 	RpcData<Map<String,String>>	getImpDataInfo(String loginId,String passwrod);
 	RpcResult	doImpData(String loginId,String passwrod);
+	RpcResult	doRePutData(String loginId,String passwrod);
 }

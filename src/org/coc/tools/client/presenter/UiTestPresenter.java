@@ -54,11 +54,32 @@ public class UiTestPresenter implements Presenter {
 		this.display.getTestRpcButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				//doImpData();
-				doSearch();
+				//doSearch();
+				doReputData();
 			}
 		});
 		
 		
+	}
+	private void	doReputData(){
+		
+		rpcMgr.getAdminToolServiceAsync().doRePutData(this.display.getText1(), this.display.getText2(), new AsyncCallback<RpcResult>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+				Window.alert("Error "+caught.getMessage());
+				
+			}
+
+			@Override
+			public void onSuccess(RpcResult result) {
+				String msg=result.getMsg();
+				Window.alert(msg);
+				
+			}
+			
+		});
 	}
 	private void	doImpData(){
 		rpcMgr.getAdminToolServiceAsync().doImpData(this.display.getText1(), this.display.getText2(), new AsyncCallback<RpcResult>(){

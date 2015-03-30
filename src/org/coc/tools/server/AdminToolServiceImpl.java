@@ -1,7 +1,9 @@
 package org.coc.tools.server;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
@@ -11,10 +13,12 @@ import org.coc.tools.server.dataimp.XmlDataImpoter;
 import org.coc.tools.server.misc.DateTimeHelper;
 import org.coc.tools.shared.RpcData;
 import org.coc.tools.shared.RpcResult;
+import org.coc.tools.shared.model.CWIndex;
 import org.coc.tools.shared.model.Clan;
 import org.coc.tools.shared.model.ClanWarEntryPojo;
 import org.coc.tools.shared.model.WarResult;
 import org.coc.tools.server.config.InMemoryUser;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
 
@@ -126,7 +130,60 @@ public class AdminToolServiceImpl extends RemoteServiceServlet implements
 		}
 		return rsp;
 	}
+	@Override
+	public RpcResult doRePutData(String loginId, String passwrod) {
+		RpcResult rsp=new RpcResult();
+		if(!checkRootUser(loginId,passwrod,rsp)){
+			return rsp;
+		}
 
+		List<String>	opt_steps=new ArrayList<String>();
+
+		int clan_count=reputAllClan();
+		int cw_ret_count=reputAllCwResult();
+		int cw_index_count=reputAllCwIndex();
+		opt_steps.add("re-put for [Clan],count ="+clan_count+"\r\n");
+		opt_steps.add("re-put for [CwResult],count ="+cw_ret_count+"\r\n");
+		opt_steps.add("re-put for [CwIndex],count ="+cw_index_count+"\r\n");
+		rsp.setMsg(opt_steps.toString());
+		return rsp;
+	}
+
+	private int reputAllClan(){
+		int maxResult=65535;
+		int clan_count=0;
+		
+		List<Clan> all_clan=dataMager.getClanDao().getList(Clan.class, maxResult);
+		clan_count=all_clan.size();
+		for(Clan one:all_clan){
+			dataMager.getClanDao().update(one);
+		}
+
+		return clan_count;
+	}
+	private int reputAllCwResult(){
+
+		int maxResult=65535;
+		int cw_ret_count=0;
+		List<WarResult> all=dataMager.getWarResultDao().getList(WarResult.class, maxResult);
+		cw_ret_count=all.size();
+		for(WarResult one:all){
+			dataMager.getWarResultDao().update(one);
+		}
+		return cw_ret_count;
+	}
+	private int reputAllCwIndex(){
+
+		int maxResult=65535;
+		int cw_index_count=0;
+
+		List<CWIndex> all=dataMager.getCwIndexDao().getList(CWIndex.class, maxResult);
+		cw_index_count=all.size();
+		for(CWIndex one:all){
+			dataMager.getCwIndexDao().update(one);
+		}
+		return cw_index_count;
+	}
 	
 	
 }

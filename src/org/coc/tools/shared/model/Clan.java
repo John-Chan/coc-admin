@@ -6,6 +6,7 @@ import java.util.Date;
 import com.googlecode.objectify.annotation.*;
 
 @Entity
+@Index
 public class Clan implements Serializable,ObjectifyEntity{
 
 	/**
