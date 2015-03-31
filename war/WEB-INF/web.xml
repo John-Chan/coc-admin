@@ -60,6 +60,18 @@
 		<url-pattern>/cocadmin/adminToolService</url-pattern>
 	</servlet-mapping>
 	
+	
+	<servlet>
+		<servlet-name>counterServiceImplServlet</servlet-name>
+		<servlet-class>org.coc.tools.server.CounterServiceImpl</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>counterServiceImplServlet</servlet-name>
+		<url-pattern>/cocadmin/counterService</url-pattern>
+	</servlet-mapping>
+	
+	
 	<servlet>
         <servlet-name>ApplicationInitServlet</servlet-name>
         <display-name>ApplicationInitServlet</display-name>
