@@ -60,7 +60,7 @@ public class FieldVerifier {
 		if (val == null) {
 			return VerifieStatus.NullError(what);
 		}
-		if (val.length()<3) {
+		if (val.length()<1) {
 			return VerifieStatus.LengthError(what);
 		}
 		return VerifieStatus.NoError();

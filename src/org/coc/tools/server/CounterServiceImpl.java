@@ -27,6 +27,7 @@ public class CounterServiceImpl  extends RemoteServiceServlet  implements  Count
 		RpcData<CounterWarResult> rspData=new RpcData<CounterWarResult>();
 		Clan clanForCount=dataMager.getClanDao().getClanByTag(clanTag);
 		if(clanForCount !=null){
+			int countWin=0;int countLose=0;int countDraw=0;
 			CounterWarResult data=WarResultCounterBuilder.makeCounterWarResult(countWin, countLose, countDraw);
 			data.setClan(clanForCount);
 			rspData.setData(data);
